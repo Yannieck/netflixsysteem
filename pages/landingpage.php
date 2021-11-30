@@ -8,18 +8,18 @@
 </head>
 
 <body>
-    <div id="header">
-        <img src="../assets/img/lightlogo.svg" alt="Logo" width="280px" height="152px">
-        <button id="signIn" type="button">Sign in</button>
-    </div>
-    <div id="feature">
-        <div id="h1">
-            <h1>It's not a bug, it's a feature...</h1>
+        <div id="header">
+            <img src="../assets/img/lightlogo.svg" alt="Logo" width="280px" height="152px">
+            <button id="signIn" type="button">Sign in</button>
         </div>
-        <div id="h2">
-            <p>Ask anywhere, anytime, anything.</p>
-        </div>
-        <button id="membership" type="button">Choose a membership</button>
+        <div id="feature">
+            <div id="h1">
+                <h1>It's not a bug, it's a feature...</h1>
+            </div>
+            <div id="h2">
+                <p>Ask anywhere, anytime, anything.</p>
+            </div>
+            <button id="membership" type="button">Choose a membership</button>
     </div>
 </body>
 

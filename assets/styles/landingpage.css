@@ -16,7 +16,7 @@ body {
     width: 604px;
     height: 197px;
     margin-left: 125px;
-    margin-top: 240px;
+    margin-top: 1px;
     margin-right: 1191px;
     margin-bottom: 440px;
 }
@@ -46,16 +46,17 @@ p {
     margin-top: 25px;
     height: 45px;
     width: 280px;
-    border-radius: 8px;
+    border-radius: 4px;
+    border: none;
 }
 
 #signIn {
     background-color: #E17F00;
     color: #f8f8f8;
-    margin-top: 51px;
     height: 45px;
     width: 153px;
-    border-radius: 8px;
+    border-radius: 4px;
+    border: none;
 }
 
 #header {
