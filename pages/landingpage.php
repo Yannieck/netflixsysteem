@@ -9,8 +9,8 @@
 
 <body>
         <div id="header">
-            <img src="../assets/img/lightlogo.svg" alt="Logo" width="280px" height="152px">
-            <button id="signIn" type="button">Sign in</button>
+            <img src="../assets/img/lightlogo.svg" alt="Logo" width="auto" height="110px">
+            <a href="./login.php"><button id="signIn" type="button">Sign in</button></a>
         </div>
         <div id="feature">
             <div id="h1">
@@ -19,7 +19,7 @@
             <div id="h2">
                 <p>Ask anywhere, anytime, anything.</p>
             </div>
-            <button id="membership" type="button">Choose a membership</button>
+            <a href="./choosemembership.php"><button id="membership" type="button">Choose a membership</button></a>
     </div>
 </body>
 
