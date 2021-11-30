@@ -12,12 +12,22 @@ header {
     height: 50px;
     background-color: #292929;
     color: white;
+    font-weight: bold;
 }
 
 header li {
     display: inline;
     color: white;
-    padding-left: 30px;
+    padding: 20px;
+}
+
+.navtekst li:hover {
+    background-color: #E17F00;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.navicons a:hover {
+    color: #E17F00;
 }
 
 header a {
