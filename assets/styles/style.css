@@ -1,10 +1,70 @@
+:root {
+    --clr-neutral-900: #000000;
+    --clr-neutral-900-50: rgba(0, 0, 0, 0.5);
+    --clr-neutral-600: #292929;
+    --clr-neutral-400: #8C8C8C;
+    --clr-neutral-100: #ffffff;
+    --clr-accent-400: #E17F00;
+    --clr-accent-500: #FF5959;
+}
+
 * {
     margin: 0;
     padding: 0;
+}
+
+body {
+    font-family: Helvetica, sans-serif;
 }
 
 .background {
     width: 100vw;
     height: 100vh;
     background-image: url(../img/background.png);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    position: absolute;
+    width: 200px;
+    left: 75px;
+    top: 25px;
+}
+
+.holder {
+    width: 25vw;
+    height: 80vh;
+    background-color: var(--clr-neutral-900-50);
+}
+
+.content {
+    padding: 50px;
+    color: var(--clr-neutral-100);
+}
+
+.content h1 {
+    font-weight: normal;
+    margin-bottom: 20px;
+}
+
+.content input {
+    border: none;
+    color: var(--clr-neutral-100);
+    padding: 12px 20px;
+    border-radius: 2px;
+}
+
+.formfield {
+    background-color: var(--clr-neutral-600);
+    width: calc(100% - 40px);
+    margin-bottom: 15px;
+    border-bottom: 3px solid var(--clr-accent-400) !important;
+}
+
+.button {
+    background-color: var(--clr-accent-400);
+    width: 100%;
+    margin-top: 25px;
 }
