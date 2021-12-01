@@ -2,8 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Log in</title>
+    <?php include_once('../assets/components/head.php') ?>
     <link rel="stylesheet" href="../assets/styles/style.css">
 </head>
 

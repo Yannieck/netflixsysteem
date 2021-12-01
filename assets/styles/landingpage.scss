@@ -1,3 +1,4 @@
+@import url("vars.css");
 body {
     font-family: Arial, "Helvetica", sans-serif;
     background-image: url(../img/background.png);
@@ -11,14 +12,9 @@ body {
     margin-left: 125px;
 }
 
-#feature {
+.feature {
     color: #f8f8f8;
-    width: 604px;
-    height: 197px;
     margin-left: 125px;
-    margin-top: 1px;
-    margin-right: 1191px;
-    margin-bottom: 440px;
 }
 
 #h1 {
@@ -69,8 +65,14 @@ p {
     }
 }
 
-#header {
+.header {
     margin: 51px 125px;
     display: flex;
     justify-content: space-between;
+}
+
+.btnRight {
+    position: absolute;
+    right: 125px;
+    top: 51px;
 }

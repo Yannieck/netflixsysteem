@@ -1,0 +1,52 @@
+@import url("vars.css");
+.content {
+    width: 300px;
+    height: 500px;
+    background-color: var(--clr-neutral-900-50);
+    padding: 50px;
+    color: var(--clr-neutral-100);
+    h1 {
+        font-weight: normal;
+        margin-bottom: 15px;
+    }
+    input {
+        border: none;
+        color: var(--clr-neutral-100);
+        padding: 12px 20px;
+        border-radius: 2px;
+    }
+    .formfield {
+        background-color: var(--clr-neutral-600);
+        width: calc(100% - 40px);
+        margin-top: 15px;
+        border-bottom: 3px solid var(--clr-accent-400) !important;
+    }
+    .content1 {
+        display: flex;
+        justify-content: space-between;
+        color: var(--clr-neutral-100);
+        font-size: 0.8rem;
+        margin-bottom: 25px;
+    }
+    .content2 {
+        color: var(--clr-neutral-400);
+        font-size: 0.8rem;
+    }
+    label:hover {
+        text-decoration: underline;
+    }
+}
+
+.formbutton {
+    background-color: var(--clr-accent-400);
+    width: 100%;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    border: none;
+    color: var(--clr-neutral-100);
+    padding: 12px 20px;
+    border-radius: 2px;
+    &:hover {
+        text-decoration: underline;
+    }
+}

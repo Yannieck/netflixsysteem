@@ -2,14 +2,12 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Log in</title>
-    <link rel="stylesheet" href="../assets/styles/style.css">
+    <?php include_once('../assets/components/head.php') ?>
+    <link rel="stylesheet" href="../assets/styles/login.css">
 </head>
 
 <body>
-
-    <div class="background">
+    <div class="background center">
         <a href="./landingpage.php"><img class="logo" src="../assets/img/lightlogo.svg" alt="logo"></a>
         <div class="content">
             <h1>Sign up</h1>
@@ -19,7 +17,7 @@
                 <p class="errortext" id="emailerror">Please enter a valid emailadress.</p>
                 <input class="formfield" type="password" name="password" id="password" placeholder="Password...">
                 <p class="errortext" id="passworderror">Your password must contain between 4 and 8 characters.</p>
-                <input class="button" type="submit" name="login" id="login" value="Sign In">
+                <input class="formbutton" type="submit" name="login" id="login" value="Sign In">
 
                 <div class="content1">
                     <div class="checkbox">
