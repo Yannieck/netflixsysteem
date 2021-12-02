@@ -29,7 +29,7 @@
                         <input type="checkbox" name="remember" id="remember">
                         <label for="remember">Remember me</label>
                     </div>
-                    <a href="#">Need help?</a>
+                    <a href="./loginhelp.php">Need help?</a>
                 </div>
             </form>
             <!-- Sign up link -->

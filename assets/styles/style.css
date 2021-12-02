@@ -6,6 +6,7 @@
 }
 
 a {
+  display: inline-block;
   color: var(--clr-neutral-100);
   text-decoration: none;
 }
@@ -14,10 +15,15 @@ a:hover {
   text-decoration: underline;
 }
 
-.background {
-  width: 100vw;
-  height: 100vh;
-  background-image: url(../img/background.png);
+h1,
+h2,
+p,
+a {
+  margin-bottom: 0.5rem;
+}
+
+.underline {
+  text-decoration: underline;
 }
 
 .center {
@@ -41,6 +47,12 @@ a:hover {
           align-items: center;
 }
 
+.background {
+  width: 100vw;
+  height: 100vh;
+  background-image: url(../img/background.png);
+}
+
 .logo {
   position: absolute;
   width: 225px;
@@ -49,14 +61,16 @@ a:hover {
 }
 
 .button {
+  display: inline-block;
   background-color: var(--clr-accent-400);
-  margin-top: 25px;
+  margin-top: 0.5rem;
   margin-bottom: 15px;
   border: none;
   color: var(--clr-neutral-100);
   padding: 1rem 3rem;
   border-radius: 2px;
   cursor: pointer;
+  font-size: 0.85rem;
 }
 
 .button:hover {
