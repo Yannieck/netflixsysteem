@@ -43,6 +43,10 @@
   font-size: 0.8rem;
 }
 
+.content .content2 p {
+  margin-bottom: 0.5rem;
+}
+
 .content label:hover {
   text-decoration: underline;
 }

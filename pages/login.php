@@ -3,7 +3,7 @@
 
 <head>
     <?php include_once('../assets/components/head.php') ?>
-    <link rel="stylesheet" href="../assets/styles/login.css">
+    <link rel="stylesheet" href="../assets/styles/login/login.css">
 </head>
 
 <body>
@@ -12,13 +12,18 @@
         <div class="content">
             <h1>Sign up</h1>
             <form action="<?php echo htmlentities($_SERVER['PHP_SELF']) ?>" method="post">
-                <!-- <form action="../index.php" method="post"> -->
+                <!-- Email veld -->
                 <input class="formfield" type="email" name="email" id="email" placeholder="Email...">
                 <p class="errortext" id="emailerror">Please enter a valid emailadress.</p>
+
+                <!-- Wachtwoord veld -->
                 <input class="formfield" type="password" name="password" id="password" placeholder="Password...">
                 <p class="errortext" id="passworderror">Your password must contain between 4 and 8 characters.</p>
+
+                <!-- Submit -->
                 <input class="formbutton" type="submit" name="login" id="login" value="Sign In">
 
+                <!-- Remember me + help -->
                 <div class="content1">
                     <div class="checkbox">
                         <input type="checkbox" name="remember" id="remember">
@@ -26,14 +31,15 @@
                     </div>
                     <a href="#">Need help?</a>
                 </div>
-
             </form>
+            <!-- Sign up link -->
             <div class="content2">
-                <p>New to Null Pointer Videos? <a href="./createaccount.php">Sign up now</a>.</p>
+                <p>New to Null Pointer Videos? <a href="./choosemembership.php">Sign up now</a>.</p>
             </div>
         </div>
     </div>
     <?php
+    // Form input valideren
     if (isset($_POST['login'])) {
         if (!empty($_POST['email'])) {
             if (!empty($_POST['password'])) {
@@ -43,6 +49,8 @@
                     header('Location: ./choosemembership.php');
                 }
             } else {
+                // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
+                // en het email veld weer invult
                 echo
                 "<script>
                     document.getElementById('passworderror').style.display = 'block';
@@ -50,6 +58,7 @@
                 </script>";
             }
         } else {
+            // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
             echo
             "<script>
                 document.getElementById('emailerror').style.display = 'block';

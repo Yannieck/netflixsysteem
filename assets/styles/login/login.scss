@@ -31,6 +31,9 @@
     .content2 {
         color: var(--clr-neutral-400);
         font-size: 0.8rem;
+        p {
+            margin-bottom: 0.5rem;
+        }
     }
     label:hover {
         text-decoration: underline;
