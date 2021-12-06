@@ -1,0 +1,29 @@
+@import url("vars.css");
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 2rem 20px 2rem;
+    height: 5vh;
+    background-color: var(--clr-neutral-600);
+    color: var(--clr-neutral-100);
+    font-weight: bold;
+    a {
+        text-decoration: none;
+        color: var(--clr-neutral-100);
+    }
+    li {
+        display: inline;
+        color: var(--clr-neutral-100);
+        padding: 20px;
+    }
+}
+
+.navtekst li:hover {
+    background-color: var(--clr-accent-400);
+    border-radius: 10px 10px 10px 10px;
+}
+
+.navicons a:hover {
+    color: var(--clr-accent-400);
+}

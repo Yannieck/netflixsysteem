@@ -1,0 +1,38 @@
+@import url("vars.css");
+header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 20px 2rem 20px 2rem;
+  height: 5vh;
+  background-color: var(--clr-neutral-600);
+  color: var(--clr-neutral-100);
+  font-weight: bold;
+}
+
+header a {
+  text-decoration: none;
+  color: var(--clr-neutral-100);
+}
+
+header li {
+  display: inline;
+  color: var(--clr-neutral-100);
+  padding: 20px;
+}
+
+.navtekst li:hover {
+  background-color: var(--clr-accent-400);
+  border-radius: 10px 10px 10px 10px;
+}
+
+.navicons a:hover {
+  color: var(--clr-accent-400);
+}
+/*# sourceMappingURL=header.css.map */
