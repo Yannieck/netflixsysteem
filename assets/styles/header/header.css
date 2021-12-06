@@ -1,5 +1,21 @@
-@import url("vars.css");
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica, sans-serif;
+}
+
 header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 20px 50px 20px 50px;
+  height: 5vh;
+  background-color: #292929;
+  color: white;
+  font-weight: bold;
+}
+
+header .leftHeader {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -9,30 +25,53 @@ header {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 20px 2rem 20px 2rem;
+  width: 40%;
   height: 5vh;
-  background-color: var(--clr-neutral-600);
-  color: var(--clr-neutral-100);
-  font-weight: bold;
+}
+
+header .rightHeader {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: right;
+      -ms-flex-pack: right;
+          justify-content: right;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 60%;
+  height: 5vh;
 }
 
 header a {
   text-decoration: none;
-  color: var(--clr-neutral-100);
+  color: white;
 }
 
 header li {
   display: inline;
-  color: var(--clr-neutral-100);
+  color: white;
+  padding: 15px;
+}
+
+header li input {
+  display: none;
+  height: 3vh;
+  width: 15vw;
+  border-radius: 0.3em;
+  font-size: 1em;
+}
+
+.navtekst a {
   padding: 20px;
 }
 
-.navtekst li:hover {
-  background-color: var(--clr-accent-400);
+.navtekst a:hover {
+  background-color: #E17F00;
   border-radius: 10px 10px 10px 10px;
 }
 
 .navicons a:hover {
-  color: var(--clr-accent-400);
+  color: #E17F00;
 }
 /*# sourceMappingURL=header.css.map */

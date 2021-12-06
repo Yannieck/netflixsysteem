@@ -1,29 +1,72 @@
-@import url("vars.css");
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica, sans-serif;
+}
+
 header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 2rem 20px 2rem;
+    padding: 20px 50px 20px 50px;
     height: 5vh;
-    background-color: var(--clr-neutral-600);
-    color: var(--clr-neutral-100);
+    background-color: #292929;
+    color: white;
     font-weight: bold;
+
+    .leftHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 40%;
+        height: 5vh;
+    }
+
+    .rightHeader {
+        display: flex;
+        justify-content: right;
+        align-items: center;
+        width: 60%;
+        height: 5vh;
+    }
+
     a {
         text-decoration: none;
-        color: var(--clr-neutral-100);
+        color: white;
     }
+
     li {
         display: inline;
-        color: var(--clr-neutral-100);
+        color: white;
+        padding: 15px;
+
+        input {
+            display: none;
+            height: 3vh;
+            width: 15vw;
+            border-radius: 0.3em;
+            font-size: 1em;
+        }
+    }
+
+    
+}
+
+
+
+.navtekst {
+    a {
         padding: 20px;
+    }
+
+    a:hover {
+        background-color: #E17F00;
+        border-radius: 10px 10px 10px 10px;
     }
 }
 
-.navtekst li:hover {
-    background-color: var(--clr-accent-400);
-    border-radius: 10px 10px 10px 10px;
-}
+    
+
 
 .navicons a:hover {
-    color: var(--clr-accent-400);
+    color: #E17F00;
 }
+
