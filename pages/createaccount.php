@@ -12,7 +12,7 @@
         <a href="./landingpage.php"><img class="logo" src="../assets/img/lightlogo.svg" alt="logo"></a>
         <div class="content">
             <h1>Sign in</h1>
-            <form action="../index.php" method="post">
+            <form action="<?php echo htmlentities($_SERVER['PHP_SELF']) ?>" method="post">
                 <!-- Email veld + error -->
                 <input class="formfield" type="email" name="email" id="email" placeholder="Email...">
                 <p class="errortext" id="emailerror">Please enter a valid emailadress.</p>
@@ -53,7 +53,7 @@
                     if (isset($_POST['remember'])) {
                         echo "remember";
                     } else {
-                        header('Location: ./choosemembership.php');
+                        header('Location: ./askquestion.php');
                     }
                 } else {
                     // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
