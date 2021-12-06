@@ -2,8 +2,11 @@
     --clr-neutral-900: #000000;
     --clr-neutral-900-50: rgba(0, 0, 0, 0.5);
     --clr-neutral-600: #292929;
+    --clr-neutral-500: #393939;
     --clr-neutral-400: #8C8C8C;
     --clr-neutral-100: #ffffff;
+    --clr-accent-300: #33A7FF;
+    --clr-accent-350: #9CC1DB;
     --clr-accent-400: #E17F00;
     --clr-accent-500: #FF5959;
 }

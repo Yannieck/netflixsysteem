@@ -1,28 +1,29 @@
+@import url("vars.css");
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 50px 20px 50px;
+    padding: 20px 2rem 20px 2rem;
     height: 5vh;
-    background-color: #292929;
-    color: white;
+    background-color: var(--clr-neutral-600);
+    color: var(--clr-neutral-100);
     font-weight: bold;
     a {
         text-decoration: none;
-        color: white;
+        color: var(--clr-neutral-100);
     }
     li {
         display: inline;
-        color: white;
+        color: var(--clr-neutral-100);
         padding: 20px;
     }
 }
 
 .navtekst li:hover {
-    background-color: #E17F00;
+    background-color: var(--clr-accent-400);
     border-radius: 10px 10px 10px 10px;
 }
 
 .navicons a:hover {
-    color: #E17F00;
+    color: var(--clr-accent-400);
 }
