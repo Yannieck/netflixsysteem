@@ -1,0 +1,30 @@
+@import url("vars.css");
+body {
+  font-family: Arial, "Helvetica", sans-serif;
+  background-image: url(../img/background.png);
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+}
+
+.slogan {
+  color: var(--clr-neutral-100);
+  margin-left: 125px;
+}
+
+.slogan h1,
+.slogan h2 {
+  margin-bottom: 0.5rem;
+}
+
+.slogan h2 {
+  font-size: 21px;
+  font-weight: normal;
+}
+
+.btnRight {
+  position: absolute;
+  right: 125px;
+  top: 51px;
+}
+/*# sourceMappingURL=landingpage.css.map */
