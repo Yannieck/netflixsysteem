@@ -8,17 +8,39 @@ header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  padding: 20px 50px 20px 50px;
+  height: 5vh;
+  background-color: #292929;
+  color: white;
+  font-weight: bold;
+}
+
+header .leftHeader {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 20px 50px 20px 50px;
+  width: 40%;
   height: 5vh;
-  background-color: #292929;
-  color: white;
-  font-weight: bold;
+}
+
+header .rightHeader {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: right;
+      -ms-flex-pack: right;
+          justify-content: right;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 60%;
+  height: 5vh;
 }
 
 header a {
@@ -29,10 +51,22 @@ header a {
 header li {
   display: inline;
   color: white;
+  padding: 15px;
+}
+
+header li input {
+  display: none;
+  height: 3vh;
+  width: 15vw;
+  border-radius: 0.3em;
+  font-size: 1em;
+}
+
+.navtekst a {
   padding: 20px;
 }
 
-.navtekst li:hover {
+.navtekst a:hover {
   background-color: #E17F00;
   border-radius: 10px 10px 10px 10px;
 }
