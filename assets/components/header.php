@@ -1,5 +1,5 @@
 <header>
-    <a href="index.php"><img src="../assets/img/lightlogo.svg" height="120" width="120" alt="logo"></a>
+    <a href="../index.php"><img src="../assets/img/lightlogo.svg" height="120" width="120" alt="logo"></a>
     <ul class="navtekst">
         <li><a href="">Ask a question</a></li>
         <li><a href="">Questions</a></li>
