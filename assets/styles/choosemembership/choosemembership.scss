@@ -1,3 +1,4 @@
+@import url("vars.css");
 body {
     color: white;
 }
@@ -37,4 +38,12 @@ td {
 
 tr:nth-child(even) {
     background-color: #292929;
+}
+
+.text-green {
+    color: var(--clr-accent-600)
+}
+
+.text-red {
+    color: var(--clr-accent-500);
 }
