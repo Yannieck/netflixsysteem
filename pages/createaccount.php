@@ -26,7 +26,7 @@
                 <p class="errortext" id="passwordrepeaterror">Passwords are not the same.</p>
 
                 <!-- Submit knop -->
-                <input class="button" type="submit" name="login" id="login" value="Sign In">
+                <input class="formbutton" type="submit" name="login" id="login" value="Sign In">
 
                 <!-- Remember me + help knop -->
                 <div class="content1">
