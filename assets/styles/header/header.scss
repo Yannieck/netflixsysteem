@@ -1,13 +1,25 @@
-@import url("vars.css");
+@import url("../vars.css");
 header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 2rem 20px 2rem;
+    padding: 25px 50px 25px 50px;
     height: 5vh;
     background-color: var(--clr-neutral-600);
     color: var(--clr-neutral-100);
     font-weight: bold;
+    .leftHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 60%;
+        height: 5vh;
+    }
+    .rightHeader {
+        display: flex;
+        justify-content: right;
+        align-items: center;
+        width: 60%;
+        height: 5vh;
+    }
     a {
         text-decoration: none;
         color: var(--clr-neutral-100);
@@ -15,15 +27,32 @@ header {
     li {
         display: inline;
         color: var(--clr-neutral-100);
-        padding: 20px;
+        padding: 15px;
+        input {
+            display: none;
+            height: 3vh;
+            width: 15vw;
+            border-radius: 0.3em;
+            font-size: 1em;
+        }
     }
 }
 
-.navtekst li:hover {
-    background-color: var(--clr-accent-400);
-    border-radius: 10px 10px 10px 10px;
+.navtekst {
+    a {
+        padding: 10px;
+    }
+    a:hover {
+        background-color: var(--clr-accent-400);
+        border-radius: 5px;
+    }
 }
 
-.navicons a:hover {
+.navicons {
+    font-size: 0.75rem;
+}
+
+.navicons i:hover {
+    cursor: pointer;
     color: var(--clr-accent-400);
 }

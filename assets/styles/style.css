@@ -11,7 +11,7 @@ a {
   text-decoration: none;
 }
 
-a:hover {
+a:not(.headerBtn):hover {
   text-decoration: underline;
 }
 
@@ -68,9 +68,9 @@ a {
   border: none;
   color: var(--clr-neutral-100);
   padding: 1rem 3rem;
-  border-radius: 2px;
-  cursor: pointer;
+  border-radius: 5px;
   font-size: 0.85rem;
+  cursor: pointer;
 }
 
 .button:hover {

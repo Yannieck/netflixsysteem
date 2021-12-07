@@ -1,9 +1,9 @@
-@import url("vars.css");
+@import url("../vars.css");
 aside {
   background-color: var(--clr-neutral-600);
   color: var(--clr-neutral-100);
   padding: 2rem;
-  width: 260px;
+  width: 240px;
   height: calc(95vh - 40px);
   display: -webkit-box;
   display: -ms-flexbox;

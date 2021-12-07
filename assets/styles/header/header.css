@@ -1,5 +1,16 @@
-@import url("vars.css");
+@import url("../vars.css");
 header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 25px 50px 25px 50px;
+  height: 5vh;
+  background-color: var(--clr-neutral-600);
+  color: var(--clr-neutral-100);
+  font-weight: bold;
+}
+
+header .leftHeader {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -9,11 +20,22 @@ header {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 20px 2rem 20px 2rem;
+  width: 60%;
   height: 5vh;
-  background-color: var(--clr-neutral-600);
-  color: var(--clr-neutral-100);
-  font-weight: bold;
+}
+
+header .rightHeader {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: right;
+      -ms-flex-pack: right;
+          justify-content: right;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 60%;
+  height: 5vh;
 }
 
 header a {
@@ -24,15 +46,32 @@ header a {
 header li {
   display: inline;
   color: var(--clr-neutral-100);
-  padding: 20px;
+  padding: 15px;
 }
 
-.navtekst li:hover {
+header li input {
+  display: none;
+  height: 3vh;
+  width: 15vw;
+  border-radius: 0.3em;
+  font-size: 1em;
+}
+
+.navtekst a {
+  padding: 10px;
+}
+
+.navtekst a:hover {
   background-color: var(--clr-accent-400);
-  border-radius: 10px 10px 10px 10px;
+  border-radius: 5px;
 }
 
-.navicons a:hover {
+.navicons {
+  font-size: 0.75rem;
+}
+
+.navicons i:hover {
+  cursor: pointer;
   color: var(--clr-accent-400);
 }
 /*# sourceMappingURL=header.css.map */

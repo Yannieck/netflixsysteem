@@ -1,0 +1,49 @@
+@import url("../vars.css");
+body {
+  color: white;
+}
+
+h1 {
+  color: white;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 550px;
+}
+
+.container {
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 50px;
+  padding-top: 25px;
+}
+
+.headertext {
+  margin: 0 auto;
+  text-align: center;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px;
+}
+
+.select {
+  background-color: transparent !important;
+}
+
+tr:nth-child(even) {
+  background-color: #292929;
+}
+
+.text-green {
+  color: var(--clr-accent-600);
+}
+
+.text-red {
+  color: var(--clr-accent-500);
+}
+/*# sourceMappingURL=choosemembership.css.map */
