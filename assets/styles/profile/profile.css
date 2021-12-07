@@ -1,0 +1,42 @@
+body {
+  background-color: #141414;
+}
+
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 90vh;
+}
+
+.container .contentBlock {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  background-color: #000000;
+  opacity: 64%;
+  width: 90%;
+  height: 90%;
+}
+
+.container .contentBlock .profileBlock {
+  background-color: red;
+  height: 200px;
+}
+
+.container .contentBlock .membershipBlock {
+  background-color: blue;
+  height: 200px;
+}
+/*# sourceMappingURL=profile.css.map */

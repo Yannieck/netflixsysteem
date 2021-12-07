@@ -1,0 +1,31 @@
+body {
+    background-color: #141414;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+
+    .contentBlock {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        background-color: #000000;
+        opacity: 64%;
+        width: 90%;
+        height: 90%;
+
+        .profileBlock {
+            background-color: red;
+            height: 200px;
+        }
+
+        .membershipBlock {
+            background-color: blue;
+            height: 200px;
+        }
+    }
+}
+
