@@ -49,47 +49,59 @@
     if (isset($_POST['login'])) {
         if (!empty($_POST['email'])) {
             $email = $_POST['email'];
-            $name = explode('@', $email)[0];
-            $domain = explode('.', explode('@', $email)[1])[0];
-            $extention = explode('.', explode('@', $email)[1])[1];
-            if (str_contains($email, "@" && str_contains($email, "."))) {
-                if (!empty($_POST['password'])) {
-                    if (!empty($_POST['repeatpassword'] && $_POST['repeatpassword'] == $_POST['password'])) {
-                        if (isset($_POST['remember'])) {
-                            echo "remember";
+            if (str_contains($email, "@") && str_contains($email, ".")) {
+                $name = explode('@', $email)[0];
+
+                $atPos = strpos($email, '@');
+                $dotPos = strpos($email, '.', $atPos);
+                $validEmail = boolval(($dotPos > $atPos) ? True : False);
+
+                if (strlen($name) >= 1 && $validEmail == 1) {
+                    if (!empty($_POST['password'])) {
+                        if (!empty($_POST['repeatpassword'] && $_POST['repeatpassword'] == $_POST['password'])) {
+                            if (isset($_POST['remember'])) {
+                                echo "remember";
+                            } else {
+                                header('Location: ./askquestion.php');
+                            }
                         } else {
-                            header('Location: ./askquestion.php');
+                            // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
+                            // en het email veld weer invult
+                            echo
+                            "<script>
+                        document.getElementById('passwordrepeaterror').style.display = 'block';
+                        document.getElementById('email').value = '" . $_POST['email'] . "';
+                    </script>";
                         }
                     } else {
                         // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
                         // en het email veld weer invult
                         echo
                         "<script>
-                        document.getElementById('passwordrepeaterror').style.display = 'block';
-                        document.getElementById('email').value = '" . $_POST['email'] . "';
-                    </script>";
+                    document.getElementById('passworderror').style.display = 'block';
+                    document.getElementById('email').value = '" . $_POST['email'] . "';
+                </script>";
                     }
                 } else {
                     // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
-                    // en het email veld weer invult
                     echo
                     "<script>
-                    document.getElementById('passworderror').style.display = 'block';
-                    document.getElementById('email').value = '" . $_POST['email'] . "';
+                    document.getElementById('emailerror').style.display = 'block';
                 </script>";
                 }
             } else {
                 // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
                 echo
                 "<script>
-                    document.getElementById('emailerror').style.display = 'block';
-                </script>";
+                document.getElementById('emailerror').style.display = 'block';
+            </script>";
             }
         } else {
             // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
             echo
             "<script>
                 document.getElementById('emailerror').style.display = 'block';
+                console.log(1);
             </script>";
         }
     }
