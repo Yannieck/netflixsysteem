@@ -42,19 +42,44 @@
     // Form input valideren
     if (isset($_POST['login'])) {
         if (!empty($_POST['email'])) {
-            if (!empty($_POST['password'])) {
-                if (isset($_POST['remember'])) {
-                    echo "remember";
+            $email = $_POST['email'];
+            if (str_contains($email, "@") && str_contains($email, ".")) {
+                $name = explode('@', $email)[0];
+
+                $atPos = strpos($email, '@');
+                $dotPos = strpos($email, '.', $atPos);
+                $validEmail = boolval(($dotPos > $atPos) ? True : False);
+
+
+                if (strlen($name) >= 1 && $validEmail == 1) {
+                    $len = strlen($_POST['password']);
+                    if (!empty($_POST['password'] && $len >= 4)) {
+                        if (isset($_POST['remember'])) {
+                            echo "remember";
+                        } else {
+                            header('Location: ./choosemembership.php');
+                        }
+                    } else {
+                        // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
+                        // en het email veld weer invult
+                        echo
+                        "<script>
+                            document.getElementById('passworderror').style.display = 'block';
+                            document.getElementById('email').value = '" . $_POST['email'] . "';
+                        </script>";
+                    }
                 } else {
-                    header('Location: ./choosemembership.php');
+                    // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
+                    echo
+                    "<script>
+                        document.getElementById('emailerror').style.display = 'block';
+                    </script>";
                 }
             } else {
                 // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
-                // en het email veld weer invult
                 echo
                 "<script>
-                    document.getElementById('passworderror').style.display = 'block';
-                    document.getElementById('email').value = '" . $_POST['email'] . "';
+                    document.getElementById('emailerror').style.display = 'block';
                 </script>";
             }
         } else {

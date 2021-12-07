@@ -26,6 +26,12 @@ a {
   text-decoration: underline;
 }
 
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .center {
   display: -webkit-box;
   display: -ms-flexbox;
