@@ -15,6 +15,27 @@
             <h1>It's not a bug, it's a feature...</h1>
             <h2>Ask anywhere, anytime, anything.</h2>
             <button type="button" class="button" onclick="location.href = './choosemembership.php'">Choose a membership</button>
+
+            <!--verwijder dit-->
+            </br>
+            <a href="../pages/askquestion.php">ask question</a>
+            </br>
+            <a href="../pages/choosemembership.php">choose membership</a>
+            </br>
+            <a href="../pages/createaccount.php">create account</a>
+            </br>
+            <a href="../pages/login.php">log in</a>
+            </br>
+            <a href="../pages/loginhelp.php">log in help</a>
+            </br>
+            <a href="../pages/main.php">main page</a>
+            </br>
+            <a href="../pages/questions.php">questions</a>
+            </br>
+            <a href="../pages/verifiedrequest.php">verified request</a>
+            </br>
+            <a href="../pages/videos.php">video's</a>
+        <!--tot dit-->
         </div>
     </div>
 </body>

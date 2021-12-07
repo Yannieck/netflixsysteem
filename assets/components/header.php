@@ -2,9 +2,9 @@
     <div class="leftHeader">
         <a href="../index.php"><img src="../assets/img/lightlogo.svg" height="120" width="120" alt="logo"></a>
         <ul class="navtekst">
-            <li><a href="./askquestion.php">Ask a question</a></li>
-            <li><a href="#">Questions</a></li>
-            <li><a href="#">Videos</a></li>
+            <li><a class="headerBtn" href="./askquestion.php">Ask a question</a></li>
+            <li><a class="headerBtn" href="#">Questions</a></li>
+            <li><a class="headerBtn" href="#">Videos</a></li>
         </ul>
     </div>
     <div class="rightHeader">

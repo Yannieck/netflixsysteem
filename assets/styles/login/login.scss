@@ -13,7 +13,7 @@
         border: none;
         color: var(--clr-neutral-100);
         padding: 12px 20px;
-        border-radius: 2px;
+        border-radius: 5px;
     }
     .formfield {
         background-color: var(--clr-neutral-600);
@@ -48,7 +48,8 @@
     border: none;
     color: var(--clr-neutral-100);
     padding: 12px 20px;
-    border-radius: 2px;
+    border-radius: 5px;
+    cursor: pointer;
     &:hover {
         text-decoration: underline;
     }

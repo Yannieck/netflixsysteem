@@ -3,10 +3,10 @@ header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding: 20px 50px 20px 50px;
+  padding: 25px 50px 25px 50px;
   height: 5vh;
-  background-color: #292929;
-  color: white;
+  background-color: var(--clr-neutral-600);
+  color: var(--clr-neutral-100);
   font-weight: bold;
 }
 
@@ -40,12 +40,12 @@ header .rightHeader {
 
 header a {
   text-decoration: none;
-  color: white;
+  color: var(--clr-neutral-100);
 }
 
 header li {
   display: inline;
-  color: white;
+  color: var(--clr-neutral-100);
   padding: 15px;
 }
 
@@ -58,15 +58,20 @@ header li input {
 }
 
 .navtekst a {
-  padding: 20px;
+  padding: 10px;
 }
 
 .navtekst a:hover {
-  background-color: #E17F00;
-  border-radius: 10px 10px 10px 10px;
+  background-color: var(--clr-accent-400);
+  border-radius: 5px;
 }
 
-.navicons a:hover {
-  color: #E17F00;
+.navicons {
+  font-size: 0.75rem;
+}
+
+.navicons i:hover {
+  cursor: pointer;
+  color: var(--clr-accent-400);
 }
 /*# sourceMappingURL=header.css.map */

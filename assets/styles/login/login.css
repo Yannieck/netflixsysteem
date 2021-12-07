@@ -16,7 +16,7 @@
   border: none;
   color: var(--clr-neutral-100);
   padding: 12px 20px;
-  border-radius: 2px;
+  border-radius: 5px;
 }
 
 .content .formfield {
@@ -59,7 +59,8 @@
   border: none;
   color: var(--clr-neutral-100);
   padding: 12px 20px;
-  border-radius: 2px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .formbutton:hover {
