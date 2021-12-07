@@ -18,23 +18,25 @@
 
             <!--verwijder dit-->
             </br>
-            <a href="../pages/askquestion.php">ask question</a>
+            <a style="color:green" href="../pages/landingpage.php">landingpage</a>
             </br>
-            <a href="../pages/choosemembership.php">choose membership</a>
+            <a style="color:yellow" href="../pages/askquestion.php">ask question</a>
             </br>
-            <a href="../pages/createaccount.php">create account</a>
+            <a style="color:green" href="../pages/choosemembership.php">choose membership</a>
             </br>
-            <a href="../pages/login.php">log in</a>
+            <a style="color:green" href="../pages/createaccount.php">create account</a>
             </br>
-            <a href="../pages/loginhelp.php">log in help</a>
+            <a style="color:green" href="../pages/login.php">log in</a>
             </br>
-            <a href="../pages/main.php">main page</a>
+            <a style="color:green" href="../pages/loginhelp.php">log in help</a>
             </br>
-            <a href="../pages/questions.php">questions</a>
+            <a style="color:yellow" href="../pages/main.php">main page</a>
             </br>
-            <a href="../pages/verifiedrequest.php">verified request</a>
+            <a style="color:red" href="../pages/questions.php">questions</a>
             </br>
-            <a href="../pages/videos.php">video's</a>
+            <a style="color:red" href="../pages/verifiedrequest.php">verified request</a>
+            </br>
+            <a style="color:red" href="../pages/videos.php">video's</a>
         <!--tot dit-->
         </div>
     </div>
