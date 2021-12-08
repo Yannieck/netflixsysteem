@@ -17,6 +17,5 @@ $db = "null pointer videos";
 $conn = mysqli_connect($host, $user, $pwd, $db) 
     OR DIE('Cannot connect to the database.');
 
-echo "Connection successfull";
 
 ?>
