@@ -9,6 +9,7 @@ aside {
     flex-direction: column;
     align-items: flex-start;
     margin: 0;
+    border-right: 4px solid var(--clr-neutral-450);
 }
 
 aside>h2 {

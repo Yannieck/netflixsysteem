@@ -4,14 +4,18 @@
     padding: 0;
     font-family: Helvetica, sans-serif;
 }
-html, body {
+
+html,
+body {
     width: 100%;
     height: 100%;
 }
+
 // TEKST OPMAAK
-.flex { 
+.flex {
     display: flex;
 }
+
 a {
     display: inline-block;
     color: var(--clr-neutral-100);
@@ -53,6 +57,12 @@ a {
     width: 100vw;
     height: 100vh;
     background-image: url(../img/background.png);
+}
+
+.pageContent {
+    width: calc(100vw - 240px);
+    height: calc(95vh - 50px);
+    background: red;
 }
 
 .logo {

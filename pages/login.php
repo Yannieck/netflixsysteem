@@ -10,7 +10,7 @@
     <div class="background center">
         <a href="./landingpage.php"><img class="logo" src="../assets/img/lightlogo.svg" alt="logo"></a>
         <div class="content">
-            <h1>Sign up</h1>
+            <h1>Sign in</h1>
             <form action="<?php echo htmlentities($_SERVER['PHP_SELF']) ?>" method="post">
                 <!-- Email veld -->
                 <input class="formfield" type="email" name="email" id="email" placeholder="Email...">

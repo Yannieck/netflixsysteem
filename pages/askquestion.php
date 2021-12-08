@@ -12,7 +12,11 @@
     <?php include_once("../assets/components/header.php"); ?>
     <div class="flex">
         <?php include_once("../assets/components/aside.php"); ?>
-        <div style="width: calc(100vw - 240px); height: calc(95vh - 50px);; background: red"></div>
+        <div class="pageContent">
+            <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
+                <input type="text" name="title" id="title">
+            </form>
+        </div>
     </div>
 </body>
 
