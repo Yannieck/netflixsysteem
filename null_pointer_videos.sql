@@ -107,4 +107,9 @@ CREATE TABLE IF NOT EXISTS `tag_question` (
     CONSTRAINT PRIMARY KEY (SubTagId, QuestionTitle),
     CONSTRAINT FOREIGN KEY (SubTagId) REFERENCES subtag(Id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FOREIGN KEY (QuestionTitle) REFERENCES question(Title) ON DELETE CASCADE ON UPDATE CASCADE
-)
+);
+
+INSERT INTO `membership` (`Name`, `Price`) VALUES ('Junior', 09.99);
+INSERT INTO `membership` (`Name`, `Price`) VALUES ('Senior', 14.99);
+INSERT INTO `membership` (`Name`) VALUES ('Admin');
+INSERT INTO `membership` (`Name`) VALUES ('Prof')
