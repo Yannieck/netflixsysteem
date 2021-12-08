@@ -112,4 +112,6 @@ CREATE TABLE IF NOT EXISTS `tag_question` (
 INSERT INTO `membership` (`Name`, `Price`) VALUES ('Junior', 09.99);
 INSERT INTO `membership` (`Name`, `Price`) VALUES ('Senior', 14.99);
 INSERT INTO `membership` (`Name`) VALUES ('Admin');
-INSERT INTO `membership` (`Name`) VALUES ('Prof')
+INSERT INTO `membership` (`Name`) VALUES ('Prof');
+
+INSERT INTO `account` (`MembershipName`,`Name`,`Username`,`Email`,`Password`) VALUES ('Admin', 'Admin', 'Developers', 'developer@gmail.com', '$2y$10$tc1ctq28T5bm9DpO42rvzeI0PFGecEhUr1l1Gb.zcWezqj5VA06/W')

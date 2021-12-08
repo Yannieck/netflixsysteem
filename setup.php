@@ -25,7 +25,7 @@ function DBExec($connection, $sqlStatement) {
 
     // Execute the statement
     mysqli_stmt_execute($stmt)
-        OR DIE("Something went wrong.");
+        OR DIE("Something went wrong: ". mysqli_error($connection));
 
     // Close the statement
     mysqli_stmt_close($stmt);
