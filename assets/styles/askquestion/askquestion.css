@@ -1,0 +1,51 @@
+label {
+  color: var(--clr-neutral-200);
+  padding: 0.5rem;
+}
+
+input[type=text] {
+  border: 2px solid var(--clr-neutral-200);
+  background-color: var(--clr-neutral-700);
+  padding: 0.8rem;
+  color: var(--clr-neutral-200);
+  margin-bottom: 20px;
+}
+
+textarea {
+  border: 2px solid var(--clr-neutral-200);
+  background-color: var(--clr-neutral-700);
+  height: 10rem;
+  padding: 0.8rem;
+  color: var(--clr-neutral-200);
+  margin-bottom: 20px;
+}
+
+code {
+  border: 2px solid white;
+  padding: 5px;
+  display: block;
+  margin: 5px 0px 5px 0px;
+  width: 50vw;
+  border-radius: 5px;
+}
+
+form {
+  margin: 50px;
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+p {
+  color: white;
+}
+
+pre {
+  color: white;
+}
+/*# sourceMappingURL=askquestion.css.map */

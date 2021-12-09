@@ -1,5 +1,5 @@
 @import url("vars.css");
-* {
+*:not(code) {
     margin: 0;
     padding: 0;
     font-family: Helvetica, sans-serif;
@@ -74,7 +74,7 @@ a {
 .pageContent {
     width: calc(100vw - 240px);
     height: calc(95vh - 50px);
-    background: var(--clr-neutral-800);
+    background-color: var(--clr-neutral-800);
 }
 
 .logo {

@@ -62,7 +62,7 @@ a {
 .pageContent {
     width: calc(100vw - 240px);
     height: calc(95vh - 50px);
-    background: red;
+    background-color: var(--clr-neutral-800);
 }
 
 .logo {
