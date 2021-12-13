@@ -13,7 +13,6 @@ $host = "localhost";
 $user = "root";
 $pwd = "";
 $db = "null pointer videos";
-$column_names = ["name", "type", "size", "location"];
 
 $conn = mysqli_connect($host, $user, $pwd, $db)
     or die('Cannot connect to the database.');

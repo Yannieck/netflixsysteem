@@ -8,7 +8,6 @@ header {
     font-weight: bold;
     .leftHeader {
         display: flex;
-        justify-content: space-between;
         align-items: center;
         width: 60%;
         height: 5vh;
@@ -39,6 +38,7 @@ header {
 }
 
 .navtekst {
+    margin-left: 110px;
     a {
         padding: 10px;
     }
@@ -52,7 +52,25 @@ header {
     font-size: 0.75rem;
 }
 
+i {
+    position: relative;
+}
+
 .navicons i:hover {
     cursor: pointer;
     color: var(--clr-accent-400);
+}
+
+.accountHover {
+    background-color: black;
+    position: absolute;
+    bottom: -30px;
+    p {
+        font-weight: normal;
+        font-size: 1rem;
+        &:hover {
+            color: white;
+            text-decoration: underline;
+        }
+    }
 }

@@ -14,9 +14,6 @@ header .leftHeader {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -57,6 +54,10 @@ header li input {
   font-size: 1em;
 }
 
+.navtekst {
+  margin-left: 110px;
+}
+
 .navtekst a {
   padding: 10px;
 }
@@ -70,8 +71,28 @@ header li input {
   font-size: 0.75rem;
 }
 
+i {
+  position: relative;
+}
+
 .navicons i:hover {
   cursor: pointer;
   color: var(--clr-accent-400);
+}
+
+.accountHover {
+  background-color: black;
+  position: absolute;
+  bottom: -30px;
+}
+
+.accountHover p {
+  font-weight: normal;
+  font-size: 1rem;
+}
+
+.accountHover p:hover {
+  color: white;
+  text-decoration: underline;
 }
 /*# sourceMappingURL=header.css.map */

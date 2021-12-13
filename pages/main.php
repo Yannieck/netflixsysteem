@@ -15,7 +15,7 @@
     ?>
     <div class="flex">
         <?php  include_once("../assets/components/aside.php"); ?>
-        <div class="main-container">
+        <div class="pageContent">
             <div class="filter">
                 <div class="flex-container">
                     <div class="logos">

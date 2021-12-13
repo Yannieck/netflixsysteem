@@ -63,7 +63,7 @@
 
                     mysqli_stmt_fetch($stmt);
 
-                    if(password_verify($_POST['password'], $passResult)) {
+                    if (password_verify($_POST['password'], $passResult)) {
                         header("Location: ./main.php");
                     } else {
                         echo "ERROR: Password does not match emailadress.";
