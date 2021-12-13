@@ -1,5 +1,6 @@
 body {
     background-color: #141414;
+    color: white;
 }
 
 .container {
@@ -16,16 +17,47 @@ body {
         opacity: 64%;
         width: 90%;
         height: 90%;
+        
+        .profileBlock form {
+            display: flex;
+            flex-direction: column;
+        }
 
-        .profileBlock {
-            background-color: red;
-            height: 200px;
+        .profileBlock input[type=text], input[type=email], input[type=password] {
+            width: 20vw;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            resize: vertical;
+              
         }
 
         .membershipBlock {
-            background-color: blue;
-            height: 200px;
+            td, th {
+                text-align: left;
+                padding: 10px 50px 10px 50px;
+            }
+              
+            tr:nth-child(even) {
+                background-color: #292929;
+            }
+
+            button {
+                float: right;
+                background-color: #E17F00;
+                color: white;
+                padding: 10px;
+                cursor: pointer;
+                border: none;
+            }
         }
+        
+        
+
+          
     }
 }
 

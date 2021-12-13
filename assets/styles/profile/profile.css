@@ -1,5 +1,6 @@
 body {
   background-color: #141414;
+  color: white;
 }
 
 .container {
@@ -30,13 +31,43 @@ body {
   height: 90%;
 }
 
-.container .contentBlock .profileBlock {
-  background-color: red;
-  height: 200px;
+.container .contentBlock .profileBlock form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
-.container .contentBlock .membershipBlock {
-  background-color: blue;
-  height: 200px;
+.container .contentBlock .profileBlock input[type=text], .container .contentBlock input[type=email], .container .contentBlock input[type=password] {
+  width: 20vw;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+.container .contentBlock .membershipBlock td, .container .contentBlock .membershipBlock th {
+  text-align: left;
+  padding: 10px 50px 10px 50px;
+}
+
+.container .contentBlock .membershipBlock tr:nth-child(even) {
+  background-color: #292929;
+}
+
+.container .contentBlock .membershipBlock button {
+  float: right;
+  background-color: #E17F00;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  border: none;
 }
 /*# sourceMappingURL=profile.css.map */
