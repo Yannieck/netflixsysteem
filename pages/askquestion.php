@@ -27,13 +27,9 @@
                 echo "<br>";
                 $rawinput = $_POST['text'];
                 if (str_contains($rawinput, "<<") && str_contains($rawinput, ">>")) {
-                    // echo "yup <br>";
                     $begin = strpos($rawinput, "<<") + 1;
                     $end = strpos($rawinput, ">>") - 1;
                     $len = $end - $begin;
-                    // echo $begin . "<br>";
-                    // echo $end . "<br>";
-                    // echo $len . "<br>";
                     $code = substr($rawinput, $begin + 1, $len);
                     $otherText = explode($code, $rawinput);
                     echo htmlentities(substr($otherText[0], 0, -2));
