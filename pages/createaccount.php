@@ -11,7 +11,7 @@
     <div class="background center">
         <a href="./landingpage.php"><img class="logo" src="../assets/img/lightlogo.svg" alt="logo"></a>
         <div class="content">
-            <h1>Sign in</h1>
+            <h1>Sign up</h1>
             <form action="<?php echo htmlentities($_SERVER['PHP_SELF']) ?>" method="post">
                 <!-- Email veld + error -->
                 <input class="formfield" type="email" name="email" id="email" placeholder="Email...">
@@ -19,7 +19,7 @@
 
                 <!-- 1e wachtwoord veld + error -->
                 <input class="formfield" type="password" name="password" id="password" placeholder="Password...">
-                <p class="errortext" id="passworderror">Your password must contain between 4 and 8 characters.</p>
+                <p class="errortext" id="passworderror">Your password must contain more then 4 characters.</p>
 
                 <!-- 2e wachtwoord veld + error -->
                 <input class="formfield" type="password" name="repeatpassword" id="repeatpassword" placeholder="Repeat password...">
@@ -57,7 +57,8 @@
                 $validEmail = boolval(($dotPos > $atPos) ? True : False);
 
                 if (strlen($name) >= 1 && $validEmail == 1) {
-                    if (!empty($_POST['password'])) {
+                    $len = strlen($_POST['password']);
+                    if (!empty($_POST['password'] && $len >= 4)) {
                         if (!empty($_POST['repeatpassword'] && $_POST['repeatpassword'] == $_POST['password'])) {
                             if (isset($_POST['remember'])) {
                                 echo "remember";

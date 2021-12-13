@@ -1,9 +1,12 @@
 :root {
     --clr-neutral-900: #000000;
     --clr-neutral-900-50: rgba(0, 0, 0, 0.5);
+    --clr-neutral-800: #141414;
     --clr-neutral-600: #292929;
     --clr-neutral-500: #393939;
+    --clr-neutral-450: #505050;
     --clr-neutral-400: #8C8C8C;
+    --clr-neutral-200: #F8F8F8;
     --clr-neutral-100: #ffffff;
     --clr-accent-300: #33A7FF;
     --clr-accent-350: #9CC1DB;
