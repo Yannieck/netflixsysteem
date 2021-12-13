@@ -1,3 +1,4 @@
+<?php require_once("../utils/dbconnect.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,45 +42,41 @@
     <?php
     // Form input valideren
     if (isset($_POST['login'])) {
-        if (!empty($_POST['email'])) {
-            $email = $_POST['email'];
-            if (str_contains($email, "@") && str_contains($email, ".")) {
-                $name = explode('@', $email)[0];
-
-                $atPos = strpos($email, '@');
-                $dotPos = strpos($email, '.', $atPos);
-                $validEmail = boolval(($dotPos > $atPos) ? True : False);
-
-
-                if (strlen($name) >= 1 && $validEmail == 1) {
-                    $len = strlen($_POST['password']);
-                    if (!empty($_POST['password'] && $len >= 4)) {
-                        if (isset($_POST['remember'])) {
-                            echo "remember";
-                        } else {
-                            header('Location: ./choosemembership.php');
-                        }
-                    } else {
-                        // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
-                        // en het email veld weer invult
-                        echo
-                        "<script>
-                            document.getElementById('passworderror').style.display = 'block';
-                            document.getElementById('email').value = '" . $_POST['email'] . "';
-                        </script>";
-                    }
+        if (filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
+            $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+            if (($password = $_POST['password']) && strlen($_POST['password']) >= 8) {
+                if (isset($_POST['remember'])) {
+                    echo "remember";
                 } else {
-                    // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
-                    echo
-                    "<script>
-                        document.getElementById('emailerror').style.display = 'block';
-                    </script>";
+                    // header('Location: ./choosemembership.php');
+                    // Database connectie
+
+                    $query = "SELECT `Password` FROM `account` WHERE Email = ?";
+
+                    $stmt = mysqli_prepare($conn, $query);
+                    mysqli_stmt_bind_param($stmt, 's', $email);
+
+                    mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+
+                    mysqli_stmt_bind_result($stmt, $passResult) or die(mysqli_error($conn));
+                    mysqli_stmt_store_result($stmt);
+
+                    mysqli_stmt_fetch($stmt);
+
+                    if(password_verify($_POST['password'], $passResult)) {
+                        header("Location: ./main.php");
+                    } else {
+                        echo "ERROR: Password does not match emailadress.";
+                    }
+                    mysqli_stmt_close($stmt);
                 }
             } else {
                 // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
+                // en het email veld weer invult
                 echo
                 "<script>
-                    document.getElementById('emailerror').style.display = 'block';
+                    document.getElementById('passworderror').style.display = 'block';
+                    document.getElementById('email').value = '" . $_POST['email'] . "';
                 </script>";
             }
         } else {
@@ -95,3 +92,4 @@
 </body>
 
 </html>
+<?php include_once("../utils/dbclose.php"); ?>
