@@ -1,1 +1,43 @@
-/* No CSS *//*# sourceMappingURL=main.css.map */
+.main-container {
+  width: 100%;
+  background-color: #141414;
+}
+
+.filter {
+  background-color: #141414;
+  width: 100%;
+  height: 20vh;
+}
+
+.logos {
+  width: 120px;
+  height: 120px;
+  background-color: #292929;
+  margin: auto;
+  position: relative;
+  border-radius: 5px;
+}
+
+.logos p {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.logos img {
+  display: block;
+  max-width: 80%;
+  height: 70px;
+  margin: 15px auto;
+}
+
+.flex-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
+/*# sourceMappingURL=main.css.map */

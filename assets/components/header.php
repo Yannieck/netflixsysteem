@@ -3,7 +3,7 @@
         <a href="../index.php"><img src="../assets/img/lightlogo.svg" height="120" width="120" alt="logo"></a>
         <ul class="navtekst">
             <li><a class="headerBtn" href="./askquestion.php">Ask a question</a></li>
-            <li><a class="headerBtn" href="#">Questions</a></li>
+            <li><a class="headerBtn" href="./questions.php">Questions</a></li>
             <li><a class="headerBtn" href="#">Videos</a></li>
         </ul>
     </div>
