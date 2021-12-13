@@ -94,12 +94,12 @@
           <th></th>
           <th>
             <h2>
-              <a class="button" href="./createaccount.php">Select</a>
+              <a class="button" href="./createaccount.php?type=0">Select</a>
             </h2>
           </th>
           <th>
             <h2>
-            <a class="button" href="./createaccount.php">Select</a>
+            <a class="button" href="./createaccount.php?type=1">Select</a>
             </h2>
           </th>
         </tr>
