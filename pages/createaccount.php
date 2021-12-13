@@ -68,11 +68,17 @@ if (isset($_GET['type'])) {
                                 if (!empty($_POST['repeatpassword'] && $_POST['repeatpassword'] == $_POST['password'])) {
                                     if (isset($_POST['remember'])) {
                                         echo "remember";
-                                    } else {
-                                        // header('Location: ./askquestion.php');                                    
-                                        $typename = htmlentities($_GET['type']) == 0 ? "junior" : "senior";
+                                    } else {                                  
+                                        $typename = htmlentities($_GET['type']) == 0 ? "Junior" : "Senior";
                                         
-                                        echo $typename;
+                                        $executeQuerry("INSERT INTO account (`MembershipName`, `Name`, `Username`, `Email`, `Password`) VALUES(
+                                            '{$typename}',
+                                            '{$name}',
+                                            '{$name}',
+                                            '{$email}',
+                                            '{$_POST['password']}'
+                                        )");
+                                        header('Location: ./askquestion.php')
                                     }
                                 } else {
                                     // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
