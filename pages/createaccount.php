@@ -61,7 +61,7 @@ if (isset($_GET['type'])) {
                                 $typename = htmlentities($_GET['type']) == 0 ? "Junior" : "Senior";
                                 $name = htmlspecialchars($rawname);
                                 $username = htmlspecialchars($rawname);
-                                $hashedPassword = password_hash($_POST['password'], PASSWORD_BCRYPT);
+                                $hashedPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
                                 // Database connectie
                                 $query = "INSERT INTO account (`MembershipName`, `Name`, `Username`, `Email`, `Password`) VALUES(

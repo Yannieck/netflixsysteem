@@ -48,9 +48,7 @@
                 if (isset($_POST['remember'])) {
                     echo "remember";
                 } else {
-                    // header('Location: ./choosemembership.php');
                     // Database connectie
-
                     $query = "SELECT `Password` FROM `account` WHERE Email = ?";
 
                     $stmt = mysqli_prepare($conn, $query);
