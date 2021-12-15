@@ -11,9 +11,8 @@
 </head>
 
 <body>
-<?php include_once("../assets/components/header.php"); ?>
-    <div class="flex">
-          
+    <?php include_once("../assets/components/header.php"); ?>
+    <div class="flex">      
         <?php include_once("../assets/components/aside.php"); ?>
         <div class="pageContent">
             <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
