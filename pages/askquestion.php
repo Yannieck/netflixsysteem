@@ -49,9 +49,6 @@
                         
                         echo '<span style="color:red;"> Title is required! </span>';
                     }
-                   
-    
-
                 }
 
                
