@@ -45,29 +45,27 @@
         if (filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
             $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
             if (($password = $_POST['password']) && strlen($_POST['password']) >= 8) {
-                if (isset($_POST['remember'])) {
-                    echo "remember";
+                $remember = isset($_POST['remember']) == 1 ? 1 : 0;
+                
+                // Database connectie
+                $query = "SELECT `Password` FROM `account` WHERE Email = ?";
+
+                $stmt = mysqli_prepare($conn, $query);
+                mysqli_stmt_bind_param($stmt, 's', $email);
+
+                mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+
+                mysqli_stmt_bind_result($stmt, $passResult) or die(mysqli_error($conn));
+                mysqli_stmt_store_result($stmt);
+
+                mysqli_stmt_fetch($stmt);
+
+                if (password_verify($_POST['password'], $passResult)) {
+                    header("Location: ./loginredirect.php?rem=".$remember);
                 } else {
-                    // Database connectie
-                    $query = "SELECT `Password` FROM `account` WHERE Email = ?";
-
-                    $stmt = mysqli_prepare($conn, $query);
-                    mysqli_stmt_bind_param($stmt, 's', $email);
-
-                    mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
-
-                    mysqli_stmt_bind_result($stmt, $passResult) or die(mysqli_error($conn));
-                    mysqli_stmt_store_result($stmt);
-
-                    mysqli_stmt_fetch($stmt);
-
-                    if (password_verify($_POST['password'], $passResult)) {
-                        header("Location: ./main.php");
-                    } else {
-                        echo "ERROR: Password does not match emailadress.";
-                    }
-                    mysqli_stmt_close($stmt);
+                    echo "ERROR: Password does not match emailadress.";
                 }
+                mysqli_stmt_close($stmt);
             } else {
                 // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
                 // en het email veld weer invult
