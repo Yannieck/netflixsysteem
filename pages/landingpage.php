@@ -20,7 +20,7 @@
             </br>
             <a style="color:green" href="../pages/landingpage.php">landingpage</a>
             </br>
-            <a style="color:yellow" href="../pages/askquestion.php">ask question</a>
+            <a style="color:green" href="../pages/askquestion.php">ask question</a>
             </br>
             <a style="color:green" href="../pages/choosemembership.php">choose membership</a>
             </br>
@@ -30,7 +30,7 @@
             </br>
             <a style="color:green" href="../pages/loginhelp.php">log in help</a>
             </br>
-            <a style="color:yellow" href="../pages/main.php">main page</a>
+            <a style="color:green" href="../pages/main.php">main page</a>
             </br>
             <a style="color:red" href="../pages/questions.php">questions</a>
             </br>
