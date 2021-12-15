@@ -16,24 +16,40 @@ body {
     justify-content: center;
     flex-direction: column;
 
-    input[type=text] {
-        width: 30vw;
-        padding: 12px;
-        border-radius: 2px;
-        background-color: #000000;
-        margin-top: 6px;
-        margin-bottom: 16px;
-        border: none;
-        color: #ffffff;
-    }
+    .contentBlock {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
 
-    button {
-        background-color: #FF5959;
-        color: white;
-        padding: 15px;
-        cursor: pointer;
-        border: none;
-        border-radius: 2px;
+        .textBlock {
+            padding-bottom: 10vh;
+        }
+
+        input[type=text] {
+            width: 30vw;
+            padding: 12px;
+            border-radius: 2px;
+            background-color: #000000;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            border: none;
+            color: #ffffff;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 30vw;
+            
+            button {
+                background-color: #FF5959;
+                color: white;
+                padding: 15px;
+                cursor: pointer;
+                border: none;
+                border-radius: 2px;
+            }
+        }
+        
     }
     
 }

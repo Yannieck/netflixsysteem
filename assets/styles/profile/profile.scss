@@ -35,6 +35,15 @@ body {
                 border-bottom: 2px solid #E17F00;
 
             }
+
+            input[type=submit] {
+                background-color: #E17F00;
+                color: white;
+                padding: 15px;
+                cursor: pointer;
+                border: none;
+                border-radius: 2px;
+            }
             
             button {
                 background-color: #FF5959;

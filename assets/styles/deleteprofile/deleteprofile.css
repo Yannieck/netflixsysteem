@@ -26,7 +26,24 @@ body {
           flex-direction: column;
 }
 
-.container input[type=text] {
+.container .contentBlock {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.container .contentBlock .textBlock {
+  padding-bottom: 10vh;
+}
+
+.container .contentBlock input[type=text] {
   width: 30vw;
   padding: 12px;
   border-radius: 2px;
@@ -37,7 +54,17 @@ body {
   color: #ffffff;
 }
 
-.container button {
+.container .contentBlock .buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 30vw;
+}
+
+.container .contentBlock .buttons button {
   background-color: #FF5959;
   color: white;
   padding: 15px;

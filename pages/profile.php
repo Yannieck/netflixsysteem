@@ -23,7 +23,8 @@
                     <label for="name">Password</label>
                     <input type="password" name="password" placeholder="Password">
                 </form>
-                <button href="deleteprofile.php">Delete profile</button>
+                <a href="deleteprofile.php"><button>Delete profile</button></a>
+                <input type="submit" name="submit" value="Save profile">
             </div>
             <div class="membershipBlock">
                 <h1>Select membership</h1>
@@ -57,7 +58,7 @@
                         <td><i class="fas fa-check"></i></td>
                     </tr>
                 </table>
-                <button>Change membership</button>
+                <button>Upgrade membership</button>
             </div>
         </div>
     </div>

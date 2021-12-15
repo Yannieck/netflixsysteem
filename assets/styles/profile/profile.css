@@ -52,6 +52,15 @@ body {
   border-bottom: 2px solid #E17F00;
 }
 
+.container .contentBlock .profileBlock input[type=submit] {
+  background-color: #E17F00;
+  color: white;
+  padding: 15px;
+  cursor: pointer;
+  border: none;
+  border-radius: 2px;
+}
+
 .container .contentBlock .profileBlock button {
   background-color: #FF5959;
   color: white;
