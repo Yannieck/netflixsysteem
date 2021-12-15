@@ -18,6 +18,7 @@
             <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
                 <label for="title">Enter your question title:</label>
                 <input type="text" name="title" id="title" placeholder="Title...">
+                <!-- <p class="errortext" id="titelerror" style="display: block;">Please enter a mooie titel</p>  -->
                 <label for="text">Enter your question here:</label>
                 <textarea name="text" id="text" placeholder="Question..."></textarea>
                 <input name="submit"class="button" type="submit" value="Submit">
@@ -50,6 +51,7 @@
                         echo '<span style="color:red;"> Title is required! </span>';
                     }
                 }
+                
 
                
                 ?>
