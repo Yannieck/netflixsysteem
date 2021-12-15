@@ -3,6 +3,7 @@
 
 <head>
     <?php include_once('../assets/components/head.php') ?>
+    <?php include_once("../assets/components/header.php"); ?>
     <link rel="stylesheet" href="../assets/styles/login/login.css">
     <link rel="stylesheet" href="../assets/styles/header/header.css">
     <link rel="stylesheet" href="../assets/styles/aside/aside.css">
@@ -10,7 +11,7 @@
 </head>
 
 <body>
-    <?php include_once("../assets/components/header.php"); ?>
+    
     <div class="flex">
         <?php include_once("../assets/components/aside.php"); ?>
         <div class="pageContent">
