@@ -1,3 +1,4 @@
+<?php include_once("../assets/components/loginCheck.php") ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,14 +45,12 @@
 
                 if (isset($_POST["submit"])) { 
                     if (!empty($_POST["title"])) {
-                        $titleError = test_input($_POST["title"]);
+                        // $titleError = test_input($_POST["title"]);
                     } else { 
                         
                         echo '<span style="color:red;"> Title is required! </span>';
                     }
                 }
-
-               
                 ?>
             </p>
         </div>
