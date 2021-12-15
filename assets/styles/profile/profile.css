@@ -26,7 +26,6 @@ body {
   -ms-flex-pack: distribute;
       justify-content: space-around;
   background-color: #000000;
-  opacity: 64%;
   width: 90%;
   height: 90%;
 }
@@ -41,16 +40,25 @@ body {
           flex-direction: column;
 }
 
-.container .contentBlock .profileBlock input[type=text], .container .contentBlock input[type=email], .container .contentBlock input[type=password] {
+.container .contentBlock .profileBlock input[type=text], .container .contentBlock .profileBlock input[type=email], .container .contentBlock .profileBlock input[type=password] {
   width: 20vw;
   padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  border-radius: 2px;
+  background-color: #292929;
   margin-top: 6px;
   margin-bottom: 16px;
-  resize: vertical;
+  border: none;
+  color: #ffffff;
+  border-bottom: 2px solid #E17F00;
+}
+
+.container .contentBlock .profileBlock button {
+  background-color: #FF5959;
+  color: white;
+  padding: 15px;
+  cursor: pointer;
+  border: none;
+  border-radius: 2px;
 }
 
 .container .contentBlock .membershipBlock td, .container .contentBlock .membershipBlock th {
@@ -66,8 +74,9 @@ body {
   float: right;
   background-color: #E17F00;
   color: white;
-  padding: 10px;
+  padding: 15px;
   cursor: pointer;
   border: none;
+  border-radius: 2px;
 }
 /*# sourceMappingURL=profile.css.map */

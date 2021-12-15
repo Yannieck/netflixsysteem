@@ -23,6 +23,7 @@
                     <label for="name">Password</label>
                     <input type="password" name="password" placeholder="Password">
                 </form>
+                <button href="deleteprofile.php">Delete profile</button>
             </div>
             <div class="membershipBlock">
                 <h1>Select membership</h1>
