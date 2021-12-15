@@ -1,0 +1,84 @@
+body {
+    background-color: #141414;
+    color: white;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+
+    .contentBlock {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        background-color: #000000;
+        width: 90%;
+        height: 90%;
+        
+
+        .profileBlock  {
+            form {
+                display: flex;
+                flex-direction: column;
+            }
+            input[type=text], input[type=email], input[type=password] {
+                width: 20vw;
+                padding: 12px;
+                border-radius: 2px;
+                background-color: #292929;
+                margin-top: 6px;
+                margin-bottom: 16px;
+                border: none;
+                color: #ffffff;
+                border-bottom: 2px solid #E17F00;
+
+            }
+
+            input[type=submit] {
+                background-color: #E17F00;
+                color: white;
+                padding: 15px;
+                cursor: pointer;
+                border: none;
+                border-radius: 2px;
+            }
+            
+            button {
+                background-color: #FF5959;
+                color: white;
+                padding: 15px;
+                cursor: pointer;
+                border: none;
+                border-radius: 2px;
+            }
+        } 
+
+        .membershipBlock {
+            td, th {
+                text-align: left;
+                padding: 10px 50px 10px 50px;
+            }
+              
+            tr:nth-child(even) {
+                background-color: #292929;
+            }
+
+            button {
+                float: right;
+                background-color: #E17F00;
+                color: white;
+                padding: 15px;
+                cursor: pointer;
+                border: none;
+                border-radius: 2px;
+            }
+        }
+        
+        
+
+          
+    }
+}
+

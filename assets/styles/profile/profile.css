@@ -1,0 +1,91 @@
+body {
+  background-color: #141414;
+  color: white;
+}
+
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 90vh;
+}
+
+.container .contentBlock {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  background-color: #000000;
+  width: 90%;
+  height: 90%;
+}
+
+.container .contentBlock .profileBlock form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.container .contentBlock .profileBlock input[type=text], .container .contentBlock .profileBlock input[type=email], .container .contentBlock .profileBlock input[type=password] {
+  width: 20vw;
+  padding: 12px;
+  border-radius: 2px;
+  background-color: #292929;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  border: none;
+  color: #ffffff;
+  border-bottom: 2px solid #E17F00;
+}
+
+.container .contentBlock .profileBlock input[type=submit] {
+  background-color: #E17F00;
+  color: white;
+  padding: 15px;
+  cursor: pointer;
+  border: none;
+  border-radius: 2px;
+}
+
+.container .contentBlock .profileBlock button {
+  background-color: #FF5959;
+  color: white;
+  padding: 15px;
+  cursor: pointer;
+  border: none;
+  border-radius: 2px;
+}
+
+.container .contentBlock .membershipBlock td, .container .contentBlock .membershipBlock th {
+  text-align: left;
+  padding: 10px 50px 10px 50px;
+}
+
+.container .contentBlock .membershipBlock tr:nth-child(even) {
+  background-color: #292929;
+}
+
+.container .contentBlock .membershipBlock button {
+  float: right;
+  background-color: #E17F00;
+  color: white;
+  padding: 15px;
+  cursor: pointer;
+  border: none;
+  border-radius: 2px;
+}
+/*# sourceMappingURL=profile.css.map */
