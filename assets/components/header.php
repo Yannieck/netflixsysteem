@@ -16,6 +16,7 @@
                 <i onmouseover="showAccountMenu()" onmouseleave="hideAccountMenu()" class="fas fa-user fa-2x">
                     <div id="accountMenu" class="accountHover">
                         <p><a href="./accountinfo.php">Account</a></p>
+                        <p><a href="./logout.php">Log out</a></p>
                     </div>
                 </i>
             </li>
