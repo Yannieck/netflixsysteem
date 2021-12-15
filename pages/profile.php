@@ -6,25 +6,39 @@
 </head>
 <body>
 <?php include_once('../assets/components/header.php') ?>
+<?php include("../utils/dbconnect.php") ?>
     <div class="container">
         <div class="contentBlock">
             <div class="profileBlock">
                 <h1>Profile</h1>
                 <form action="">
+                    <?php 
+                        $records = mysqli_query($conn,"SELECT * FROM account"); 
+
+                        while($data = mysqli_fetch_array($records)){
+
+                    ?>
+
                     <label for="name">Name</label>
-                    <input type="text" name="name" placeholder="Name">
+                    <input type="text" name="name" value="<?php echo $data["Name"];?>">
 
                     <label for="name">Username</label>
-                    <input type="text" name="username" placeholder="Username">
+                    <input type="text" name="username" value="<?php echo $data["Username"];?>">
 
                     <label for="name">Email</label>
-                    <input type="email" name="email" placeholder="Email">
+                    <input type="email" name="email" value="<?php echo $data["Email"];?>">
 
                     <label for="name">Password</label>
-                    <input type="password" name="password" placeholder="Password">
+                    <input type="password" name="password" value="<?php echo $data["password"];?>">
+                    <?php 
+                        } 
+                        include("../utils/dbclose.php")
+                    ?>
                 </form>
-                <a href="deleteprofile.php"><button>Delete profile</button></a>
-                <input type="submit" name="submit" value="Save profile">
+                <div class="buttons">
+                    <input type="submit" name="submit" value="Save profile">
+                    <a href="deleteprofile.php"><button>Delete profile</button></a>
+                </div>
             </div>
             <div class="membershipBlock">
                 <h1>Select membership</h1>
