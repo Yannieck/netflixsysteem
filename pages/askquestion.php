@@ -1,3 +1,4 @@
+<?php include_once("../assets/components/loginCheck.php") ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,7 +21,7 @@
                 <input type="text" name="title" id="title" placeholder="Title...">
                 <label for="text">Enter your question here:</label>
                 <textarea name="text" id="text" placeholder="Question..."></textarea>
-                <input class="button" type="submit" value="Submit">
+                <input name="submit"class="button" type="submit" value="Submit">
             </form>
             <p id="output">
                 <?php
@@ -40,6 +41,15 @@
                     echo htmlentities(substr($otherText[1], 2, strlen($otherText[1])));
                 } else {
                     echo htmlentities($rawinput);
+                }
+
+                if (isset($_POST["submit"])) { 
+                    if (!empty($_POST["title"])) {
+                        // $titleError = test_input($_POST["title"]);
+                    } else { 
+                        
+                        echo '<span style="color:red;"> Title is required! </span>';
+                    }
                 }
                 ?>
             </p>
