@@ -17,10 +17,7 @@
     unset($_COOKIE['rememberLoggedIn']);
     setcookie('rememberLoggedIn', null, -1);
 
-    echo "You have been logged out.<br>";
-    echo "You can log back in with the link underneath.<br><br>";
-
-    echo "<a href='./login.php'>Log in</a>";
+    header("Location: ./landingpage.php");
     ?>
     </p>
 </body>

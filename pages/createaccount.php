@@ -12,13 +12,14 @@
 if (isset($_GET['type'])) {
     if ($_GET['type'] == 0 || $_GET['type'] == 1) {
 ?>
-
         <body>
             <div class="background center">
                 <a href="./landingpage.php"><img class="logo" src="../assets/img/lightlogo.svg" alt="logo"></a>
-                <div class="content">
+                <div class="content width-1">
                     <h1>Sign up</h1>
-                    <form action="<?php echo htmlentities($_SERVER['PHP_SELF']) . '?type=' . htmlentities($_GET['type']) ?>" method="post">
+                    <p>Selected account type: <?php echo htmlentities($_GET['type'] == 0) ? "Junior" : "Senior"; ?></p>
+                    <p>This will cost: &euro;<?php echo htmlentities($_GET['type'] == 0) ? "9.99" : "14.99"; ?></p>
+                    <form action="<?php echo htmlentities($_SERVER['PHP_SELF']) . '?type=' . htmlentities($_GET['type']) ?>" method="post" autocomplete="off">
                         <!-- Username + error -->
                         <input class="formfield" type="text" name="username" id="username" placeholder="Username...">
                         <p class="errortext" id="usernameerror">Please enter a valid username.</p>
@@ -46,7 +47,7 @@ if (isset($_GET['type'])) {
                     <!-- Log in link + verify link -->
                     <div class="content2">
                         <p>Already have an account? <a href="./login.php">Sign in now</a>.</p>
-                        <p>Want a verified account? <a href="./verifiedrequest.php">Verify now</a>.</p>
+                        <p>Want a verified account? <a href="./verifyrequest.php">Verify now</a>.</p>
                     </div>
                 </div>
             </div>
@@ -94,20 +95,6 @@ if (isset($_GET['type'])) {
                                 document.getElementById('email').value = '" . $_POST['email'] . "';
                             </script>";
                         }
-                        // } else {
-                        //     // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
-                        //     echo
-                        //     "<script>
-                        //     document.getElementById('emailerror').style.display = 'block';
-                        // </script>";
-                        // }
-                        // } else {
-                        //     // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
-                        //     echo
-                        //     "<script>
-                        //     document.getElementById('emailerror').style.display = 'block';
-                        // </script>";
-                        // }
                     } else {
                         // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
                         echo
