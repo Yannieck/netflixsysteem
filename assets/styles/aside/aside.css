@@ -3,7 +3,6 @@ aside {
   background-color: var(--clr-neutral-600);
   color: var(--clr-neutral-100);
   padding: 2rem;
-  width: 240px;
   height: calc(95vh - 114px);
   display: -webkit-box;
   display: -ms-flexbox;
@@ -17,6 +16,7 @@ aside {
           align-items: flex-start;
   margin: 0;
   border-right: 4px solid var(--clr-neutral-450);
+  max-width: 240px;
 }
 
 aside > h2 {
