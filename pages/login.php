@@ -17,6 +17,10 @@
                 <input class="formfield" type="email" name="email" id="email" placeholder="Email...">
                 <p class="errortext" id="emailerror">Please enter a valid emailadress.</p>
 
+                <!-- Wachtwoord veld -->
+                <input class="formfield" type="password" name="password" id="password" placeholder="Password...">
+                <p class="errortext" id="passworderror">Your password must contain between 4 and 8 characters.</p>
+
                 <!-- Submit -->
                 <input class="formbutton" type="submit" name="login" id="login" value="Sign In">
 
