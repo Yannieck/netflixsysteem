@@ -3,7 +3,7 @@
         <a href="./main.php"><img src="../assets/img/lightlogo.svg" height="120" width="120" alt="logo"></a>
         <ul class="navtekst">
             <li><a href="./askquestion.php">Ask a question</a></li>
-            <li><a href="#">Questions</a></li>
+            <li><a href="./questions.php">Questions</a></li>
             <li><a href="./main.php">Videos</a></li>
         </ul>
     </div>
@@ -26,7 +26,7 @@
             <li>
                 <i onclick="showAccountMenu()" class="fas fa-user fa-2x">
                     <div id="accountMenu" class="overlayHover accountHover">
-                        <a href="./accountinfo.php">Account</a>
+                        <a href="./profile.php">Account</a>
                         <a href="./logout.php">Log out</a>
                     </div>
                 </i>
@@ -39,11 +39,24 @@
     const searchbtn = document.getElementById("searchbtn");
     const accountMenu = document.getElementById("accountMenu");
     const notificationMenu = document.getElementById("notificationMenu");
-    
+
     searchIcon.style.display = "none";
     searchbtn.style.display = "none";
     accountMenu.style.display = "none";
-    notificationMenu.style.display = "block";
+    notificationMenu.style.display = "none";
+
+
+    var closeMenu = function(element) {
+        return function curried_func(event) {
+            if (element.style.display == "block") {
+                if (element.parentNode !== event.target) {
+                    element.style.display = "none";
+                }
+            }
+        }
+    }
+    document.addEventListener("click", closeMenu(accountMenu));
+    document.addEventListener("click", closeMenu(notificationMenu));
 
     function showInput() {
         if (searchIcon.style.display == "none") {
@@ -71,9 +84,9 @@
     }
 
     function showNotificationMenu() {
-        if(notificationMenu.style.display == "none") {
+        if (notificationMenu.style.display == "none") {
             notificationMenu.style.display = "block";
-            
+
             accountMenu.style.display = "none";
             searchIcon.style.display = "none";
             searchbtn.style.display = "none";

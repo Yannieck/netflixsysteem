@@ -48,20 +48,20 @@
                 $remember = isset($_POST['remember']) == 1 ? 1 : 0;
                 
                 // Database connectie
-                $query = "SELECT `Password` FROM `account` WHERE Email = ?";
+                $query = "SELECT `Password`,`Id` FROM `account` WHERE Email = ?";
 
                 $stmt = mysqli_prepare($conn, $query);
                 mysqli_stmt_bind_param($stmt, 's', $email);
 
                 mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
 
-                mysqli_stmt_bind_result($stmt, $passResult) or die(mysqli_error($conn));
+                mysqli_stmt_bind_result($stmt, $passResult, $id) or die(mysqli_error($conn));
                 mysqli_stmt_store_result($stmt);
 
                 mysqli_stmt_fetch($stmt);
 
                 if (password_verify($_POST['password'], $passResult)) {
-                    header("Location: ./loginredirect.php?rem=".$remember);
+                    header("Location: ./loginredirect.php?rem={$remember}&id={$id}");
                 } else {
                     echo "ERROR: Password does not match emailadress.";
                 }

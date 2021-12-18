@@ -71,6 +71,12 @@ a {
   background-image: url(../img/background.png);
 }
 
+.fullPageContent {
+  width: 100vw;
+  height: calc(95vh - 50px);
+  background-color: var(--clr-neutral-800);
+}
+
 .pageContent {
   width: calc(100% - 244px - 4rem);
   height: calc(95vh - 50px);

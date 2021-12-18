@@ -1,3 +1,4 @@
+<?php include_once("../assets/components/loginCheck.php") ?>
 <!DOCTYPE html>
 <html lang="en">
 
