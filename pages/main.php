@@ -1,6 +1,7 @@
 <?php
 include_once("../assets/components/loginCheck.php");
 include_once("../utils/dbconnect.php");
+include_once("../utils/functions.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,20 +26,20 @@ include_once("../utils/dbconnect.php");
                     <?php
                     // $files = array_diff(scandir("../assets/videos"), array('..', '.'));
 
-                    $sql = "SELECT video.Id, question.title, account.Name, video.Description, video.UploadDate, video.File
+                    $sql = "SELECT video.Id, question.title, account.Name, video.UploadDate, video.File
                             FROM video, question, account
                             WHERE video.QuestionId = question.Id AND video.AccountId = account.Id;";
 
                     $stmt = mysqli_prepare($conn, $sql);
                     mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
 
-                    mysqli_stmt_bind_result($stmt, $videoId, $questionTitle, $accountName, $videoDesc, $videoDate, $videoPath)  or die(mysqli_error($conn));
+                    mysqli_stmt_bind_result($stmt, $videoId, $questionTitle, $accountName, $videoDate, $videoPath)  or die(mysqli_error($conn));
                     mysqli_stmt_store_result($stmt);
 
                     if (mysqli_stmt_num_rows($stmt) > 0) {
                         while (mysqli_stmt_fetch($stmt)) {
                     ?>
-                            <div class='vidHolder'>
+                            <div class='vidHolder' onclick="openVideo(<?php echo $videoId ?>)">
                                 <div class="overflowHidden">
                                     <video>
                                         <source src=<?php echo "../assets/videos/" . $videoPath ?> type="video/mp4">
@@ -48,14 +49,17 @@ include_once("../utils/dbconnect.php");
                                         <div class="vidHoverTop">
                                             <i class="far fa-bookmark"></i>
                                         </div>
-                                        <div class="vidHoverBot">
-                                            <p><?php echo $questionTitle ?></p>
-                                        </div>
+                                        <!-- <div class="vidHoverBot">
+                                            <p>PLACEHOLDER</p>
+                                        </div> -->
                                     </div>
                                 </div>
-                                <div class="titleHolder">
+                                <div class="vidInfoHolder">
                                     <p class="title"><?php echo $questionTitle ?></p>
-                                    <p class="uploader"><?php echo $accountName ?></p>
+                                    <div class="otherInfo">
+                                        <p><?php echo $accountName ?></p>
+                                        <p><?php echo calculateDate($videoDate) ?> ago</p>
+                                    </div>
                                 </div>
                             </div>
                     <?php
@@ -67,5 +71,10 @@ include_once("../utils/dbconnect.php");
         </div>
     </div>
 </body>
+<script>
+    function openVideo(videoId) {
+        console.log(videoId);
+    }
+</script>
 
 </html>

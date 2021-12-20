@@ -23,7 +23,7 @@
   color: var(--clr-neutral-100);
 }
 
-.vidHolder .titleHolder {
+.vidHolder .vidInfoHolder {
   z-index: 1;
   width: 100%;
   position: absolute;
@@ -31,7 +31,7 @@
   bottom: -35px;
 }
 
-.vidHolder .titleHolder p {
+.vidHolder .vidInfoHolder p {
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -39,9 +39,24 @@
   white-space: nowrap;
 }
 
-.vidHolder .titleHolder .uploader {
+.vidHolder .vidInfoHolder .otherInfo {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.vidHolder .vidInfoHolder .otherInfo p {
   font-size: 0.75rem;
   color: var(--clr-neutral-400);
+  width: 50%;
+}
+
+.vidHolder .vidInfoHolder .otherInfo p:nth-child(2) {
+  text-align: right;
 }
 
 .vidHolder .overflowHidden {
@@ -75,15 +90,11 @@
   font-size: 1.25rem;
 }
 
-.vidHolder .overflowHidden .vidHover .vidHoverBot {
-  width: calc(100% - 20px);
-  padding: 10px;
-  position: absolute;
-  left: 0;
-  bottom: -10px;
+.vidHolder:hover .title {
+  text-decoration: underline;
 }
 
-.vidHolder .overflowHidden:hover .vidHover {
+.vidHolder:hover .vidHover {
   display: block;
 }
 /*# sourceMappingURL=main.css.map */

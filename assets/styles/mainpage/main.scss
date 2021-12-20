@@ -19,7 +19,7 @@
     background-color: var(--clr-neutral-700);
     position: relative;
     color: var(--clr-neutral-100);
-    .titleHolder {
+    .vidInfoHolder {
         z-index: 1;
         width: 100%;
         position: absolute;
@@ -32,9 +32,18 @@
             margin-bottom: 0;
             white-space: nowrap;
         }
-        .uploader {
-            font-size: 0.75rem;
-            color: var(--clr-neutral-400);
+        .otherInfo {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            p {
+                font-size: 0.75rem;
+                color: var(--clr-neutral-400);
+                width: 50%;
+                &:nth-child(2) {
+                    text-align: right;
+                }
+            }
         }
     }
     .overflowHidden {
@@ -58,15 +67,22 @@
                 justify-content: flex-end;
                 font-size: 1.25rem;
             }
-            .vidHoverBot {
-                width: calc(100% - 20px);
-                padding: 10px;
-                position: absolute;
-                left: 0;
-                bottom: -10px;
-            }
+            // .vidHoverBot {
+            //     width: calc(100% - 10px);
+            //     padding: 5px;
+            //     position: absolute;
+            //     left: 0;
+            //     bottom: -10px;
+            //     background-color: rgba(0, 0, 0, 0.75);
+            //     font-size: 0.75rem;
+            // }
         }
-        &:hover .vidHover {
+    }
+    &:hover {
+        .title {
+            text-decoration: underline;
+        }
+        .vidHover {
             display: block;
         }
     }
