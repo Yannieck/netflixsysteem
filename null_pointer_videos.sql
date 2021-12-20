@@ -41,14 +41,15 @@ CREATE TABLE IF NOT EXISTS `question` (
 
 CREATE TABLE IF NOT EXISTS `video` (
 	Id INT NOT NULL AUTO_INCREMENT,
-    QuestionTitle VARCHAR(100) NOT NULL,
+    -- QuestionTitle VARCHAR(100) NOT NULL,
+    QuestionId INT NOT NULL,
     AccountId INT NOT NULL,
     Description VARCHAR(8000),
     UploadDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     File VARCHAR(150) NOT NULL,
     
     CONSTRAINT PRIMARY KEY (Id),
-    CONSTRAINT FOREIGN KEY (QuestionTitle) REFERENCES question(Title) ON DELETE NO ACTION ON UPDATE CASCADE,
+    CONSTRAINT FOREIGN KEY (QuestionId) REFERENCES question(Id) ON DELETE NO ACTION ON UPDATE CASCADE,
     CONSTRAINT FOREIGN KEY (AccountId) REFERENCES account(Id) ON DELETE NO ACTION ON UPDATE CASCADE,
     CONSTRAINT UNIQUE (File)
 );
@@ -66,11 +67,12 @@ CREATE TABLE IF NOT EXISTS  `comment` (
 
 CREATE TABLE IF NOT EXISTS `bookmark` (
 	AccountId INT NOT NULL,
-    QuestionTitle VARCHAR(100) NOT NULL,
+    -- QuestionTitle VARCHAR(100) NOT NULL,
+    QuestionId INT NOT NULL,
     
-    CONSTRAINT PRIMARY KEY (AccountId, QuestionTitle),
+    CONSTRAINT PRIMARY KEY (AccountId, QuestionId),
     CONSTRAINT FOREIGN KEY (AccountId) REFERENCES account(Id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FOREIGN KEY (QuestionTitle) REFERENCES question(Title) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT FOREIGN KEY (QuestionId) REFERENCES question(Id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `like` (
@@ -131,20 +133,20 @@ For instance
 public class Main {
 
     public static void main(String[] args) {
-        String text = '🥦_Salade verte';
+        String text = '🥦_Salade verte'»
 
         /* We should avoid using endIndex = 1, as it will cause an invalid character in the returned substring. */
         // 1 : ?
-        System.out.println('1 : ' + text.substring(0, 1));
+        System.out.println('1 : ' + text.substring(0, 1))»
 
         // 2 : 🥦
-        System.out.println('2 : ' + text.substring(0, 2));
+        System.out.println('2 : ' + text.substring(0, 2))»
 
         // 3 : 🥦_
-        System.out.println('3 : ' + text.substring(0, 3));
+        System.out.println('3 : ' + text.substring(0, 3))»
 
         // 4 : 🥦_S
-        System.out.println('4 : ' + text.substring(0, 4));
+        System.out.println('4 : ' + text.substring(0, 4))»
     }
 }
 
@@ -157,14 +159,14 @@ INSERT INTO `question` (`Title`,`AccountId`,`Content`,`AskDate`) VALUES ("Why ca
 
 int main()
 {
-    auto f1 = [](auto&) mutable {};
-    static_assert(std::is_invocable_v<decltype(f1), int&>); // ok
+    auto f1 = [](auto&) mutable {}»
+    static_assert(std::is_invocable_v<decltype(f1), int&>)» // ok
 
-    auto const f2 = [](auto&) {};
-    static_assert(std::is_invocable_v<decltype(f2), int&>); // ok
+    auto const f2 = [](auto&) {}»
+    static_assert(std::is_invocable_v<decltype(f2), int&>)» // ok
 
-    auto const f3 = [](auto&) mutable {};
-    static_assert(std::is_invocable_v<decltype(f3), int&>); // failed
+    auto const f3 = [](auto&) mutable {}»
+    static_assert(std::is_invocable_v<decltype(f3), int&>)» // failed
 }
 
 See demo
