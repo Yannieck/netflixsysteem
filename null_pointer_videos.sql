@@ -28,12 +28,14 @@ CREATE TABLE IF NOT EXISTS `account` (
 );
 
 CREATE TABLE IF NOT EXISTS `question` (
+    Id INT NOT NULL AUTO_INCREMENT,
 	Title VARCHAR(255) NOT NULL,
     AccountId INT NOT NULL,
     Content VARCHAR(8000) NOT NULL,
     AskDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     
-    CONSTRAINT PRIMARY KEY (Title),
+    CONSTRAINT PRIMARY KEY (Id),
+    CONSTRAINT UNIQUE (Title),
     CONSTRAINT FOREIGN KEY (AccountId) REFERENCES account(Id) ON DELETE NO ACTION ON UPDATE CASCADE
 );
 
@@ -102,11 +104,11 @@ CREATE TABLE IF NOT EXISTS `subtag` (
 
 CREATE TABLE IF NOT EXISTS `tag_question` (
 	SubTagId INT NOT NULL,
-    QuestionTitle VARCHAR(100) NOT NULL,
+    QuestionId INT NOT NULL,
     
-    CONSTRAINT PRIMARY KEY (SubTagId, QuestionTitle),
+    CONSTRAINT PRIMARY KEY (SubTagId, QuestionId),
     CONSTRAINT FOREIGN KEY (SubTagId) REFERENCES subtag(Id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FOREIGN KEY (QuestionTitle) REFERENCES question(Title) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT FOREIGN KEY (QuestionId) REFERENCES question(Id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO `membership` (`Name`, `Price`) VALUES ('Junior', 09.99);
@@ -116,11 +118,11 @@ INSERT INTO `membership` (`Name`) VALUES ('Prof');
 
 INSERT INTO `account` (`MembershipName`,`Name`,`Username`,`Email`,`Password`) VALUES ('Admin', 'Admin', 'Developers', 'developer@gmail.com', '$2y$10$tc1ctq28T5bm9DpO42rvzeI0PFGecEhUr1l1Gb.zcWezqj5VA06/W');
 
-INSERT INTO `question` (`Title`,`AccountId`,`Content`,`AskDate`) VALUES (`How to change parser titles when using Argparse without modifying internal variables?`, 1, `
+INSERT INTO `question` (`Title`,`AccountId`,`Content`,`AskDate`) VALUES ("How to change parser titles when using Argparse without modifying internal variables?", 1, "
 
-I'm using Python's argparse module to create a CLI for my application. I've made a subparsers variable to store the parsers for each command, but when I can't find a way to change the title of the subparsers without modifying parser's (the main ArgumentParser's) internal variables.`, `2021-12-14 13:19:20`);
+I'm using Python's argparse module to create a CLI for my application. I've made a subparsers variable to store the parsers for each command, but when I can't find a way to change the title of the subparsers without modifying parser's (the main ArgumentParser's) internal variables.", "2021-12-14 13:19:20");
 
-INSERT INTO `question` (`Title`,`AccountId`,`Content`,`AskDate`) VALUES (`What are some ways to avoid String.substring from returning substring with invalid unicode character`, 1, `
+INSERT INTO `question` (`Title`,`AccountId`,`Content`,`AskDate`) VALUES ("What are some ways to avoid String.substring from returning substring with invalid unicode character", 1, "
 
 Recently, only I notice that, it is possible for substring to return string with invalid unicode character.
 
@@ -147,9 +149,9 @@ public class Main {
 }
 
 I was wondering, when trimming a long string with String.substring, what are some good ways to avoid the returned substring from containing invalid unicode?
-`, `2021-04-04 18:57:19`);
+", "2021-04-04 18:57:19");
 
-INSERT INTO `question` (`Title`,`AccountId`,`Content`,`AskDate`) VALUES (`Why can't a const mutable lambda with an auto& parameter be invoked?`, 1, `
+INSERT INTO `question` (`Title`,`AccountId`,`Content`,`AskDate`) VALUES ("Why can't a const mutable lambda with an auto& parameter be invoked?", 1, "
 
 #include <type_traits>
 
@@ -168,4 +170,9 @@ int main()
 See demo
 
 Why can't a const mutable lambda take a reference argument?
-`, `2021-12-11 13:19:30`)
+", "2021-12-11 13:19:30");
+
+INSERT INTO `tag` (`Id`, `Category`) VALUES (1, 'Python'), (2, 'Java'), (3, 'C++');
+
+INSERT INTO `subtag` (`Id`, `TagId`, `SubCategory`) VALUES (1, 1, 'python'), (2, 1, 'parsing'), (3, 1, 'command-line'), (4, 1, 'argparse'), (5, 2, 'java'), (6, 2, 'android'), (7, 3, 'c++'), (8, 3, 'lambda'), (9, 3, 'c++20'), (10, 2, 'typetraits'), (11, 3, 'static-assert');
+INSERT INTO `tag_question` (`SubTagId`, `QuestionId`) VALUES (1, 1), (2, 1), (3, 1), (4, 1), (5, 2), (6, 2), (7, 3), (8, 3), (9, 3), (10, 3), (11, 3) 
