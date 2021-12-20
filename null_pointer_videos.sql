@@ -174,6 +174,21 @@ See demo
 Why can't a const mutable lambda take a reference argument?
 ", "2021-12-11 13:19:30");
 
+INSERT INTO `question` (`Title`,`AccountId`,`Content`,`AskDate`) VALUES (
+    "What is the difference between rem and em?",
+    1,
+    "When I use rem and em I get exactly the same result. Why is that?",
+    "2021-04-04 18:57:19"
+);
+
+INSERT INTO `video` (`QuestionId`,`AccountId`, `Description`, `UploadDate`, `File`) VALUES (
+    4,
+    1,
+    "Here is a video explaining the difference between rem and em. Hope this answers your question!",
+    "2021-12-13 15:26:22",
+    "difference_between_rem_and_em.mp4"
+);
+
 INSERT INTO `tag` (`Id`, `Category`) VALUES (1, 'Python'), (2, 'Java'), (3, 'C++');
 
 INSERT INTO `subtag` (`Id`, `TagId`, `SubCategory`) VALUES (1, 1, 'python'), (2, 1, 'parsing'), (3, 1, 'command-line'), (4, 1, 'argparse'), (5, 2, 'java'), (6, 2, 'android'), (7, 3, 'c++'), (8, 3, 'lambda'), (9, 3, 'c++20'), (10, 2, 'typetraits'), (11, 3, 'static-assert');

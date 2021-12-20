@@ -1,4 +1,5 @@
 <?php
+include_once("../assets/components/loginCheck.php");
 require '../utils/dbconnect.php';
 require '../utils/functions.php';
 ?>

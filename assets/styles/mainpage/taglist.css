@@ -1,0 +1,61 @@
+.filter {
+  background-color: var(--clr-neutral-800);
+  height: 155px;
+  overflow-x: scroll;
+}
+
+.logos {
+  width: 100px;
+  min-width: 100px;
+  height: 100px;
+  background-color: var(--clr-neutral-600);
+  margin: 10px;
+  position: relative;
+  border-radius: 5px;
+}
+
+.logos:hover {
+  cursor: pointer;
+}
+
+.logos p {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: smaller;
+}
+
+.logos img {
+  display: block;
+  max-width: 80%;
+  height: 55px;
+  margin: 10px auto;
+}
+
+.flex-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 10px 10px 0px 10px;
+  color: var(--clr-neutral-100);
+  text-align: center;
+}
+
+::-webkit-scrollbar {
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--clr-neutral-600);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--clr-neutral-400);
+  height: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--clr-neutral-500);
+}
+/*# sourceMappingURL=taglist.css.map */

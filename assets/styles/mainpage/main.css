@@ -1,61 +1,89 @@
-.filter {
-  background-color: var(--clr-neutral-800);
-  height: 155px;
-  overflow-x: scroll;
+.videoContainer {
+  width: calc(100% - 50px);
+  height: calc(100% - 205px);
+  padding: 25px;
 }
 
-.logos {
-  width: 100px;
-  min-width: 100px;
-  height: 100px;
-  background-color: var(--clr-neutral-600);
-  margin: 10px;
-  position: relative;
-  border-radius: 5px;
-}
-
-.logos:hover {
-  cursor: pointer;
-}
-
-.logos p {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  font-size: smaller;
-}
-
-.logos img {
-  display: block;
-  max-width: 80%;
-  height: 55px;
-  margin: 10px auto;
-}
-
-.flex-container {
+.vidRow {
+  width: 100%;
+  height: 200px;
+  background-color: var(--clr-neutral-500);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding: 10px 10px 0px 10px;
+  overflow-x: scroll;
+}
+
+.vidHolder {
+  margin: 15px;
+  height: calc(85% - 30px);
+  aspect-ratio: calc(16/9);
+  background-color: var(--clr-neutral-700);
+  position: relative;
   color: var(--clr-neutral-100);
-  text-align: center;
 }
 
-::-webkit-scrollbar {
-  height: 10px;
+.vidHolder .titleHolder {
+  z-index: 1;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: -35px;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--clr-neutral-600);
+.vidHolder .titleHolder p {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0;
+  white-space: nowrap;
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--clr-neutral-400);
-  height: 100px;
+.vidHolder .titleHolder .uploader {
+  font-size: 0.75rem;
+  color: var(--clr-neutral-400);
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--clr-neutral-500);
+.vidHolder .overflowHidden {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.vidHolder .overflowHidden video {
+  width: 100%;
+}
+
+.vidHolder .overflowHidden .vidHover {
+  display: none;
+  width: 100%;
+}
+
+.vidHolder .overflowHidden .vidHover .vidHoverTop {
+  width: calc(100% - 20px);
+  padding: 10px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  font-size: 1.25rem;
+}
+
+.vidHolder .overflowHidden .vidHover .vidHoverBot {
+  width: calc(100% - 20px);
+  padding: 10px;
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+}
+
+.vidHolder .overflowHidden:hover .vidHover {
+  display: block;
 }
 /*# sourceMappingURL=main.css.map */
