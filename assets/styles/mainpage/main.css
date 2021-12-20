@@ -34,11 +34,10 @@
 }
 
 .flex-container {
-  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding: 10px 10px;
+  padding: 10px 10px 0px 10px;
   color: var(--clr-neutral-100);
   text-align: center;
 }

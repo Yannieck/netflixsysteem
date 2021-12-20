@@ -5,6 +5,9 @@
 <body>
     <div class="container">
         <div class="contentBlock">
+            <?php
+            
+            ?>
             <div class="textBlock">
                 <h2>Are you sure you want to delete your account?</h2>
                 <h4 style="color: #FF5959">This can't be undone!</h4>

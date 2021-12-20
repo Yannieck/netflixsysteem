@@ -1,6 +1,9 @@
 <?php
+
+$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+
 session_start();
-$_SESSION["loggedIn"] = True;
+$_SESSION["userId"] = $id;
 
 if (isset($_GET['rem'])) {
     if ($_GET['rem'] == 1) {

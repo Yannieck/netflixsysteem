@@ -1,4 +1,4 @@
-<?php include_once("./assets/components/loginCheck.php") ?>
+<?php include_once("../assets/components/loginCheck.php") ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,10 +12,10 @@
 
 <body>
     <?php
-    include_once("../assets/components/header.php");
+    include_once("../assets/components/header.php") ; 
     ?>
     <div class="flex">
-        <?php include_once("../assets/components/aside.php"); ?>
+        <?php  include_once("../assets/components/aside.php"); ?>
         <div class="pageContent">
             <div class="filter">
                 <div class="flex-container">

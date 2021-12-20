@@ -1,9 +1,9 @@
+<?php include_once("../assets/components/loginCheck.php") ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <?php include_once('../assets/components/head.php') ?>
-     
+    <?php include_once('../assets/components/head.php') ?>     
     <link rel="stylesheet" href="../assets/styles/login/login.css">
     <link rel="stylesheet" href="../assets/styles/header/header.css">
     <link rel="stylesheet" href="../assets/styles/aside/aside.css">
@@ -23,43 +23,37 @@
                 <textarea name="text" id="text" placeholder="Question..."></textarea>
                 <input name="submit"class="button" type="submit" value="Submit">
             </form>
-            <p id="output">
+            <!-- <p id="output"> -->
                 <?php
-                echo htmlentities($_POST['title']);
-                echo "<br>";
-                $rawinput = $_POST['text'];
-                if (str_contains($rawinput, "<<") && str_contains($rawinput, ">>")) {
-                    $begin = strpos($rawinput, "<<") + 1;
-                    $end = strpos($rawinput, ">>") - 1;
-                    $len = $end - $begin;
-                    $code = substr($rawinput, $begin + 1, $len);
-                    $otherText = explode($code, $rawinput);
-                    echo htmlentities(substr($otherText[0], 0, -2));
-                    echo "<code>";
-                    echo $code;
-                    echo "</code>";
-                    echo htmlentities(substr($otherText[1], 2, strlen($otherText[1])));
-                } else {
-                    echo htmlentities($rawinput);
-                }
+                // echo htmlentities($_POST['title']);
+                // echo "<br>";
+                // $rawinput = $_POST['text'];
+                // if (str_contains($rawinput, "<<") && str_contains($rawinput, ">>")) {
+                //     $begin = strpos($rawinput, "<<") + 1;
+                //     $end = strpos($rawinput, ">>") - 1;
+                //     $len = $end - $begin;
+                //     $code = substr($rawinput, $begin + 1, $len);
+                //     $otherText = explode($code, $rawinput);
+                //     echo htmlentities(substr($otherText[0], 0, -2));
+                //     echo "<code>";
+                //     echo $code;
+                //     echo "</code>";
+                //     echo htmlentities(substr($otherText[1], 2, strlen($otherText[1])));
+                // } else {
+                //     echo htmlentities($rawinput);
+                // }
 
-                if (isset($_POST["submit"])) { 
-                    if (!empty($_POST["title"])) {
-                        $titleError = test_input($_POST["title"]);
-                    } else { 
+                // if (isset($_POST["submit"])) { 
+                //     if (!empty($_POST["title"])) {
+                //         // $titleError = test_input($_POST["title"]);
+                //     } else { 
                         
-                        echo '<span style="color:red;"> Title is required! </span>';
-                    }
-                }
-                
-
-               
+                //         echo '<span style="color:red;"> Title is required! </span>';
+                //     }
+                // }
                 ?>
-            </p>
+            <!-- </p> -->
         </div>
     </div>
 </body>
-
-
-
 </html>

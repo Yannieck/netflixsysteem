@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `account` (
 );
 
 CREATE TABLE IF NOT EXISTS `question` (
-	Title VARCHAR(100) NOT NULL,
+	Title VARCHAR(255) NOT NULL,
     AccountId INT NOT NULL,
     Content VARCHAR(8000) NOT NULL,
     AskDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -114,4 +114,58 @@ INSERT INTO `membership` (`Name`, `Price`) VALUES ('Senior', 14.99);
 INSERT INTO `membership` (`Name`) VALUES ('Admin');
 INSERT INTO `membership` (`Name`) VALUES ('Prof');
 
-INSERT INTO `account` (`MembershipName`,`Name`,`Username`,`Email`,`Password`) VALUES ('Admin', 'Admin', 'Developers', 'developer@gmail.com', '$2y$10$tc1ctq28T5bm9DpO42rvzeI0PFGecEhUr1l1Gb.zcWezqj5VA06/W')
+INSERT INTO `account` (`MembershipName`,`Name`,`Username`,`Email`,`Password`) VALUES ('Admin', 'Admin', 'Developers', 'developer@gmail.com', '$2y$10$tc1ctq28T5bm9DpO42rvzeI0PFGecEhUr1l1Gb.zcWezqj5VA06/W');
+
+INSERT INTO `question` (`Title`,`AccountId`,`Content`,`AskDate`) VALUES (`How to change parser titles when using Argparse without modifying internal variables?`, 1, `
+
+I'm using Python's argparse module to create a CLI for my application. I've made a subparsers variable to store the parsers for each command, but when I can't find a way to change the title of the subparsers without modifying parser's (the main ArgumentParser's) internal variables.`, `2021-12-14 13:19:20`);
+
+INSERT INTO `question` (`Title`,`AccountId`,`Content`,`AskDate`) VALUES (`What are some ways to avoid String.substring from returning substring with invalid unicode character`, 1, `
+
+Recently, only I notice that, it is possible for substring to return string with invalid unicode character.
+
+For instance
+
+public class Main {
+
+    public static void main(String[] args) {
+        String text = '🥦_Salade verte';
+
+        /* We should avoid using endIndex = 1, as it will cause an invalid character in the returned substring. */
+        // 1 : ?
+        System.out.println('1 : ' + text.substring(0, 1));
+
+        // 2 : 🥦
+        System.out.println('2 : ' + text.substring(0, 2));
+
+        // 3 : 🥦_
+        System.out.println('3 : ' + text.substring(0, 3));
+
+        // 4 : 🥦_S
+        System.out.println('4 : ' + text.substring(0, 4));
+    }
+}
+
+I was wondering, when trimming a long string with String.substring, what are some good ways to avoid the returned substring from containing invalid unicode?
+`, `2021-04-04 18:57:19`);
+
+INSERT INTO `question` (`Title`,`AccountId`,`Content`,`AskDate`) VALUES (`Why can't a const mutable lambda with an auto& parameter be invoked?`, 1, `
+
+#include <type_traits>
+
+int main()
+{
+    auto f1 = [](auto&) mutable {};
+    static_assert(std::is_invocable_v<decltype(f1), int&>); // ok
+
+    auto const f2 = [](auto&) {};
+    static_assert(std::is_invocable_v<decltype(f2), int&>); // ok
+
+    auto const f3 = [](auto&) mutable {};
+    static_assert(std::is_invocable_v<decltype(f3), int&>); // failed
+}
+
+See demo
+
+Why can't a const mutable lambda take a reference argument?
+`, `2021-12-11 13:19:30`)

@@ -19,20 +19,48 @@ header {
         width: 60%;
         height: 5vh;
     }
+    .navicons {
+        font-size: 0.75rem;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        i:hover {
+            cursor: pointer;
+            color: var(--clr-accent-400);
+        }
+    }
     a {
+        margin-bottom: 0;
         text-decoration: none;
         color: var(--clr-neutral-100);
     }
     li {
         display: inline;
         color: var(--clr-neutral-100);
-        padding: 15px;
-        input {
-            display: none;
+        padding: 0 15px;
+        form {
+            display: inline;
+        }
+        .input {
             height: 3vh;
             width: 15vw;
             border-radius: 0.3em;
             font-size: 1em;
+            border: none;
+            padding: 0 5px;
+        }
+        .btn {
+            background-color: var(--clr-accent-400);
+            color: var(--clr-neutral-100);
+            border: none;
+            padding: 0 5px;
+            height: 3vh;
+            width: 3vw;
+            border-radius: 0.3em;
+            font-size: 1em;
+        }
+        i {
+            position: relative;
         }
     }
 }
@@ -48,28 +76,42 @@ header {
     }
 }
 
-.navicons {
-    font-size: 0.75rem;
+.overlayHover {
+    z-index: 1;
+    background-color: var(--clr-neutral-800);
+    position: absolute;
+    top: 30px;
+    right: -10px;
+    padding: .75rem .5rem;
+    box-shadow: 0 5px 10px 0 black;
+    h1,
+    h2,
+    p,
+    a {
+        font-weight: normal;
+        font-size: 1rem;
+        margin: 0;
+        &:hover {
+            color: var(--clr-neutral-100);
+            text-decoration: underline;
+        }
+    }
 }
 
-i {
-    position: relative;
-}
-
-.navicons i:hover {
-    cursor: pointer;
-    color: var(--clr-accent-400);
+.notificationHover {
+    width: 250px;
+    height: 200px;
+    top: 30px;
+    right: 0;
 }
 
 .accountHover {
-    background-color: black;
-    position: absolute;
-    bottom: -30px;
-    p {
-        font-weight: normal;
-        font-size: 1rem;
+    a {
+        padding: .75rem 1rem;
+        border-radius: 5px;
         &:hover {
-            color: white;
+            background-color: var(--clr-accent-400);
+            color: var(--clr-neutral-100);
             text-decoration: underline;
         }
     }

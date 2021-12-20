@@ -3,20 +3,7 @@ body {
   color: white;
 }
 
-.container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  height: 90vh;
-}
-
-.container .contentBlock {
+.contentBlock {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -27,10 +14,10 @@ body {
       justify-content: space-around;
   background-color: #000000;
   width: 90%;
-  height: 90%;
+  height: 85%;
 }
 
-.container .contentBlock .profileBlock form {
+.contentBlock .profileBlock form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -40,10 +27,12 @@ body {
           flex-direction: column;
 }
 
-.container .contentBlock .profileBlock input[type=text], .container .contentBlock .profileBlock input[type=email], .container .contentBlock .profileBlock input[type=password] {
+.contentBlock .profileBlock input[type=text],
+.contentBlock .profileBlock input[type=email],
+.contentBlock .profileBlock input[type=password] {
   width: 20vw;
   padding: 12px;
-  border-radius: 2px;
+  border-radius: 5px;
   background-color: #292929;
   margin-top: 6px;
   margin-bottom: 16px;
@@ -52,40 +41,40 @@ body {
   border-bottom: 2px solid #E17F00;
 }
 
-.container .contentBlock .profileBlock input[type=submit] {
+.contentBlock .profileBlock .profileBtn {
   background-color: #E17F00;
   color: white;
   padding: 15px;
   cursor: pointer;
   border: none;
-  border-radius: 2px;
+  border-radius: 5px;
 }
 
-.container .contentBlock .profileBlock button {
-  background-color: #FF5959;
-  color: white;
-  padding: 15px;
-  cursor: pointer;
-  border: none;
-  border-radius: 2px;
+.contentBlock .profileBlock .profileBtn:hover {
+  text-decoration: underline;
 }
 
-.container .contentBlock .membershipBlock td, .container .contentBlock .membershipBlock th {
+.contentBlock .profileBlock .deleteBtn {
+  background-color: var(--clr-accent-500);
+}
+
+.contentBlock .membershipBlock td,
+.contentBlock .membershipBlock th {
   text-align: left;
   padding: 10px 50px 10px 50px;
 }
 
-.container .contentBlock .membershipBlock tr:nth-child(even) {
+.contentBlock .membershipBlock tr:nth-child(even) {
   background-color: #292929;
 }
 
-.container .contentBlock .membershipBlock button {
+.contentBlock .membershipBlock a {
   float: right;
   background-color: #E17F00;
   color: white;
   padding: 15px;
   cursor: pointer;
   border: none;
-  border-radius: 2px;
+  border-radius: 5px;
 }
 /*# sourceMappingURL=profile.css.map */

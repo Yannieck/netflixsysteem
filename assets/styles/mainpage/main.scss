@@ -1,5 +1,4 @@
 .filter {
-    // width: 100%;
     background-color: var(--clr-neutral-800);
     height: 155px;
     overflow-x: scroll;
@@ -13,7 +12,7 @@
     margin: 10px;
     position: relative;
     border-radius: 5px;
-    &:hover{
+    &:hover {
         cursor: pointer;
     }
     p {
@@ -32,9 +31,8 @@
 }
 
 .flex-container {
-    width: 100%;
     display: flex;
-    padding: 10px 10px;
+    padding: 10px 10px 0px 10px;
     color: var(--clr-neutral-100);
     text-align: center;
 }

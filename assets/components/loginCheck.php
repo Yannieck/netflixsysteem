@@ -1,7 +1,8 @@
 <?php
 session_start();
-if ($_SESSION['loggedIn'] == 1 || $_COOKIE['rememberLoggedIn'] == 1) {
+
+if (isset($_SESSION["userId"]) || isset($_COOKIE['rememberLoggedIn'])) {
     return;
-} else {    
+} else {
     header("Location: ./login.php");
 }
