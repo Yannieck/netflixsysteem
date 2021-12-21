@@ -21,6 +21,7 @@
   background-color: var(--clr-neutral-700);
   position: relative;
   color: var(--clr-neutral-100);
+  cursor: pointer;
 }
 
 .vidHolder .vidInfoHolder {

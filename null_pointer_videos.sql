@@ -190,7 +190,7 @@ INSERT INTO `video` (`QuestionId`,`AccountId`, `Description`, `UploadDate`, `Fil
     "difference_between_rem_and_em.mp4"
 );
 
-INSERT INTO `tag` (`Id`, `Category`) VALUES (1, 'Python'), (2, 'Java'), (3, 'C++');
+INSERT INTO `tag` (`Id`, `Category`) VALUES (1, 'Python'), (2, 'Java'), (3, 'C++'), (4, 'CSS');
 
-INSERT INTO `subtag` (`Id`, `TagId`, `SubCategory`) VALUES (1, 1, 'python'), (2, 1, 'parsing'), (3, 1, 'command-line'), (4, 1, 'argparse'), (5, 2, 'java'), (6, 2, 'android'), (7, 3, 'c++'), (8, 3, 'lambda'), (9, 3, 'c++20'), (10, 2, 'typetraits'), (11, 3, 'static-assert');
-INSERT INTO `tag_question` (`SubTagId`, `QuestionId`) VALUES (1, 1), (2, 1), (3, 1), (4, 1), (5, 2), (6, 2), (7, 3), (8, 3), (9, 3), (10, 3), (11, 3) 
+INSERT INTO `subtag` (`Id`, `TagId`, `SubCategory`) VALUES (1, 1, 'python'), (2, 1, 'parsing'), (3, 1, 'command-line'), (4, 1, 'argparse'), (5, 2, 'java'), (6, 2, 'android'), (7, 3, 'c++'), (8, 3, 'lambda'), (9, 3, 'c++20'), (10, 2, 'typetraits'), (11, 3, 'static-assert'), (12, 4, 'CSS units');
+INSERT INTO `tag_question` (`SubTagId`, `QuestionId`) VALUES (1, 1), (2, 1), (3, 1), (4, 1), (5, 2), (6, 2), (7, 3), (8, 3), (9, 3), (10, 3), (11, 3), (12, 4)

@@ -19,7 +19,7 @@
 
                 <!-- Wachtwoord veld -->
                 <input class="formfield" type="password" name="password" id="password" placeholder="Password...">
-                <p class="errortext" id="passworderror">Your password must contain between 4 and 8 characters.</p>
+                <p class="errortext" id="passworderror">Your password must contain more then 4 characters.</p>
 
                 <!-- Submit -->
                 <input class="formbutton" type="submit" name="login" id="login" value="Sign In">
@@ -44,7 +44,7 @@
     if (isset($_POST['login'])) {
         if (filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
             $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-            if (($password = $_POST['password']) && strlen($_POST['password']) >= 8) {
+            if (($password = $_POST['password']) && strlen($_POST['password']) >= 4) {
                 $remember = isset($_POST['remember']) == 1 ? 1 : 0;
                 
                 // Database connectie

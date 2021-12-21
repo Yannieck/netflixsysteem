@@ -47,7 +47,7 @@ include_once("../utils/functions.php");
                                     </video>
                                     <div class="vidHover">
                                         <div class="vidHoverTop">
-                                            <i class="far fa-bookmark"></i>
+                                            <a href="#"><i class="far fa-bookmark"></i></a>
                                         </div>
                                         <!-- <div class="vidHoverBot">
                                             <p>PLACEHOLDER</p>
