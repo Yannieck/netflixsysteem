@@ -32,7 +32,7 @@ if (isset($_GET['type'])) {
 
                         <!-- 1e wachtwoord veld + error -->
                         <input class="formfield" type="password" name="password" id="password" placeholder="Password...">
-                        <p class="errortext" id="passworderror">Your password must contain more than 4 characters.</p>
+                        <p class="errortext" id="passworderror">Your password must contain more than 8 characters.</p>
 
                         <!-- 2e wachtwoord veld + error -->
                         <input class="formfield" type="password" name="repeatpassword" id="repeatpassword" placeholder="Repeat password...">
@@ -61,7 +61,7 @@ if (isset($_GET['type'])) {
                         $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
                         if (filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
                             $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-                            if ($password = $_POST['password'] && strlen($_POST['password']) >= 4 && strlen($_POST['password']) < 255) {
+                            if ($password = $_POST['password'] && strlen($_POST['password']) >= 8 && strlen($_POST['password']) < 255) {
                                 if ($repeatPassword = $_POST['repeatpassword'] && $password == $_POST['repeatpassword']) {
                                     $rawname = explode('@', $email)[0];
 

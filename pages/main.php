@@ -24,6 +24,7 @@ include_once("../utils/functions.php");
             <?php include_once("../assets/components/taglist.php"); ?>
             <div class="videoContainer">
                 <?php
+                // Als er gezocht wordt naar waarden, zorg dat er een knop komt die het zoeken annuleerdt
                 if (isset($_GET['search'])) {
                 ?>
                     <a class="button" href="./main.php">Cancel search
@@ -31,53 +32,55 @@ include_once("../utils/functions.php");
                     </a>
                 <?php
                 }
-                ?>
-                <div class="vidRow">
-                    <?php
-                    // Pak standaard van de video: id, title, accountnaam, upload datum, bestandslocatie, aantal likes, aantal dislike.
+                // ===== Haal video's uit de database =====
+
+                // Pak standaard van de video: id, title, accountnaam, upload datum, bestandslocatie, aantal likes, aantal dislike.
+                $sql = "SELECT video.Id, question.title, account.Name, video.UploadDate, video.File, (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 1) as 'Likes', (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 0) as 'Dislike'
+                        FROM video, question, account
+                        WHERE video.QuestionId = question.Id AND video.AccountId = account.Id
+                        ORDER BY video.UploadDate;";
+
+                // Als er een get waarde is gezet; als er wordt gefilterd: filter op tag id
+                if (isset($_GET['tag'])) {
+                    $sql = "SELECT video.Id, question.title, account.Name, video.UploadDate, video.File, (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 1) as 'Likes', (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 0) as 'Dislike'
+                            FROM video, question, account, tag_question, subtag, tag
+                            WHERE video.QuestionId = question.Id 
+                                AND video.AccountId = account.Id
+                                AND tag_question.QuestionId = video.QuestionId
+                                AND tag_question.SubTagID = subtag.Id
+                                AND subtag.TagId = tag.Id
+                                AND tag.id = ?;";
+                } else if (isset($_GET['search'])) {
                     $sql = "SELECT video.Id, question.title, account.Name, video.UploadDate, video.File, (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 1) as 'Likes', (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 0) as 'Dislike'
                             FROM video, question, account
-                            WHERE video.QuestionId = question.Id AND video.AccountId = account.Id
-                            ORDER BY video.UploadDate;";
+                            WHERE video.QuestionId = question.Id 
+                                AND video.AccountId = account.Id
+                                AND question.title LIKE CONCAT('%', ?, '%')";
+                }
+                // Prepare stmt
+                $stmt = mysqli_prepare($conn, $sql);
 
-                    // Als er een get waarde is gezet; als er wordt gefilterd: filter op tag id
-                    if (isset($_GET['tag'])) {
-                        $sql = "SELECT video.Id, question.title, account.Name, video.UploadDate, video.File, (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 1) as 'Likes', (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 0) as 'Dislike'
-                                FROM video, question, account, tag_question, subtag, tag
-                                WHERE video.QuestionId = question.Id 
-                                    AND video.AccountId = account.Id
-                                    AND tag_question.QuestionId = video.QuestionId
-                                    AND tag_question.SubTagID = subtag.Id
-                                    AND subtag.TagId = tag.Id
-                                    AND tag.id = ?;";
-                    } else if (isset($_GET['search'])) {
-                        $sql = "SELECT video.Id, question.title, account.Name, video.UploadDate, video.File, (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 1) as 'Likes', (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 0) as 'Dislike'
-                                FROM video, question, account
-                                WHERE video.QuestionId = question.Id 
-                                    AND video.AccountId = account.Id
-                                    AND question.title LIKE CONCAT('%', ?, '%')";
-                    }
-                    // Prepare stmt
-                    $stmt = mysqli_prepare($conn, $sql);
+                // Als er wordt gefilterd, zet de ? naar tagId
+                if (isset($_GET['tag'])) {
+                    $tagId = filter_input(INPUT_GET, "tag", FILTER_SANITIZE_NUMBER_INT);
+                    mysqli_stmt_bind_param($stmt, 'i', $tagId);
+                } else if (isset($_GET['search'])) {
+                    $search = filter_input(INPUT_GET, "search", FILTER_SANITIZE_SPECIAL_CHARS);
+                    mysqli_stmt_bind_param($stmt, 's', $search);
+                }
+                // Standaard database resultaat vergrijgen
+                mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
 
-                    // Als er wordt gefilterd, zet de ? naar tagId
-                    if (isset($_GET['tag'])) {
-                        $tagId = filter_input(INPUT_GET, "tag", FILTER_SANITIZE_NUMBER_INT);
-                        mysqli_stmt_bind_param($stmt, 'i', $tagId);
-                    } else if (isset($_GET['search'])) {
-                        $search = filter_input(INPUT_GET, "search", FILTER_SANITIZE_SPECIAL_CHARS);
-                        mysqli_stmt_bind_param($stmt, 's', $search);
-                    }
-                    // Standaard database resultaat vergrijgen
-                    mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+                mysqli_stmt_bind_result($stmt, $videoId, $questionTitle, $accountName, $videoDate, $videoPath, $likes, $dislikes)  or die(mysqli_error($conn));
+                mysqli_stmt_store_result($stmt);
 
-                    mysqli_stmt_bind_result($stmt, $videoId, $questionTitle, $accountName, $videoDate, $videoPath, $likes, $dislikes)  or die(mysqli_error($conn));
-                    mysqli_stmt_store_result($stmt);
-
-                    if (mysqli_stmt_num_rows($stmt) > 0) {
+                if (mysqli_stmt_num_rows($stmt) > 0) {
+                ?>
+                    <div class="vidRow">
+                        <?php
                         while (mysqli_stmt_fetch($stmt)) {
                             // Voor elke video die is gevonden doe dit:
-                    ?>
+                        ?>
                             <div class='vidHolder' onclick="openVideo(<?php echo $videoId ?>)">
                                 <div class="overflowHidden">
                                     <!-- Het video element: -->
@@ -104,11 +107,21 @@ include_once("../utils/functions.php");
                                     </div>
                                 </div>
                             </div>
-                    <?php
+                        <?php
                         }
+                        ?>
+                    </div>
+                <?php
+                } else {
+                    // Als er een get is met tag, laat de tag error zien,
+                    // Is er een get met search, laat de search error zien
+                    if (isset($_GET['tag'])) {
+                        echo "<h2>No results were found with this tag.</h2>";
+                    } else if (isset($_GET['search'])) {
+                        echo "<h2>No results were found that match this description.</h3>";
                     }
-                    ?>
-                </div>
+                }
+                ?>
             </div>
         </div>
     </div>

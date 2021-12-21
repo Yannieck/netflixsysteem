@@ -42,7 +42,6 @@ CREATE TABLE IF NOT EXISTS `question` (
 
 CREATE TABLE IF NOT EXISTS `video` (
 	Id INT NOT NULL AUTO_INCREMENT,
-    -- QuestionTitle VARCHAR(100) NOT NULL,
     QuestionId INT NOT NULL,
     AccountId INT NOT NULL,
     Description VARCHAR(8000),
@@ -68,7 +67,6 @@ CREATE TABLE IF NOT EXISTS  `comment` (
 
 CREATE TABLE IF NOT EXISTS `bookmark` (
 	AccountId INT NOT NULL,
-    -- QuestionTitle VARCHAR(100) NOT NULL,
     QuestionId INT NOT NULL,
     
     CONSTRAINT PRIMARY KEY (AccountId, QuestionId),
@@ -119,7 +117,7 @@ INSERT INTO `membership` (`Name`, `Price`) VALUES ('Senior', 14.99);
 INSERT INTO `membership` (`Name`) VALUES ('Admin');
 INSERT INTO `membership` (`Name`) VALUES ('Prof');
 
-INSERT INTO `account` (`MembershipName`,`Name`,`Username`,`Email`,`Password`) VALUES ('Admin', 'Admin', 'Developers', 'developer@gmail.com', '$2y$10$tc1ctq28T5bm9DpO42rvzeI0PFGecEhUr1l1Gb.zcWezqj5VA06/W');
+INSERT INTO `account` (`MembershipName`,`Name`,`Username`,`Email`,`Password`) VALUES ('Admin', 'Admin', 'Developers', 'developer@gmail.com', '$2y$10$cRDvcaHW17Hh6HOhY7BXduLpbGdE.AwYNF/9tJ8vBl5tjgKymRy.y');
 
 INSERT INTO `question` (`Title`,`AccountId`,`Content`,`AskDate`) VALUES ("How to change parser titles when using Argparse without modifying internal variables?", 1, "
 
