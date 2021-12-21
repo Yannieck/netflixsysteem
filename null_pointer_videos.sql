@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS `null pointer videos`;
 CREATE DATABASE IF NOT EXISTS `null pointer videos`;
 
 USE `null pointer videos`;
