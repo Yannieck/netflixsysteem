@@ -141,8 +141,10 @@ header li i {
 }
 
 .accountHover a {
+  width: calc(100% - 2rem);
   padding: .75rem 1rem;
   border-radius: 5px;
+  text-align: center;
 }
 
 .accountHover a:hover {

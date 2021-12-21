@@ -1,0 +1,36 @@
+.contentBlock {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  background-color: #000000;
+  width: 90%;
+  height: 85%;
+}
+
+.contentBlock .content {
+  margin: 50px;
+  width: 100%;
+  height: calc(100% - 50px);
+  padding: 25px;
+  color: var(--clr-neutral-100);
+}
+
+.contentBlock .content h1 {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.contentBlock .content h2,
+.contentBlock .content p {
+  width: 100%;
+}
+
+.contentBlock .content .section {
+  margin-bottom: 1.5rem;
+}
+/*# sourceMappingURL=adminpanel.css.map */

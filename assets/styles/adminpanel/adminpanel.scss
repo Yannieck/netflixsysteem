@@ -1,0 +1,27 @@
+.contentBlock {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #000000;
+    width: 90%;
+    height: 85%;
+    .content {
+        margin: 50px;
+        width: 100%;
+        height: calc(100% - 50px);
+        // background: red;
+        padding: 25px;
+        color: var(--clr-neutral-100);
+        h1 {
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+        h2,
+        p {
+            width: 100%;
+        }
+        .section {
+            margin-bottom: 1.5rem;
+        }
+    }
+}
