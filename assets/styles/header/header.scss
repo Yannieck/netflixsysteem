@@ -42,7 +42,7 @@ header {
             display: inline;
         }
         .input {
-            height: 3vh;
+            height: 4vh;
             width: 15vw;
             border-radius: 0.3em;
             font-size: 1em;
@@ -54,10 +54,11 @@ header {
             color: var(--clr-neutral-100);
             border: none;
             padding: 0 5px;
-            height: 3vh;
+            height: 4vh;
             width: 3vw;
             border-radius: 0.3em;
             font-size: 1em;
+            margin-left: 5px;
         }
         i {
             position: relative;

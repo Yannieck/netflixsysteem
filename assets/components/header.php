@@ -11,8 +11,8 @@
         <ul class="navicons">
             <li>
                 <form action="./main.php" method="post">
-                    <input class="input" id="searchbar" type="text">
-                    <input class="btn" id="searchbtn" type="submit" value="Search">
+                    <input class="input" name="searchbar" id="searchbar" type="text" placeholder="Search for something...">
+                    <input class="btn" name="searchSubmit" id="searchbtn" type="submit" value="Search">
                 </form>
             </li>
             <li><i onclick="showInput()" class="fas fa-search fa-2x"></i></li>
@@ -34,6 +34,14 @@
         </ul>
     </div>
 </header>
+<?php
+if (isset($_POST['searchSubmit'])) {
+    if (!empty($_POST['searchbar'])) {
+        $searchInput = filter_input(INPUT_POST, 'searchbar', FILTER_SANITIZE_SPECIAL_CHARS);
+        header("Location: ./main.php?search=" . $searchInput);
+    }
+}
+?>
 <script>
     const searchIcon = document.getElementById("searchbar");
     const searchbtn = document.getElementById("searchbtn");

@@ -2,6 +2,23 @@
     width: calc(100% - 50px);
     height: calc(100% - 205px);
     padding: 25px;
+    &>a {
+        margin-top: 0;
+        position: relative;
+        .hoverCross {
+            position: absolute;
+            font-size: 1.2rem;
+            right: 20px;
+            top: 0;
+            bottom: 0;
+            height: max-content;
+            margin: auto 0;
+            display: none;
+        }
+        &:hover .hoverCross {
+            display: block;
+        }
+    }
 }
 
 .vidRow {

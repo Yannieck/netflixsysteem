@@ -23,9 +23,17 @@ include_once("../utils/functions.php");
             <!-- Include de tag lijst boven aan het scherm -->
             <?php include_once("../assets/components/taglist.php"); ?>
             <div class="videoContainer">
+                <?php
+                if (isset($_GET['search'])) {
+                ?>
+                    <a class="button" href="./main.php">Cancel search
+                        <i class="hoverCross fas fa-times"></i>
+                    </a>
+                <?php
+                }
+                ?>
                 <div class="vidRow">
                     <?php
-
                     // Pak standaard van de video: id, title, accountnaam, upload datum, bestandslocatie, aantal likes, aantal dislike.
                     $sql = "SELECT video.Id, question.title, account.Name, video.UploadDate, video.File, (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 1) as 'Likes', (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 0) as 'Dislike'
                             FROM video, question, account
@@ -34,7 +42,7 @@ include_once("../utils/functions.php");
 
                     // Als er een get waarde is gezet; als er wordt gefilterd: filter op tag id
                     if (isset($_GET['tag'])) {
-                        $sql = "SELECT video.Id, question.title, account.Name, video.UploadDate, video.File
+                        $sql = "SELECT video.Id, question.title, account.Name, video.UploadDate, video.File, (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 1) as 'Likes', (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 0) as 'Dislike'
                                 FROM video, question, account, tag_question, subtag, tag
                                 WHERE video.QuestionId = question.Id 
                                     AND video.AccountId = account.Id
@@ -42,8 +50,13 @@ include_once("../utils/functions.php");
                                     AND tag_question.SubTagID = subtag.Id
                                     AND subtag.TagId = tag.Id
                                     AND tag.id = ?;";
+                    } else if (isset($_GET['search'])) {
+                        $sql = "SELECT video.Id, question.title, account.Name, video.UploadDate, video.File, (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 1) as 'Likes', (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 0) as 'Dislike'
+                                FROM video, question, account
+                                WHERE video.QuestionId = question.Id 
+                                    AND video.AccountId = account.Id
+                                    AND question.title LIKE CONCAT('%', ?, '%')";
                     }
-
                     // Prepare stmt
                     $stmt = mysqli_prepare($conn, $sql);
 
@@ -51,8 +64,10 @@ include_once("../utils/functions.php");
                     if (isset($_GET['tag'])) {
                         $tagId = filter_input(INPUT_GET, "tag", FILTER_SANITIZE_NUMBER_INT);
                         mysqli_stmt_bind_param($stmt, 'i', $tagId);
+                    } else if (isset($_GET['search'])) {
+                        $search = filter_input(INPUT_GET, "search", FILTER_SANITIZE_SPECIAL_CHARS);
+                        mysqli_stmt_bind_param($stmt, 's', $search);
                     }
-
                     // Standaard database resultaat vergrijgen
                     mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
 
