@@ -30,7 +30,24 @@ include_once("../utils/functions.php");
                             FROM video, question, account
                             WHERE video.QuestionId = question.Id AND video.AccountId = account.Id;";
 
+                    if(isset($_GET['tag'])) {
+                        $sql = "SELECT video.Id, question.title, account.Name, video.UploadDate, video.File
+                                FROM video, question, account, tag_question, subtag, tag
+                                WHERE video.QuestionId = question.Id 
+                                    AND video.AccountId = account.Id
+                                    AND tag_question.QuestionId = video.QuestionId
+                                    AND tag_question.SubTagID = subtag.Id
+                                    AND subtag.TagId = tag.Id
+                                    AND tag.id = ?;";
+                    }                    
+
                     $stmt = mysqli_prepare($conn, $sql);
+                    
+                    if (isset($_GET['tag'])) {
+                        $tagId = filter_input(INPUT_GET, "tag", FILTER_SANITIZE_NUMBER_INT);
+                        mysqli_stmt_bind_param($stmt, 'i', $tagId);
+                    }
+
                     mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
 
                     mysqli_stmt_bind_result($stmt, $videoId, $questionTitle, $accountName, $videoDate, $videoPath)  or die(mysqli_error($conn));

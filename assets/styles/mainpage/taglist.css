@@ -33,6 +33,23 @@
   margin: 10px auto;
 }
 
+.logos .removeIcon {
+  display: block;
+  font-size: 50px;
+  max-width: 80%;
+  height: 55px;
+  margin: 10px auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 .flex-container {
   display: -webkit-box;
   display: -ms-flexbox;
