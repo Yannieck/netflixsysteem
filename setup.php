@@ -61,6 +61,8 @@ foreach ($sql as $singleSQL) {
 // Close the database connection
 mysqli_close($conn);
 
-echo "Successfully done!"
+echo "Successfully done!";
+
+echo "<br><a href='./index.php'>Go to mainpage</a>";
 
 ?>

@@ -58,25 +58,27 @@
         .vidHover {
             display: none;
             width: 100%;
-            .vidHoverTop {
-                width: calc(100% - 20px);
-                padding: 10px;
-                position: absolute;
-                left: 0;
-                top: 0;
-                display: flex;
-                justify-content: flex-end;
-                font-size: 1.25rem;
-            }
-            // .vidHoverBot {
-            //     width: calc(100% - 10px);
-            //     padding: 5px;
+            // .vidHoverTop {
+            //     width: calc(100% - 20px);
+            //     padding: 10px;
             //     position: absolute;
             //     left: 0;
-            //     bottom: -10px;
-            //     background-color: rgba(0, 0, 0, 0.75);
-            //     font-size: 0.75rem;
+            //     top: 0;
+            //     display: flex;
+            //     justify-content: flex-end;
+            //     font-size: 1.25rem;
             // }
+            .vidHoverBot {
+                // width: calc(100% - 10px);
+                width: max-content;
+                padding: 10px;
+                position: absolute;
+                right: 0;
+                bottom: -10px;
+                background-color: rgba(0, 0, 0, 0.75);
+                font-size: 0.75rem;
+                text-align: right;
+            }
         }
     }
     &:hover {

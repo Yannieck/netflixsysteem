@@ -76,19 +76,17 @@
   width: 100%;
 }
 
-.vidHolder .overflowHidden .vidHover .vidHoverTop {
-  width: calc(100% - 20px);
+.vidHolder .overflowHidden .vidHover .vidHoverBot {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
   padding: 10px;
   position: absolute;
-  left: 0;
-  top: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  font-size: 1.25rem;
+  right: 0;
+  bottom: -10px;
+  background-color: rgba(0, 0, 0, 0.75);
+  font-size: 0.75rem;
+  text-align: right;
 }
 
 .vidHolder:hover .title {
