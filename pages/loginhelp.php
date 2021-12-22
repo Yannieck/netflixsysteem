@@ -12,10 +12,11 @@
         <div class="content">
             <h1>Help</h1>
             <div>
-                <p>Do you have a problem with creating a account or loggin in? You can contact Null Pointer Videos via the following emailadress:</p>
+                <p>Do you have a problem with creating a account or loggin in? <br> You can contact Null Pointer Videos via the following emailadress:</p>
                 <a class="underline" href="mailto:nullpointervideos@info.com">nullpointervideos@info.com</a>
             </div>
             <a class="button" href="mailto:nullpointervideos@info.com">Email</a>
+            <a href="./landingpage.php">Back to menu</a>
         </div>
     </div>
 </body>

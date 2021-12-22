@@ -9,7 +9,7 @@
 
 <body>
   <div class="background centervertical">
-  <a href="./landingpage.php"><img class="logo" src="../assets/img/lightlogo.svg" alt="logo"></a>
+    <a href="./landingpage.php"><img class="logo" src="../assets/img/lightlogo.svg" alt="logo"></a>
 
     <div class="container">
       <h1 class="headertext"> Select membership </h1>
@@ -99,10 +99,11 @@
           </th>
           <th>
             <h2>
-            <a class="button" href="./createaccount.php?type=1">Select</a>
+              <a class="button" href="./createaccount.php?type=1">Select</a>
             </h2>
           </th>
         </tr>
       </table>
+      <p>Want a verified account? <a href="./verifyrequest.php">Verify now</a>.</p>
     </div>
 </body>
