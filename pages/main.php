@@ -85,7 +85,7 @@ include_once("../utils/functions.php");
                                 <div class="overflowHidden">
                                     <!-- Het video element: -->
                                     <video>
-                                        <source src=<?php echo "../assets/videos/" . $videoPath ?> type="video/mp4">
+                                        <source src=<?php echo "../assets/upload/videos/" . $videoPath ?> type="video/mp4">
                                         Your browser does not support HTML video.
                                     </video>
                                     <!-- De video hover die de likes laat zien: -->
