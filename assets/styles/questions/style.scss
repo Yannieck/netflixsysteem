@@ -9,19 +9,62 @@ body {
     background-color: var(--clr-neutral-800);
     color: #DADADA;
 }
+.question__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    .question__tags {
+        display: flex;
+        flex-wrap: wrap;
+        .tag {
+            background-color: var(--clr-neutral-500);
+            color: var(--clr-accent-350);
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin: 5px 10px 0 0;
+        }
+    }
+    .question__ask-date {
+        min-width: fit-content;
+        p {
+            margin: 0;
+            padding: 5px 0;
+        }
+    }
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
 
 .container {
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    height: calc(100vh - 100px);
+    overflow-y: hidden;
+    .questions__wrapper, .specific__question {
+        font-size: .9rem;
+        margin: 0 auto;
+        overflow-y: scroll;
+
+        // FireFox only
+        scrollbar-width: none;
+
+        // All browsers except FireFox
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
     .questions__wrapper {
         width: fit-content;
         max-width: 80%;
+        margin-top: 20px;
         .question {
             min-width: inherit;
             margin-bottom: 30px;
             padding-bottom: 10px;
-            border-bottom: 1px solid gray;
+            border-bottom: 1px solid #7d7d7d;
             .question__title {
                 a {
                     color: var(--clr-accent-300);
@@ -31,28 +74,76 @@ body {
                 }
                 font-size: .8rem;
             }
-            .question__info {
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-end;
-                .question__tags {
+        }
+    }
+    .specific__question {
+        width: 60%;
+
+        .question__head {
+            padding: 20px;
+            border-bottom: 1px solid #7d7d7d;
+            display: flex;
+            justify-content: space-between;
+            .main__info {
+                width: 80%;
+                .question__title {
+                    font-weight: 700;
+                }
+                .question__info {
                     display: flex;
-                    flex-wrap: wrap;
-                    .tag {
-                        background-color: var(--clr-neutral-500);
-                        color: var(--clr-accent-350);
-                        padding: 5px 10px;
-                        border-radius: 5px;
-                        margin: 5px 10px 0 0;
+                    align-items: center;
+                    justify-content: unset;
+                    .question__tags {
+                        margin-left: 10%;
                     }
                 }
-                .question__ask-date {
-                    min-width: fit-content;
-                    p {
-                        margin: 0;
-                        padding: 5px 0;
-                    }
+            }
+            i {
+                height: fit-content;
+                font-size: 2rem;
+                &:hover {
+                    color: var(--clr-accent-400);
+                    cursor: pointer;
                 }
+            }
+        }
+        .question__content {
+            padding: 50px 20px;
+            display: flex;
+            .question__main {
+                width: 80%;
+                margin: 0 auto;
+                code {
+                    margin: 15px 0;
+                    border-radius: 10px;
+                    background-color: var(--clr-neutral-600);
+                }
+            }
+        }
+    }
+
+    .comments {
+        border-top: 1px solid #7d7d7d;
+        display: flex;
+        padding: 50px 20px;
+        .comment__content {
+            width: 80%;
+            margin: 0 auto;
+            display: flex;
+        }
+        .profile {
+            justify-content: space-between;
+        }
+        .card {
+            width: 40%;
+            margin-right: 15px;
+            img, video {
+                width: 100%;
+                height: 100%;
+            }
+            video {
+                display: none;
+                pointer-events: none;
             }
         }
     }
