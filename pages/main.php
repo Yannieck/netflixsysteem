@@ -78,36 +78,41 @@ include_once("../utils/functions.php");
                 ?>
                     <div class="vidRow">
                         <?php
+                        $index = 0;
                         while (mysqli_stmt_fetch($stmt)) {
-                            // Voor elke video die is gevonden doe dit:
+                            $index++;
+                            if ($index < 10) {
+                                // Zorg dat er maar maximaal 10 video's getoond kunnen worden
+                                // Voor elke video die is gevonden doe dit:
                         ?>
-                            <div class='vidHolder' onclick="openVideo(<?php echo $videoId ?>)">
-                                <div class="overflowHidden">
-                                    <!-- Het video element: -->
-                                    <video>
-                                        <source src=<?php echo "../assets/upload/videos/" . $videoPath ?> type="video/mp4">
-                                        Your browser does not support HTML video.
-                                    </video>
-                                    <!-- De video hover die de likes laat zien: -->
-                                    <div class="vidHover">
-                                        <div class="vidHoverTop">
-                                            <a href="#"><i class="far fa-bookmark"></i></a>
+                                <div class='vidHolder' onclick="openVideo(<?php echo $videoId ?>)">
+                                    <div class="overflowHidden">
+                                        <!-- Het video element: -->
+                                        <video>
+                                            <source src=<?php echo "../assets/upload/videos/" . $videoPath ?> type="video/mp4">
+                                            Your browser does not support HTML video.
+                                        </video>
+                                        <!-- De video hover die de likes laat zien: -->
+                                        <div class="vidHover">
+                                            <div class="vidHoverTop">
+                                                <a href="#"><i class="far fa-bookmark"></i></a>
+                                            </div>
+                                            <div class="vidHoverBot">
+                                                <p><i class="far fa-thumbs-up"></i>&nbsp;<?php echo $likes ?>&nbsp;&nbsp;<i class="far fa-thumbs-down">&nbsp;<?php echo $dislikes ?></i></p>
+                                            </div>
                                         </div>
-                                        <div class="vidHoverBot">
-                                            <p><i class="far fa-thumbs-up"></i>&nbsp;<?php echo $likes ?>&nbsp;&nbsp;<i class="far fa-thumbs-down">&nbsp;<?php echo $dislikes ?></i></p>
+                                    </div>
+                                    <!-- Het element onder de video die de titel, upload datum en de uploader weergeeft -->
+                                    <div class="vidInfoHolder">
+                                        <p class="title"><?php echo $questionTitle ?></p>
+                                        <div class="otherInfo">
+                                            <p><?php echo $accountName ?></p>
+                                            <p><?php echo calculateDate($videoDate) ?> ago</p>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Het element onder de video die de titel, upload datum en de uploader weergeeft -->
-                                <div class="vidInfoHolder">
-                                    <p class="title"><?php echo $questionTitle ?></p>
-                                    <div class="otherInfo">
-                                        <p><?php echo $accountName ?></p>
-                                        <p><?php echo calculateDate($videoDate) ?> ago</p>
-                                    </div>
-                                </div>
-                            </div>
                         <?php
+                            }
                         }
                         ?>
                     </div>
