@@ -1,10 +1,11 @@
+DROP DATABASE IF EXISTS `null pointer videos`;
 CREATE DATABASE IF NOT EXISTS `null pointer videos`;
 
 USE `null pointer videos`;
 
 CREATE TABLE IF NOT EXISTS `membership` (
 	Name VARCHAR(6) NOT NULL,
-    Price DOUBLE(2,2) NOT NULL,
+    Price DOUBLE(4,2) NOT NULL,
     
     CONSTRAINT PRIMARY KEY (Name)
 );
@@ -41,14 +42,14 @@ CREATE TABLE IF NOT EXISTS `question` (
 
 CREATE TABLE IF NOT EXISTS `video` (
 	Id INT NOT NULL AUTO_INCREMENT,
-    QuestionTitle VARCHAR(100) NOT NULL,
+    QuestionId INT NOT NULL,
     AccountId INT NOT NULL,
     Description VARCHAR(8000),
     UploadDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     File VARCHAR(150) NOT NULL,
     
     CONSTRAINT PRIMARY KEY (Id),
-    CONSTRAINT FOREIGN KEY (QuestionTitle) REFERENCES question(Title) ON DELETE NO ACTION ON UPDATE CASCADE,
+    CONSTRAINT FOREIGN KEY (QuestionId) REFERENCES question(Id) ON DELETE NO ACTION ON UPDATE CASCADE,
     CONSTRAINT FOREIGN KEY (AccountId) REFERENCES account(Id) ON DELETE NO ACTION ON UPDATE CASCADE,
     CONSTRAINT UNIQUE (File)
 );
@@ -66,11 +67,11 @@ CREATE TABLE IF NOT EXISTS  `comment` (
 
 CREATE TABLE IF NOT EXISTS `bookmark` (
 	AccountId INT NOT NULL,
-    QuestionTitle VARCHAR(100) NOT NULL,
+    QuestionId INT NOT NULL,
     
-    CONSTRAINT PRIMARY KEY (AccountId, QuestionTitle),
+    CONSTRAINT PRIMARY KEY (AccountId, QuestionId),
     CONSTRAINT FOREIGN KEY (AccountId) REFERENCES account(Id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FOREIGN KEY (QuestionTitle) REFERENCES question(Title) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT FOREIGN KEY (QuestionId) REFERENCES question(Id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `like` (
@@ -116,7 +117,7 @@ INSERT INTO `membership` (`Name`, `Price`) VALUES ('Senior', 14.99);
 INSERT INTO `membership` (`Name`) VALUES ('Admin');
 INSERT INTO `membership` (`Name`) VALUES ('Prof');
 
-INSERT INTO `account` (`MembershipName`,`Name`,`Username`,`Email`,`Password`) VALUES ('Admin', 'Admin', 'Developers', 'developer@gmail.com', '$2y$10$tc1ctq28T5bm9DpO42rvzeI0PFGecEhUr1l1Gb.zcWezqj5VA06/W');
+INSERT INTO `account` (`MembershipName`,`Name`,`Username`,`Email`,`Password`) VALUES ('Admin', 'Admin', 'Developers', 'developer@gmail.com', '$2y$10$cRDvcaHW17Hh6HOhY7BXduLpbGdE.AwYNF/9tJ8vBl5tjgKymRy.y');
 
 INSERT INTO `question` (`Title`,`AccountId`,`Content`,`AskDate`) VALUES ("How to change parser titles when using Argparse without modifying internal variables?", 1, "
 
@@ -131,20 +132,20 @@ For instance
 public class Main {
 
     public static void main(String[] args) {
-        String text = '🥦_Salade verte';
+        String text = '🥦_Salade verte'»
 
         /* We should avoid using endIndex = 1, as it will cause an invalid character in the returned substring. */
         // 1 : ?
-        System.out.println('1 : ' + text.substring(0, 1));
+        System.out.println('1 : ' + text.substring(0, 1))»
 
         // 2 : 🥦
-        System.out.println('2 : ' + text.substring(0, 2));
+        System.out.println('2 : ' + text.substring(0, 2))»
 
         // 3 : 🥦_
-        System.out.println('3 : ' + text.substring(0, 3));
+        System.out.println('3 : ' + text.substring(0, 3))»
 
         // 4 : 🥦_S
-        System.out.println('4 : ' + text.substring(0, 4));
+        System.out.println('4 : ' + text.substring(0, 4))»
     }
 }
 
@@ -157,14 +158,14 @@ INSERT INTO `question` (`Title`,`AccountId`,`Content`,`AskDate`) VALUES ("Why ca
 
 int main()
 {
-    auto f1 = [](auto&) mutable {};
-    static_assert(std::is_invocable_v<decltype(f1), int&>); // ok
+    auto f1 = [](auto&) mutable {}»
+    static_assert(std::is_invocable_v<decltype(f1), int&>)» // ok
 
-    auto const f2 = [](auto&) {};
-    static_assert(std::is_invocable_v<decltype(f2), int&>); // ok
+    auto const f2 = [](auto&) {}»
+    static_assert(std::is_invocable_v<decltype(f2), int&>)» // ok
 
-    auto const f3 = [](auto&) mutable {};
-    static_assert(std::is_invocable_v<decltype(f3), int&>); // failed
+    auto const f3 = [](auto&) mutable {}»
+    static_assert(std::is_invocable_v<decltype(f3), int&>)» // failed
 }
 
 See demo
@@ -172,7 +173,26 @@ See demo
 Why can't a const mutable lambda take a reference argument?
 ", "2021-12-11 13:19:30");
 
-INSERT INTO `tag` (`Id`, `Category`) VALUES (1, 'Python'), (2, 'Java'), (3, 'C++');
+INSERT INTO `question` (`Title`,`AccountId`,`Content`,`AskDate`) VALUES (
+    "What is the difference between rem and em?",
+    1,
+    "When I use rem and em I get exactly the same result. Why is that?",
+    "2021-04-04 18:57:19"
+);
 
-INSERT INTO `subtag` (`Id`, `TagId`, `SubCategory`) VALUES (1, 1, 'python'), (2, 1, 'parsing'), (3, 1, 'command-line'), (4, 1, 'argparse'), (5, 2, 'java'), (6, 2, 'android'), (7, 3, 'c++'), (8, 3, 'lambda'), (9, 3, 'c++20'), (10, 2, 'typetraits'), (11, 3, 'static-assert');
-INSERT INTO `tag_question` (`SubTagId`, `QuestionId`) VALUES (1, 1), (2, 1), (3, 1), (4, 1), (5, 2), (6, 2), (7, 3), (8, 3), (9, 3), (10, 3), (11, 3) 
+INSERT INTO `video` (`QuestionId`,`AccountId`, `Description`, `UploadDate`, `File`) VALUES (
+    4,
+    1,
+    "Here is a video explaining the difference between rem and em. Hope this answers your question!",
+    "2021-12-13 15:26:22",
+    "difference_between_rem_and_em.mp4"
+);
+
+INSERT INTO `tag` (`Id`, `Category`) VALUES (1, 'Python'), (2, 'Java'), (3, 'C++'), (4, 'CSS'), (5, 'HTML'), (6, 'PHP'), (7, 'Javascript'), (8, 'C#'), (9, 'Android'), (10, 'Apple');
+
+INSERT INTO `subtag` (`Id`, `TagId`, `SubCategory`) VALUES (1, 1, 'python'), (2, 1, 'parsing'), (3, 1, 'command-line'), (4, 1, 'argparse'), (5, 2, 'java'), (6, 2, 'android'), (7, 3, 'c++'), (8, 3, 'lambda'), (9, 3, 'c++20'), (10, 2, 'typetraits'), (11, 3, 'static-assert'), (12, 4, 'CSS units');
+INSERT INTO `tag_question` (`SubTagId`, `QuestionId`) VALUES (1, 1), (2, 1), (3, 1), (4, 1), (5, 2), (6, 2), (7, 3), (8, 3), (9, 3), (10, 3), (11, 3), (12, 4);
+
+INSERT INTO `like` (`AccountId`, `VideoId`, `Type`) VALUES (1, 1, 1), (1, 1, 1), (1, 1, 1), (1, 1, 1);
+
+INSERT INTO `comment` (`VideoId`, `AccountId`, `Content`) VALUES (1, 1, 'Nice video!')

@@ -46,6 +46,7 @@
                     <?php
                         }
                     }
+                    mysqli_stmt_close($stmt);
                     ?>
                 </form>
                 <div class="buttons">

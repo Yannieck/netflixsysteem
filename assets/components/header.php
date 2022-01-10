@@ -1,3 +1,36 @@
+<?php
+$isAdmin = function () use ($conn) {
+    $userId = $_SESSION['userId'];
+    $query = "SELECT `MembershipName` FROM `account` WHERE `account`.`Id` = ?";
+
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, 'i', $userId);
+
+    mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+
+    mysqli_stmt_bind_result($stmt, $membershipName) or die(mysqli_error($conn));
+    mysqli_stmt_store_result($stmt);
+
+    mysqli_stmt_fetch($stmt);
+
+    if (mysqli_stmt_num_rows($stmt) > 0) {
+        if ($membershipName === "Admin") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    mysqli_stmt_close($stmt);
+};
+
+
+if (isset($_POST['searchSubmit'])) {
+    if (!empty($_POST['searchbar'])) {
+        $searchInput = filter_input(INPUT_POST, 'searchbar', FILTER_SANITIZE_SPECIAL_CHARS);
+        header("Location: ./main.php?search=" . $searchInput);
+    }
+}
+?>
 <header>
     <div class="leftHeader">
         <a href="./main.php"><img src="../assets/img/lightlogo.svg" height="120" width="120" alt="logo"></a>
@@ -11,8 +44,8 @@
         <ul class="navicons">
             <li>
                 <form action="./main.php" method="post">
-                    <input class="input" id="searchbar" type="text">
-                    <input class="btn" id="searchbtn" type="submit" value="Search">
+                    <input class="input" name="searchbar" id="searchbar" type="text" placeholder="Search for something...">
+                    <input class="btn" name="searchSubmit" id="searchbtn" type="submit" value="Search">
                 </form>
             </li>
             <li><i onclick="showInput()" class="fas fa-search fa-2x"></i></li>
@@ -26,6 +59,9 @@
             <li>
                 <i onclick="showAccountMenu()" class="fas fa-user fa-2x">
                     <div id="accountMenu" class="overlayHover accountHover">
+                        <?php if ($isAdmin()) { ?>
+                            <a href="./adminpanel.php">Admin</a>
+                        <?php } ?>
                         <a href="./profile.php">Account</a>
                         <a href="./logout.php">Log out</a>
                     </div>

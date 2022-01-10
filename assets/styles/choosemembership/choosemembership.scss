@@ -16,8 +16,11 @@ table {
 .container {
     margin: 0 auto;
     background: rgba(0, 0, 0, 0.5);
-    padding: 50px;
-    padding-top: 25px;
+    padding: 25px 50px;
+    &>p {
+        color: var(--clr-neutral-400);
+        font-size: 0.8rem;
+    }
 }
 
 .headertext {
@@ -29,6 +32,10 @@ th,
 td {
     text-align: left;
     padding: 8px;
+    p {
+        text-align: center;
+        margin-right: 10px;
+    }
 }
 
 .select {

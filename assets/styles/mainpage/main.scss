@@ -1,55 +1,113 @@
-.filter {
-    background-color: var(--clr-neutral-800);
-    height: 155px;
+.videoContainer {
+    width: calc(100% - 50px);
+    height: calc(100% - 205px);
+    padding: 25px;
+    &>a {
+        margin-top: 0;
+        position: relative;
+        .hoverCross {
+            position: absolute;
+            font-size: 1.2rem;
+            right: 20px;
+            top: 0;
+            bottom: 0;
+            height: max-content;
+            margin: auto 0;
+            display: none;
+        }
+        &:hover .hoverCross {
+            display: block;
+        }
+    }
+}
+
+.vidRow {
+    width: 100%;
+    height: 200px;
+    background-color: var(--clr-neutral-500);
+    display: flex;
     overflow-x: scroll;
 }
 
-.logos {
-    width: 100px;
-    min-width: 100px;
-    height: 100px;
-    background-color: var(--clr-neutral-600);
-    margin: 10px;
-    position: relative;
-    border-radius: 5px;
-    &:hover {
-        cursor: pointer;
-    }
-    p {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        font-size: smaller;
-    }
-    img {
-        display: block;
-        max-width: 80%;
-        height: 55px;
-        margin: 10px auto;
-    }
-}
-
-.flex-container {
-    display: flex;
-    padding: 10px 10px 0px 10px;
+h2 {
     color: var(--clr-neutral-100);
-    text-align: center;
 }
 
-::-webkit-scrollbar {
-    height: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--clr-neutral-600);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--clr-neutral-400);
-    height: 100px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--clr-neutral-500);
+.vidHolder {
+    margin: 15px;
+    height: calc(85% - 30px);
+    aspect-ratio: calc(16/9);
+    background-color: var(--clr-neutral-700);
+    position: relative;
+    color: var(--clr-neutral-100);
+    cursor: pointer;
+    .vidInfoHolder {
+        z-index: 1;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        bottom: -35px;
+        p {
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 0;
+            white-space: nowrap;
+        }
+        .otherInfo {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            p {
+                font-size: 0.75rem;
+                color: var(--clr-neutral-400);
+                width: 50%;
+                &:nth-child(2) {
+                    text-align: right;
+                }
+            }
+        }
+    }
+    .overflowHidden {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        video {
+            width: 100%;
+        }
+        .vidHover {
+            display: none;
+            width: 100%;
+            // .vidHoverTop {
+            //     width: calc(100% - 20px);
+            //     padding: 10px;
+            //     position: absolute;
+            //     left: 0;
+            //     top: 0;
+            //     display: flex;
+            //     justify-content: flex-end;
+            //     font-size: 1.25rem;
+            // }
+            .vidHoverBot {
+                // width: calc(100% - 10px);
+                width: max-content;
+                padding: 10px;
+                position: absolute;
+                right: 0;
+                bottom: -10px;
+                background-color: rgba(0, 0, 0, 0.75);
+                font-size: 0.75rem;
+                text-align: right;
+            }
+        }
+    }
+    &:hover {
+        .title {
+            text-decoration: underline;
+        }
+        .vidHover {
+            display: block;
+        }
+    }
 }

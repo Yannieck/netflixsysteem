@@ -19,7 +19,8 @@
 
                 <!-- Wachtwoord veld -->
                 <input class="formfield" type="password" name="password" id="password" placeholder="Password...">
-                <p class="errortext" id="passworderror">Your password must contain between 4 and 8 characters.</p>
+                <p class="errortext" id="passworderror">Your password must contain more then 8 characters.</p>
+                <p class="errortext" id="incorrectPassword">Password is incorrect.</p>
 
                 <!-- Submit -->
                 <input class="formbutton" type="submit" name="login" id="login" value="Sign In">
@@ -63,7 +64,13 @@
                 if (password_verify($_POST['password'], $passResult)) {
                     header("Location: ./loginredirect.php?rem={$remember}&id={$id}");
                 } else {
-                    echo "ERROR: Password does not match emailadress.";
+                    // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
+                    // en het email veld weer invult
+                    echo 
+                    "<script>
+                        document.getElementById('incorrectPassword').style.display = 'block';
+                        document.getElementById('email').value = '" . $_POST['email'] . "';
+                    </script>";
                 }
                 mysqli_stmt_close($stmt);
             } else {

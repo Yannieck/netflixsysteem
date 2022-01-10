@@ -12,6 +12,7 @@
 if (isset($_GET['type'])) {
     if ($_GET['type'] == 0 || $_GET['type'] == 1) {
 ?>
+
         <body>
             <div class="background center">
                 <a href="./landingpage.php"><img class="logo" src="../assets/img/lightlogo.svg" alt="logo"></a>
@@ -23,6 +24,7 @@ if (isset($_GET['type'])) {
                         <!-- Username + error -->
                         <input class="formfield" type="text" name="username" id="username" placeholder="Username...">
                         <p class="errortext" id="usernameerror">Please enter a valid username.</p>
+                        <p class="errortext" id="usernamelength">A username must be less than 80 characters.</p>
 
                         <!-- Email veld + error -->
                         <input class="formfield" type="email" name="email" id="email" placeholder="Email...">
@@ -55,63 +57,79 @@ if (isset($_GET['type'])) {
             // Form input valideren
             if (isset($_POST['signup'])) {
                 if (!empty($_POST['username'])) {
-                    $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
-                    if (filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
-                        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-                        if ($password = $_POST['password'] && strlen($_POST['password']) >= 8) {
-                            if ($repeatPassword = $_POST['repeatpassword'] && $password == $_POST['repeatpassword']) {
-                                $rawname = explode('@', $email)[0];
+                    if (strlen($_POST['username']) < 80) {
+                        $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
+                        if (filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
+                            $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+                            if ($password = $_POST['password'] && strlen($_POST['password']) >= 8 && strlen($_POST['password']) < 255) {
+                                if ($repeatPassword = $_POST['repeatpassword'] && $password == $_POST['repeatpassword']) {
+                                    $rawname = explode('@', $email)[0];
 
-                                $typename = htmlentities($_GET['type']) == 0 ? "Junior" : "Senior";
-                                $hashedPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                                    $typename = htmlentities($_GET['type']) == 0 ? "Junior" : "Senior";
+                                    $hashedPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-                                // Database connectie
-                                $query = "INSERT INTO account (`MembershipName`, `Username`, `Email`, `Password`) VALUES(
-                                    ?, ?, ?, ?
-                                )";
+                                    // Database connectie
+                                    $query = "INSERT INTO account (`MembershipName`, `Username`, `Email`, `Password`) VALUES(
+                                        ?, ?, ?, ?
+                                    )";
 
-                                $stmt = mysqli_prepare($conn, $query) or die(mysqli_error($conn));
-                                mysqli_stmt_bind_param($stmt, 'ssss', $typename, $username, $email, $hashedPassword);
+                                    $stmt = mysqli_prepare($conn, $query) or die(mysqli_error($conn));
+                                    mysqli_stmt_bind_param($stmt, 'ssss', $typename, $username, $email, $hashedPassword);
 
-                                mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
-                                mysqli_stmt_close($stmt);
+                                    mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+                                    mysqli_stmt_close($stmt);
 
-                                header("Location: ./payment.php?type={$_GET['type']}");
+                                    header("Location: ./payment.php?type={$_GET['type']}");
+                                } else {
+                                    // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
+                                    // en de email en username velden invullen
+                                    echo
+                                    "<script>
+                                        document.getElementById('passwordrepeaterror').style.display = 'block';
+                                        document.getElementById('username').value = '" . $_POST['username'] . "';
+                                        document.getElementById('email').value = '" . $_POST['email'] . "';
+                                    </script>";
+                                }
                             } else {
                                 // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
-                                // en het email veld weer invult
+                                // en de email en username velden invullen
                                 echo
                                 "<script>
-                                    document.getElementById('passwordrepeaterror').style.display = 'block';
+                                    document.getElementById('passworderror').style.display = 'block';
+                                    document.getElementById('username').value = '" . $_POST['username'] . "';
                                     document.getElementById('email').value = '" . $_POST['email'] . "';
                                 </script>";
                             }
                         } else {
                             // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
-                            // en het email veld weer invult
+                            // en de email en username velden invullen
                             echo
                             "<script>
-                                document.getElementById('passworderror').style.display = 'block';
+                                document.getElementById('emailerror').style.display = 'block';
+                                document.getElementById('username').value = '" . $_POST['username'] . "';
                                 document.getElementById('email').value = '" . $_POST['email'] . "';
                             </script>";
                         }
                     } else {
                         // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
+                        // en de email en username velden invullen
                         echo
                         "<script>
-                        document.getElementById('emailerror').style.display = 'block';
-                    </script>";
+                            document.getElementById('usernamelength').style.display = 'block';
+                            document.getElementById('username').value = '" . $_POST['username'] . "';
+                            document.getElementById('email').value = '" . $_POST['email'] . "';
+                        </script>";
                     }
                 } else {
+                    // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
+                    // en de email en username velden invullen
                     echo
                     "<script>
                         document.getElementById('usernameerror').style.display = 'block';
+                        document.getElementById('username').value = '" . $_POST['username'] . "';
+                        document.getElementById('email').value = '" . $_POST['email'] . "';
                     </script>";
                 }
-            }
-
-            function createAccount()
-            {
             }
             ?>
         </body>

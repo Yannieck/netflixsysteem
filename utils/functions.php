@@ -89,7 +89,7 @@ function fail($code = NULL, $info = NULL) {
 // By:          Joris Hummel                                                                            //
 //                                                                                                      //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-function stmtExecute($connection, string $sql, int $code, string $ParamChars = NULL, ...$BindParamVars) : array {
+function stmtExecute($connection, string $sql, int $code, string $ParamChars = NULL, ...$BindParamVars) : ?array {
 
     // Check if the statement can be prepared
     if($stmt = mysqli_prepare($connection, $sql)) {
@@ -138,21 +138,27 @@ function stmtExecute($connection, string $sql, int $code, string $ParamChars = N
                                 // Check if it's possible to bind and continue the function
                                 if(!mysqli_stmt_bind_param($stmt, $ParamChars, ...$BindParamVars)) {
                                     fail("DB".$code."4", mysqli_error($connection));
+                                    return null;
                                 } 
                             } else {
                                 fail("DB".$code."1", substr_count($sql, "?"));
+                                return null;
                             }
                         } else {
                             fail("DB".$code."0");
+                            return null;
                         }
                     } else {
                         fail("DB".$code."3", substr_count($sql, "?"));
+                        return null;
                     }
                 } else {
                     fail("DB".$code."5");
+                    return null;
                 }
             } else {
                 fail("DB".$code."2");
+                return null;
             }
         }  
 
@@ -164,27 +170,35 @@ function stmtExecute($connection, string $sql, int $code, string $ParamChars = N
         }
 
         if(mysqli_stmt_execute($stmt)) {
-            if(mysqli_stmt_bind_result($stmt, ...$BindResults)) {
-                $i = 0;
-                while(mysqli_stmt_fetch($stmt)) {
-                    $j = 0;
-                    foreach($BindResults as $Result) {
-                        $results[$SelectResults[$j]][] = $Result;
-                        $j++;
+            mysqli_stmt_store_result($stmt);
+            if(mysqli_stmt_num_rows($stmt) > 0) {
+                if(mysqli_stmt_bind_result($stmt, ...$BindResults)) {
+                    $i = 0;
+                    while(mysqli_stmt_fetch($stmt)) {
+                        $j = 0;
+                        foreach($BindResults as $Result) {
+                            $results[$SelectResults[$j]][] = $Result;
+                            $j++;
+                        }
+                        $i++;
                     }
-                    $i++;
+                    mysqli_stmt_close($stmt);
+                    return $results;
+                } else {
+                    fail("DB".$code."2", mysqli_error($connection));
+                    return null;
                 }
-                mysqli_stmt_close($stmt);
-                return $results;
             } else {
-                fail("DB".$code."2", mysqli_error($connection));
+                return null;
             }
         } else {
             fail("DB".$code."1", mysqli_error($connection));
+            return null;
         }
 
     } else {
         fail("DB00", mysqli_error($connection));
+        return null;
     }
 }
 

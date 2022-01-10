@@ -1,61 +1,125 @@
-.filter {
-  background-color: var(--clr-neutral-800);
-  height: 155px;
-  overflow-x: scroll;
+.videoContainer {
+  width: calc(100% - 50px);
+  height: calc(100% - 205px);
+  padding: 25px;
 }
 
-.logos {
-  width: 100px;
-  min-width: 100px;
-  height: 100px;
-  background-color: var(--clr-neutral-600);
-  margin: 10px;
+.videoContainer > a {
+  margin-top: 0;
   position: relative;
-  border-radius: 5px;
 }
 
-.logos:hover {
-  cursor: pointer;
-}
-
-.logos p {
+.videoContainer > a .hoverCross {
   position: absolute;
+  font-size: 1.2rem;
+  right: 20px;
+  top: 0;
   bottom: 0;
-  left: 0;
-  right: 0;
-  font-size: smaller;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  margin: auto 0;
+  display: none;
 }
 
-.logos img {
+.videoContainer > a:hover .hoverCross {
   display: block;
-  max-width: 80%;
-  height: 55px;
-  margin: 10px auto;
 }
 
-.flex-container {
+.vidRow {
+  width: 100%;
+  height: 200px;
+  background-color: var(--clr-neutral-500);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding: 10px 10px 0px 10px;
+  overflow-x: scroll;
+}
+
+h2 {
   color: var(--clr-neutral-100);
-  text-align: center;
 }
 
-::-webkit-scrollbar {
-  height: 10px;
+.vidHolder {
+  margin: 15px;
+  height: calc(85% - 30px);
+  aspect-ratio: calc(16/9);
+  background-color: var(--clr-neutral-700);
+  position: relative;
+  color: var(--clr-neutral-100);
+  cursor: pointer;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--clr-neutral-600);
+.vidHolder .vidInfoHolder {
+  z-index: 1;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: -35px;
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--clr-neutral-400);
-  height: 100px;
+.vidHolder .vidInfoHolder p {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0;
+  white-space: nowrap;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--clr-neutral-500);
+.vidHolder .vidInfoHolder .otherInfo {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.vidHolder .vidInfoHolder .otherInfo p {
+  font-size: 0.75rem;
+  color: var(--clr-neutral-400);
+  width: 50%;
+}
+
+.vidHolder .vidInfoHolder .otherInfo p:nth-child(2) {
+  text-align: right;
+}
+
+.vidHolder .overflowHidden {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.vidHolder .overflowHidden video {
+  width: 100%;
+}
+
+.vidHolder .overflowHidden .vidHover {
+  display: none;
+  width: 100%;
+}
+
+.vidHolder .overflowHidden .vidHover .vidHoverBot {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  bottom: -10px;
+  background-color: rgba(0, 0, 0, 0.75);
+  font-size: 0.75rem;
+  text-align: right;
+}
+
+.vidHolder:hover .title {
+  text-decoration: underline;
+}
+
+.vidHolder:hover .vidHover {
+  display: block;
 }
 /*# sourceMappingURL=main.css.map */
