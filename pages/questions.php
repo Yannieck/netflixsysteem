@@ -18,7 +18,7 @@ require '../utils/functions.php';
    <?php 
    require_once '../assets/components/header.php'; 
    ?> 
-   <div class="container">
+   <div class="page">
        <?php
         require_once '../assets/components/aside.php';
 

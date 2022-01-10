@@ -14,7 +14,7 @@
             <h1>Verified account</h1>
             <p>This is where professional programmers can submit their information to possibly get a professional account. This account will be free of charge and you will have a checkmark next to your name.</p>
             <form action="<?php echo htmlentities($_SERVER['PHP_SELF']) ?>" method="post" enctype="multipart/form-data">
-                <div class="flex">
+                <div class="content">
                     <div class="half-form">
                         <!-- Voledige naam -->
                         <input class="formfield" type="text" name="fullname" id="fullname" placeholder="Full name...">
@@ -113,7 +113,7 @@
 
                                             // Upload het bestand
                                             if (move_uploaded_file($_FILES["uploadedFile"]["tmp_name"], $saveDir . $newFileName . "." . $ext)) {
-                                                header("Location: ./verifyredirect.php", true, 301);
+                                                header("Location: ./verifyredirect.php");
                                                 exit();
                                             } else {
                                                 echo "An error occured, try again later";

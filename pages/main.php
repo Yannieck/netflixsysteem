@@ -17,7 +17,7 @@ include_once("../utils/functions.php");
 
 <body>
     <?php include_once("../assets/components/header.php"); ?>
-    <div class="flex">
+    <div class="page">
         <?php include_once("../assets/components/aside.php"); ?>
         <div class="pageContent">
             <!-- Include de tag lijst boven aan het scherm -->
@@ -35,14 +35,14 @@ include_once("../utils/functions.php");
                 // ===== Haal video's uit de database =====
 
                 // Pak standaard van de video: id, title, accountnaam, upload datum, bestandslocatie, aantal likes, aantal dislike.
-                $sql = "SELECT video.Id, question.title, account.Name, video.UploadDate, video.File, (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 1) as 'Likes', (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 0) as 'Dislike'
+                $sql = "SELECT DISTINCT video.Id, question.title, account.Name, video.UploadDate, video.File, (SELECT COUNT(`like`.`Type`) FROM `like`,video WHERE `like`.`Type` = 1 AND video.Id = `like`.VideoId) as 'Likes', (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 0) as 'Dislike'
                         FROM video, question, account
                         WHERE video.QuestionId = question.Id AND video.AccountId = account.Id
                         ORDER BY video.UploadDate;";
 
                 // Als er een get waarde is gezet; als er wordt gefilterd: filter op tag id
                 if (isset($_GET['tag'])) {
-                    $sql = "SELECT video.Id, question.title, account.Name, video.UploadDate, video.File, (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 1) as 'Likes', (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 0) as 'Dislike'
+                    $sql = "SELECT DISTINCT video.Id, question.title, account.Name, video.UploadDate, video.File, (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 1) as 'Likes', (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 0) as 'Dislike'
                             FROM video, question, account, tag_question, subtag, tag
                             WHERE video.QuestionId = question.Id 
                                 AND video.AccountId = account.Id
@@ -51,7 +51,7 @@ include_once("../utils/functions.php");
                                 AND subtag.TagId = tag.Id
                                 AND tag.id = ?;";
                 } else if (isset($_GET['search'])) {
-                    $sql = "SELECT video.Id, question.title, account.Name, video.UploadDate, video.File, (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 1) as 'Likes', (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 0) as 'Dislike'
+                    $sql = "SELECT DISTINCT video.Id, question.title, account.Name, video.UploadDate, video.File, (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 1) as 'Likes', (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 0) as 'Dislike'
                             FROM video, question, account
                             WHERE video.QuestionId = question.Id 
                                 AND video.AccountId = account.Id
@@ -98,7 +98,7 @@ include_once("../utils/functions.php");
                                                 <a href="#"><i class="far fa-bookmark"></i></a>
                                             </div>
                                             <div class="vidHoverBot">
-                                                <p><i class="far fa-thumbs-up"></i>&nbsp;<?php echo $likes ?>&nbsp;&nbsp;<i class="far fa-thumbs-down">&nbsp;<?php echo $dislikes ?></i></p>
+                                                <p><i class="far fa-thumbs-up"></i>&nbsp;<?php echo $likes ?>&nbsp;&nbsp;<i class="far fa-thumbs-down">&nbsp;<?php echo 0 ?></i></p>
                                             </div>
                                         </div>
                                     </div>
@@ -134,7 +134,7 @@ include_once("../utils/functions.php");
 <script>
     // Stukje javascript daar link naar de video waar op is geklikt
     function openVideo(videoId) {
-        console.log(videoId);
+        window.location.href = "./videopage.php?id=" + videoId;
     }
 </script>
 

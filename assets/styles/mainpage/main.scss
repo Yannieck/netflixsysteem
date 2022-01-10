@@ -111,3 +111,52 @@ h2 {
         }
     }
 }
+
+.largeVideoContainer {
+    width: calc(100% - 200px);
+    height: calc(100% - 130px);
+    padding: 65px 100px;
+    overflow-y: scroll;
+    .titleObj {
+        padding-bottom: .25rem;
+        border-bottom: 2px solid var(--clr-neutral-500);
+    }
+    .videoHolder {
+        width: 100%;
+        margin-top: 25px;
+        // margin: 25px, 0px, .25rem, 0px;
+        border-bottom: 2px solid var(--clr-neutral-500);
+        video {
+            width: 70%;
+            aspect-ratio: calc(16/9);
+            margin-bottom: 1rem;
+        }
+        .infoHolder {
+            display: flex;
+            justify-content: space-between;
+            width: 70%;
+            margin-bottom: 1rem;
+        }
+    }
+    .questionLink {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        width: 70%;
+        display: flex;
+    }
+    p {
+        color: var(--clr-neutral-400);
+        text-overflow: ellipsis;
+        min-width: max-content;
+        span {
+            color: var(--clr-neutral-100);
+        }
+    }
+    a {
+        color: var(--clr-accent-350);
+        white-space: nowrap;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

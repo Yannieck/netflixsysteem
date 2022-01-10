@@ -122,4 +122,68 @@ h2 {
 .vidHolder:hover .vidHover {
   display: block;
 }
+
+.largeVideoContainer {
+  width: calc(100% - 200px);
+  height: calc(100% - 130px);
+  padding: 65px 100px;
+  overflow-y: scroll;
+}
+
+.largeVideoContainer .titleObj {
+  padding-bottom: .25rem;
+  border-bottom: 2px solid var(--clr-neutral-500);
+}
+
+.largeVideoContainer .videoHolder {
+  width: 100%;
+  margin-top: 25px;
+  border-bottom: 2px solid var(--clr-neutral-500);
+}
+
+.largeVideoContainer .videoHolder video {
+  width: 70%;
+  aspect-ratio: calc(16/9);
+  margin-bottom: 1rem;
+}
+
+.largeVideoContainer .videoHolder .infoHolder {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 70%;
+  margin-bottom: 1rem;
+}
+
+.largeVideoContainer .questionLink {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width: 70%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.largeVideoContainer p {
+  color: var(--clr-neutral-400);
+  text-overflow: ellipsis;
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+}
+
+.largeVideoContainer p span {
+  color: var(--clr-neutral-100);
+}
+
+.largeVideoContainer a {
+  color: var(--clr-accent-350);
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 /*# sourceMappingURL=main.css.map */
