@@ -162,18 +162,24 @@ function stmtExecute($connection, string $sql, int $code, string $ParamChars = N
             }
         }  
 
-        $sql = str_replace("&nbsp;", "", $sql);
-        $sql = str_replace("DISTINCT ", "", $sql);
-        $sql = str_replace("\n", "", $sql);
-        $SelectResults = substr($sql, 7, strpos($sql, "FROM") - 8);
-        $SelectResults = explode(", ", $SelectResults);
-        foreach($SelectResults as $BindParamResult) {
-            $BindResults[] = $BindParamResult;
-        }
-
         if(mysqli_stmt_execute($stmt)) {
             mysqli_stmt_store_result($stmt);
             if(mysqli_stmt_num_rows($stmt) > 0) {
+
+                $sql = str_replace("DISTINCT ", "", $sql);
+                $SelectResults = substr($sql, 7, strpos($sql, "FROM") - 8);
+                $SelectResults = explode(", ", $SelectResults);
+
+                $i = 0;
+                foreach($SelectResults as $BindParamResult) {
+                    if(str_contains($BindParamResult, " AS ")) {
+                        $BindParamResult = substr($BindParamResult, strpos($BindParamResult, " AS ") + 4);
+                        $SelectResults[$i] = $BindParamResult;
+                    }
+                    $BindResults[] = $BindParamResult;
+                    $i++;
+                }
+
                 if(mysqli_stmt_bind_result($stmt, ...$BindResults)) {
                     $i = 0;
                     while(mysqli_stmt_fetch($stmt)) {
