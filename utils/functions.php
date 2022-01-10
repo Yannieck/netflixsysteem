@@ -78,13 +78,7 @@ function fail($code = NULL, $info = NULL) {
 // @Param $code: Use a code for fail messages, You can easily create 1 above                            //
 // @Param $Paramchars: Use this when need to use WHERE conditions -> Use given type: s, i, d or b       //
 // @Param $BindParamVars: Use this when need to use WHERE conditions -> Use known DB variables          //
-// @Param $sql: Don't use spaces between the commas in your statement                                   //
-//                                                                                                      //
-//  Example:                                                                                            //
-//                                                                                                      //
-//  "SELECT Title,AskDate FROM question ORDER BY AskDate DESC"                                          //
-//               ^                                                                                      //
-//               |                                                                                      //
+// @Param $sql: Give the sql query to execute                                                           //
 //                                                                                                      //
 // By:          Joris Hummel                                                                            //
 //                                                                                                      //
