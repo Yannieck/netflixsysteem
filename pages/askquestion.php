@@ -27,6 +27,12 @@ include_once("../utils/dbconnect.php");
             </form>
             <!-- <p id="output"> -->
             <?php
+            // function stmtExecute($connection, string $sql, int $code, string $ParamChars = NULL, ...$BindParamVars) : ?array
+            
+            $sql = "INSERT INTO question (Title, AccountId, Content) VALUES (?, ?, ?)";
+            stmtExecute($conn, $sql, 1, "sis", $title, $account, $content);
+
+
             // echo htmlentities($_POST['title']);
             // echo "<br>";
             // $rawinput = $_POST['text'];
