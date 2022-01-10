@@ -164,6 +164,7 @@ function stmtExecute($connection, string $sql, int $code, string $ParamChars = N
 
         $sql = str_replace("&nbsp;", "", $sql);
         $sql = str_replace("DISTINCT ", "", $sql);
+        $sql = str_replace("\n", "", $sql);
         $SelectResults = substr($sql, 7, strpos($sql, "FROM") - 8);
         $SelectResults = explode(", ", $SelectResults);
         foreach($SelectResults as $BindParamResult) {
