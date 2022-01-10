@@ -136,12 +136,35 @@ INSERT INTO `question` (`Title`,`AccountId`,`Content`,`AskDate`) VALUES (
     "2021-04-04 18:57:19"
 );
 
+INSERT INTO `question` (`Title`,`AccountId`,`Content`,`AskDate`) VALUES (
+    "How do background images work?",
+    1,
+    "When and how do I use a background image instead of a normal image?",
+    "2021-04-04 18:57:19"
+);
+
 INSERT INTO `video` (`QuestionId`,`AccountId`, `Description`, `UploadDate`, `File`) VALUES (
     4,
     1,
     "Here is a video explaining the difference between rem and em. Hope this answers your question!",
     "2021-12-13 15:26:22",
     "difference_between_rem_and_em.mp4"
+);
+
+INSERT INTO `video` (`QuestionId`,`AccountId`, `Description`, `UploadDate`, `File`) VALUES (
+    2,
+    1,
+    "Here is a video explaining substrings in javascript. Hope this answers your question!",
+    "2021-12-13 15:26:22",
+    "javascript-substring.mp4"
+);
+
+INSERT INTO `video` (`QuestionId`,`AccountId`, `Description`, `UploadDate`, `File`) VALUES (
+    5,
+    1,
+    "Here is a video explaining Background images. Hope this answers your question!",
+    "2021-12-13 15:26:22",
+    "background-images.mp4"
 );
 
 INSERT INTO `tag` (`Id`, `Category`) VALUES (1, 'Python'), (2, 'Java'), (3, 'C++'), (4, 'CSS'), (5, 'HTML'), (6, 'PHP'), (7, 'Javascript'), (8, 'C#'), (9, 'Android'), (10, 'Apple');
