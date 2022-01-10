@@ -61,11 +61,11 @@ require '../utils/functions.php';
             $title = $info['Title'][0];
             $askDate = $info['AskDate'][0];
             $content = $info['Content'][0]; 
-            $content = str_replace('%10;', "</p><p>", $content);
-            $content = str_replace('%11;', "</p><pre><code>", $content);
-            $content = str_replace('%12;', "</code></pre><p>", $content);
-            $content = str_replace('%13;', "\t", $content);
-            $content = str_replace('%14;', "\n", $content);
+            $content = str_replace('%10;', "</p><p>", $content);            // Enter
+            $content = str_replace('%11;', "</p><pre><code>", $content);    // Start Code Block
+            $content = str_replace('%12;', "</code></pre><p>", $content);   // Einde Code block
+            $content = str_replace('%13;', "\t", $content);                 // Tab in de code block
+            $content = str_replace('%14;', "\n", $content);                 // Enter in de code block
 
         
             echo "<div class='specific__question'>
@@ -222,6 +222,7 @@ require '../utils/functions.php';
         video.disablePictureInPicture = true;
         var img = document.getElementById('card-top');
         var videoEnd;
+        var checkVideo;
 
         // Show or hide the element in CSS
         function hide(element) {
@@ -232,11 +233,11 @@ require '../utils/functions.php';
         }
 
         // Set interval during the play time of the video
-        const checkVideo = setInterval(() => {
+        function checkVideoTime() {
             if(video.currentTime >= videoEnd) {
                 hideVideo();
             }
-        }, 1000);
+        }
 
         function checkVideoDuration() {
             // Video must be 100 seconds or longer. This so you don't see alot of the video.
@@ -273,7 +274,7 @@ require '../utils/functions.php';
                 hide(img);  
 
                 // Check the video current time during the play time of the video
-                checkVideo;
+                checkVideo = setInterval(checkVideoTime, 1000);
             }
         }
 
