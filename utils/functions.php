@@ -83,7 +83,7 @@ function fail($code = NULL, $info = NULL) {
 // By:          Joris Hummel                                                                            //
 //                                                                                                      //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-function stmtExecute($connection, string $sql, int $code, string $ParamChars = NULL, ...$BindParamVars) : ?array {
+function stmtExecute($connection, string $sql, int $code, string $ParamChars = NULL, ...$BindParamVars) : array| bool {
 
     // Check if the statement can be prepared
     if($stmt = mysqli_prepare($connection, $sql)) {
@@ -132,43 +132,33 @@ function stmtExecute($connection, string $sql, int $code, string $ParamChars = N
                                 // Check if it's possible to bind and continue the function
                                 if(!mysqli_stmt_bind_param($stmt, $ParamChars, ...$BindParamVars)) {
                                     fail("DB".$code."4", mysqli_error($connection));
-                                    return null;
+                                    return false;
                                 } 
                             } else {
                                 fail("DB".$code."1", substr_count($sql, "?"));
-                                return null;
+                                return false;
                             }
                         } else {
                             fail("DB".$code."0");
-                            return null;
+                            return false;
                         }
                     } else {
                         fail("DB".$code."3", substr_count($sql, "?"));
-                        return null;
+                        return false;
                     }
                 } else {
                     fail("DB".$code."5");
-                    return null;
+                    return false;
                 }
             } else {
                 fail("DB".$code."2");
-                return null;
+                return false;
             }
         }  
 
         if(mysqli_stmt_execute($stmt)) {
             mysqli_stmt_store_result($stmt);
             if(mysqli_stmt_num_rows($stmt) > 0) {
-
-                // SELECT question.Id, question.Title, question.AskDate, (
-                //     SELECT COUNT(bookmark.QuestionId) 
-                //     FROM bookmark 
-                //     WHERE bookmark.QuestionId = question.Id
-                //     ) AS Bookmarks, 
-                // FROM question 
-                // ORDER BY Bookmarks DESC;
-
-                // Get the FROM outside the '(' and ')'
 
                 $sql = str_replace("DISTINCT ", "", $sql);
                 $totalFROMKey = substr_count($sql, "FROM");
@@ -270,22 +260,21 @@ function stmtExecute($connection, string $sql, int $code, string $ParamChars = N
                     return $results;
                 } else {
                     fail("DB".$code."2", mysqli_error($connection));
-                    return null;
+                    return false;
                 }
             } else {
-                return null;
+                return true;
             }
         } else {
             fail("DB".$code."1", mysqli_error($connection));
-            return null;
+            return false;
         }
 
     } else {
         fail("DB00", mysqli_error($connection));
-        return null;
+        return false;
     }
 }
-
 
 // $type:   1 for print_r(), 0 or empty for var_dump()
 function debug($var, int $type = 0) {
