@@ -136,6 +136,12 @@ h2 {
             justify-content: space-between;
             width: 70%;
             margin-bottom: 1rem;
+            .likes {
+                display: flex;
+                * {
+                    margin-left: .25rem;
+                }
+            }
         }
     }
     .questionLink {

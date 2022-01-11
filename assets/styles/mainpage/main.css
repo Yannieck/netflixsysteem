@@ -158,6 +158,16 @@ h2 {
   margin-bottom: 1rem;
 }
 
+.largeVideoContainer .videoHolder .infoHolder .likes {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.largeVideoContainer .videoHolder .infoHolder .likes * {
+  margin-left: .25rem;
+}
+
 .largeVideoContainer .questionLink {
   margin-top: 1rem;
   margin-bottom: 1rem;
