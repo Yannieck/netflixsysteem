@@ -97,12 +97,16 @@ body {
 }
 
 .questions__wrapper .question .question__title a {
-  color: var(--clr-accent-300);
+  color: var(--clr-accent-300) !important;
 }
 
 .questions__wrapper .question .question__title a:hover {
   -webkit-filter: brightness(0.8);
           filter: brightness(0.8);
+}
+
+.questions__wrapper .question .question__title a h2 {
+  color: inherit;
 }
 
 .specific__question {

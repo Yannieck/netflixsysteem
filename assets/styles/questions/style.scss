@@ -67,9 +67,12 @@ body {
         border-bottom: 1px solid #7d7d7d;
         .question__title {
             a {
-                color: var(--clr-accent-300);
+                color: var(--clr-accent-300) !important;
                 &:hover {
                     filter: brightness(.8);
+                }
+                h2 {
+                    color: inherit;
                 }
             }
             font-size: .8rem;
