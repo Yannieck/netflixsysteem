@@ -28,11 +28,16 @@ aside h2 {
 aside .container {
   width: 100%;
   display: block;
+  height: inherit;
+  overflow-y: hidden;
 }
 
 aside .container .aside-element {
   border-bottom: 1px solid var(--clr-neutral-400);
   margin-bottom: 1rem;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }
 
 aside .container .aside-element .aside-element-title {
@@ -43,6 +48,8 @@ aside .container .aside-element .tags {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 aside .container .aside-element .tags p {

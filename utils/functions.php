@@ -83,7 +83,7 @@ function fail($code = NULL, $info = NULL) {
 // By:          Joris Hummel                                                                            //
 //                                                                                                      //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-function stmtExecute($connection, string $sql, int $code, string $ParamChars = NULL, ...$BindParamVars) : ?array {
+function stmtExecute($connection, string $sql, int $code, string $ParamChars = NULL, ...$BindParamVars) : array| bool {
 
     // Check if the statement can be prepared
     if($stmt = mysqli_prepare($connection, $sql)) {
@@ -132,27 +132,27 @@ function stmtExecute($connection, string $sql, int $code, string $ParamChars = N
                                 // Check if it's possible to bind and continue the function
                                 if(!mysqli_stmt_bind_param($stmt, $ParamChars, ...$BindParamVars)) {
                                     fail("DB".$code."4", mysqli_error($connection));
-                                    return null;
+                                    return false;
                                 } 
                             } else {
                                 fail("DB".$code."1", substr_count($sql, "?"));
-                                return null;
+                                return false;
                             }
                         } else {
                             fail("DB".$code."0");
-                            return null;
+                            return false;
                         }
                     } else {
                         fail("DB".$code."3", substr_count($sql, "?"));
-                        return null;
+                        return false;
                     }
                 } else {
                     fail("DB".$code."5");
-                    return null;
+                    return false;
                 }
             } else {
                 fail("DB".$code."2");
-                return null;
+                return false;
             }
         }  
 
@@ -161,8 +161,80 @@ function stmtExecute($connection, string $sql, int $code, string $ParamChars = N
             if(mysqli_stmt_num_rows($stmt) > 0) {
 
                 $sql = str_replace("DISTINCT ", "", $sql);
-                $SelectResults = substr($sql, 7, strpos($sql, "FROM") - 8);
+                $totalFROMKey = substr_count($sql, "FROM");
+                $totalENDKey = substr_count($sql, ")");
+                $totalOPENKey = substr_count($sql, "(");
+                
+                // Check FROM
+                for($i = 0; $i < $totalFROMKey; $i++) {
+                    if($i === 0) {
+                        $posFROMKey[$i] = strpos($sql, "FROM");
+                    } else {
+                        $posFROMKey[$i] = strpos($sql, "FROM", $posFROMKey[$i - 1] + 1);
+                        if($i - 1 >= 0 && $posFROMKey[$i] == $posFROMKey[$i - 1]) {
+                            $posFROMKey[$i] = strpos($sql, "FROM", $posFROMKey[$i - 1] + 1);
+                        }
+                    }
+                }
+
+                // Check nested query open sign
+                for($i = 0; $i < $totalOPENKey; $i++) {
+                    if($i === 0) {
+                        $posOPENKey[$i] = strpos($sql, "(");
+                    } else {
+                        $posOPENKey[$i] = strpos($sql, "(", $posOPENKey[$i - 1] + 1);
+                        if($i - 1 >= 0 && $posOPENKey[$i] == $posOPENKey[$i - 1]) {
+                            $posOPENKey[$i] = strpos($sql, "(", $posOPENKey[$i - 1] + 1);
+                        }
+                    }
+                }
+
+                // Check nested query end sign
+                for($i = 0; $i < $totalENDKey; $i++) {
+                    if($i === 0) {
+                        $posENDKey[$i] = strpos($sql, ")");
+                    } else {
+                        $posENDKey[$i] = strpos($sql, ")", $posENDKey[$i - 1] + 1);
+                        if($i - 1 >= 0 && $posENDKey[$i] == $posENDKey[$i - 1]) {
+                            $posENDKey[$i] = strpos($sql, ")", $posENDKey[$i - 1] + 1);
+                        }
+                    }
+                }
+
+                // debug($posOPENKey);
+                // debug($posENDKey);
+                // debug($posFROMKey);
+                
+                // Get Right positions in nested queries and form for array values
+                for($k = 0; $k < count($posFROMKey); $k++) {
+                    $posFrom = $posFROMKey[$k];
+                    if(!empty($posENDKey) && !empty($posOPENKey)) {
+
+                        if($posOPENKey[0] > $posFROMKey[0]) {
+                            goto finish;
+                        }
+                       
+                        for($i = 0; $i < count($posOPENKey); $i++) {
+                            $posOpen = $posOPENKey[$i];
+                            $posEnd = $posENDKey[$i];
+                            // echo "$i, $posOpen, $posEnd, $posFrom<br>";
+                            if($posFrom > $posEnd && $posEnd > $posOpen) {
+                                if($i + 1 < $totalOPENKey && $posOPENKey[$i + 1] > $posFrom && $posENDKey[$i + 1] > $posOPENKey[$i + 1]) {
+                                    goto finish;
+                                } else if($i + 1 == $totalOPENKey) {
+                                    goto finish;
+                                }
+                            }
+                        }
+                    } 
+                }
+                finish:
+                // echo $posFrom;
+                $SelectResults = substr($sql, 7, $posFrom - 8);
+                // echo "$SelectResults<br>";
+                
                 $SelectResults = explode(", ", $SelectResults);
+                // debug($SelectResults);
 
                 $i = 0;
                 foreach($SelectResults as $BindParamResult) {
@@ -188,22 +260,21 @@ function stmtExecute($connection, string $sql, int $code, string $ParamChars = N
                     return $results;
                 } else {
                     fail("DB".$code."2", mysqli_error($connection));
-                    return null;
+                    return false;
                 }
             } else {
-                return null;
+                return true;
             }
         } else {
             fail("DB".$code."1", mysqli_error($connection));
-            return null;
+            return false;
         }
 
     } else {
         fail("DB00", mysqli_error($connection));
-        return null;
+        return false;
     }
 }
-
 
 // $type:   1 for print_r(), 0 or empty for var_dump()
 function debug($var, int $type = 0) {
