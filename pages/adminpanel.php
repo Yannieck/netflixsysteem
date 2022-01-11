@@ -32,7 +32,7 @@
     ?>
     <div class="fullPageContent center">
         <div class="contentBlock">
-            <div class="content">
+            <div class="content leftBlock">
                 <h1>Statistics</h1>
                 <div class="section">
                     <h2>Post info</h2>
@@ -48,31 +48,38 @@
                     <p>Amount of senior accounts: <?php echo $seniorAmt ?></p>
                 </div>
             </div>
-            <div class="content">
+            <div class="content rightBlock">
                 <h1>Verification requests</h1>
-                <?php
-                $dir = "../assets/upload/verify-request";
-                $files = array_diff(scandir($dir), array('..', '.'));
-                foreach ($files as $file) {
-                    $name = explode("_", $file)[1];
-                    $email = str_replace(".png", "", str_replace(".jpg", "", str_replace(".jpeg", "", explode("_", $file)[2])));
-                ?>
-                    <div class="imgElement">
-                        <img src=<?php echo $dir . "/" . $file ?> alt="">
-                        <div>
-                            <div>
-                                <p>Name: <?php echo $name ?></p>
-                                <p>Email: <?php echo $email ?></p>
+                <div class="imgHolder">
+                    <?php
+                    $dir = "../assets/upload/verify-request";
+                    $files = array_diff(scandir($dir), array('..', '.'));
+                    foreach ($files as $file) {
+                        $name = explode("_", $file)[1];
+                        $email = str_replace(".png", "", str_replace(".jpg", "", str_replace(".jpeg", "", explode("_", $file)[2])));
+                    ?>
+                        <div class="imgElement">
+                            <img src=<?php echo $dir . "/" . $file ?> alt="">
+                            <div class="imgInfoHolder">
+                                <div class="imgText">
+                                    <p>Name: <?php echo $name ?></p>
+                                    <p>Email: <?php echo $email ?></p>
+                                </div>
+                                <div class="imgBtns">
+                                    <a href="" class="decl">Decline</a>
+                                    <a href="" class="accept">Accept</a>
+                                </div>
                             </div>
-                            <button>Accept</button>
                         </div>
-                    </div>
-                <?php } ?>
+                    <?php } ?>
+                </div>
             </div>
-            <div class="content"></div>
         </div>
     </div>
 </body>
+<?php
+
+?>
 
 </html>
 <?php include_once("../utils/dbclose.php"); ?>

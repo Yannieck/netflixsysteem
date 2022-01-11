@@ -5,8 +5,9 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   background-color: #000000;
   width: 90%;
   height: 85%;
@@ -34,8 +35,27 @@
   margin-bottom: 1.5rem;
 }
 
-.contentBlock .content .imgElement {
-  border: 1px solid white;
+.contentBlock .leftBlock {
+  width: 25%;
+}
+
+.contentBlock .rightBlock {
+  width: 50%;
+  overflow-y: scroll;
+  border-left: 2px solid darkgray;
+}
+
+.contentBlock .rightBlock .imgHolder {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.contentBlock .rightBlock .imgHolder .imgElement {
+  border: 1px solid var(--clr-neutral-100);
   padding: 10px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -47,22 +67,31 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 75%;
+  width: 45%;
+  margin: 5px;
 }
 
-.contentBlock .content .imgElement img {
+.contentBlock .rightBlock .imgHolder .imgElement img {
   width: 100%;
   aspect-ratio: calc(16/9);
   -o-object-fit: cover;
      object-fit: cover;
 }
 
-.contentBlock .content .imgElement p {
+.contentBlock .rightBlock .imgHolder .imgElement p {
   width: 100%;
   margin: 10px 0 0 0;
 }
 
-.contentBlock .content .imgElement > div {
+.contentBlock .rightBlock .imgHolder .imgElement .imgInfoHolder {
+  width: 100%;
+}
+
+.contentBlock .rightBlock .imgHolder .imgElement .imgInfoHolder .imgText {
+  width: 100%;
+}
+
+.contentBlock .rightBlock .imgHolder .imgElement .imgInfoHolder .imgBtns {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -72,13 +101,16 @@
           justify-content: space-between;
 }
 
-.contentBlock .content .imgElement > div > div {
-  width: 68%;
+.contentBlock .rightBlock .imgHolder .imgElement .imgInfoHolder .imgBtns .decl {
+  background-color: var(--clr-accent-500);
 }
 
-.contentBlock .content .imgElement > div > button {
-  width: 30%;
-  margin: 10px 0 0 0;
+.contentBlock .rightBlock .imgHolder .imgElement .imgInfoHolder .imgBtns > a {
+  text-align: center;
+  font-size: .75rem;
+  width: 50%;
+  padding: 1em;
+  margin: 10px 5px 0 5px;
   background-color: var(--clr-accent-400);
   border: none;
   border-radius: 5px;
@@ -86,7 +118,7 @@
   cursor: pointer;
 }
 
-.contentBlock .content .imgElement > div > button:hover {
+.contentBlock .rightBlock .imgHolder .imgElement .imgInfoHolder .imgBtns > a:hover {
   text-decoration: underline;
 }
 /*# sourceMappingURL=adminpanel.css.map */
