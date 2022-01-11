@@ -13,21 +13,23 @@ echo "<aside>
         <div class='container'>";
 
         foreach ($questions["Title"] as $index => $title) {
+            if($index < 3) {            
+                $title = $questions["Title"][$index];
+                $askDate = $questions["AskDate"][$index];
+                $id = $questions["Id"][$index];
+                echo "<div class='aside-element'>
+                        <a class='aside-element-title' href='questions.php?TitleId=$id'>$title</a>
+                        <div class='tags'>";
+                        $sql = "SELECT SubCategory FROM subtag WHERE Id IN (SELECT SubTagId FROM tag_question WHERE QuestionId = ?)";
 
-            $askDate = $questions["AskDate"][$index];
-            $id = $questions["Id"][$index];
-            echo "<div class='aside-element'>
-                    <a class='aside-element-title' href='questions.php?TitleId=$id'>$title</a>
-                    <div class='tags'>";
-                    $sql = "SELECT SubCategory FROM subtag WHERE Id IN (SELECT SubTagId FROM tag_question WHERE QuestionId = ?)";
-
-                    $tags = stmtExecute($conn, $sql, 1, "i", $id);
-                    foreach($tags["SubCategory"] as $index => $TagName) {
-                        echo "<p>$TagName</p>";
-                    }
-                    echo "</div>
-                    <p class='age'>".calculateDate($askDate)." ago</p>
-                </div>";
+                        $tags = stmtExecute($conn, $sql, 1, "i", $id);
+                        foreach($tags["SubCategory"] as $index => $TagName) {
+                            echo "<p>$TagName</p>";
+                        }
+                        echo "</div>
+                        <p class='age'>".calculateDate($askDate)." ago</p>
+                    </div>";
+            }
         } 
         echo "</div>
     </aside>";

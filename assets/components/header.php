@@ -35,9 +35,9 @@ if (isset($_POST['searchSubmit'])) {
     <div class="leftHeader">
         <a href="./main.php"><img src="../assets/img/lightlogo.svg" height="120" width="120" alt="logo"></a>
         <ul class="navtekst">
-            <li><a href="./askquestion.php">Ask a question</a></li>
-            <li><a href="./questions.php">Questions</a></li>
             <li><a href="./main.php">Videos</a></li>
+            <li><a href="./questions.php">Questions</a></li>
+            <li><a href="./askquestion.php">Ask a question</a></li>
         </ul>
     </div>
     <div class="rightHeader">
