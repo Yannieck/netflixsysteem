@@ -9,6 +9,11 @@
 //                                          //
 //////////////////////////////////////////////
 
+// $host = "rdbms.strato.de";
+// $user = "dbu208998";
+// $pwd = "cbdf44Zr79UTJ8t";
+// $db = "dbs4966586";
+
 $host = "localhost";
 $user = "root";
 $pwd = "";

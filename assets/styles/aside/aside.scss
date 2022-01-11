@@ -3,46 +3,44 @@ aside {
     background-color: var(--clr-neutral-600);
     color: var(--clr-neutral-100);
     padding: 2rem;
-    // width: 240px;
-    height: calc(95vh - 114px);
+    height: calc(100% - 4rem);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin: 0;
     border-right: 4px solid var(--clr-neutral-450);
     max-width: 240px;
-}
-
-aside>h2 {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 1rem;
-}
-
-.container {
-    width: 100%;
-    .aside-element {
-        border-bottom: 1px solid var(--clr-neutral-400);
+    h2 {
+        width: 100%;
+        text-align: center;
         margin-bottom: 1rem;
-        .aside-element-title {
-            color: var(--clr-accent-300);
-        }
-        .tags {
-            display: flex;
-            p {
-                background-color: var(--clr-neutral-500);
-                color: var(--clr-accent-350);
-                font-size: 0.8rem;
-                padding: 0.4rem 0.5rem;
-                border-radius: 0.25rem;
-                margin-right: 0.25rem;
+    }
+    .container {
+        width: 100%;
+        display: block;
+        .aside-element {
+            border-bottom: 1px solid var(--clr-neutral-400);
+            margin-bottom: 1rem;
+            .aside-element-title {
+                color: var(--clr-accent-300);
             }
-        }
-        .age {
-            color: var(--clr-neutral-400);
-            width: 100%;
-            text-align: right;
-            font-size: 0.8rem;
+            .tags {
+                display: flex;
+                p {
+                    background-color: var(--clr-neutral-500);
+                    color: var(--clr-accent-350);
+                    font-size: 0.8rem;
+                    padding: 0.4rem 0.5rem;
+                    border-radius: 0.25rem;
+                    margin-right: 0.25rem;
+                }
+            }
+            .age {
+                color: var(--clr-neutral-400);
+                width: 100%;
+                text-align: right;
+                font-size: 0.8rem;
+            }
         }
     }
 }

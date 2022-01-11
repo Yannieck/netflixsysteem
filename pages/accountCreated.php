@@ -10,7 +10,7 @@
 <body>
     <div class="background center">
         <a href="./landingpage.php"><img class="logo" src="../assets/img/lightlogo.svg" alt="logo"></a>
-        <div class="content">
+        <div class="page">
             <h1>Account created</h1>
             <p>Your account had been created. You can log in now.</p>
             <a href="./login.php" class="button">Log in</a>

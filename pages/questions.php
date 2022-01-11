@@ -18,7 +18,7 @@ require '../utils/functions.php';
    <?php 
    require_once '../assets/components/header.php'; 
    ?> 
-   <div class="container">
+   <div class="page">
        <?php
         require_once '../assets/components/aside.php';
 
@@ -27,7 +27,7 @@ require '../utils/functions.php';
             
             $id = filter_input(INPUT_GET, "TitleId", FILTER_VALIDATE_INT);
 
-            $sql = "SELECT Title,Content,AskDate,AccountId FROM question WHERE Id = ?";
+            $sql = "SELECT Title, Content, AskDate, AccountId FROM question WHERE Id = ?";
             $info = stmtExecute($conn, $sql, 1, 'i', $id);
 
             if(isset($_GET['bookmark'])) {
@@ -61,11 +61,11 @@ require '../utils/functions.php';
             $title = $info['Title'][0];
             $askDate = $info['AskDate'][0];
             $content = $info['Content'][0]; 
-            $content = str_replace('%10;', "</p><p>", $content);
-            $content = str_replace('%11;', "</p><pre><code>", $content);
-            $content = str_replace('%12;', "</code></pre><p>", $content);
-            $content = str_replace('%13;', "\t", $content);
-            $content = str_replace('%14;', "\n", $content);
+            $content = str_replace('%10;', "</p><p>", $content);            // Enter
+            $content = str_replace('%11;', "</p><pre><code>", $content);    // Start Code Block
+            $content = str_replace('%12;', "</code></pre><p>", $content);   // Einde Code block
+            $content = str_replace('%13;', "\t", $content);                 // Tab in de code block
+            $content = str_replace('%14;', "\n", $content);                 // Enter in de code block
 
         
             echo "<div class='specific__question'>
@@ -96,7 +96,7 @@ require '../utils/functions.php';
                     <div class='question__content'>
                         <div class='profile'>";
 
-                            $sql = "SELECT Username,Name,Photo FROM account WHERE Id = ?";
+                            $sql = "SELECT Username, Name, Photo FROM account WHERE Id = ?";
                             $profileInfo = stmtExecute($conn, $sql, 1, "i", $accountId);
 
                             $name = ($profileInfo['Username'][0] !== NULL) ? $profileInfo['Username'][0] : $profileInfo['Name'][0];
@@ -115,7 +115,7 @@ require '../utils/functions.php';
                     </div>
                 </div>";
                 
-                $sql = "SELECT AccountId,Content,CommentDate,VideoId FROM comment WHERE QuestionId = ?";
+                $sql = "SELECT AccountId, Content, CommentDate, VideoId FROM comment WHERE QuestionId = ?";
                 $comments = stmtExecute($conn, $sql, 1, "i", $id);
                 if($comments) {
 
@@ -129,7 +129,7 @@ require '../utils/functions.php';
                     <div class='profile'>
                         <div class='profile__picture'>";
 
-                            $sql = "SELECT Username,Name,Photo FROM account WHERE Id = ?";
+                            $sql = "SELECT Username, Name, Photo FROM account WHERE Id = ?";
                             $profileInfo = stmtExecute($conn, $sql, 1, "i", $accountId);
 
                             $name = ($profileInfo['Username'][0] !== NULL) ? $profileInfo['Username'][0] : $profileInfo['Name'][0];
@@ -147,7 +147,7 @@ require '../utils/functions.php';
                     <div class='comment__content'>
                         <div class='card'>";
 
-                            $sql = "SELECT File,Thumbnail FROM video WHERE Id = ?";
+                            $sql = "SELECT File, Thumbnail FROM video WHERE Id = ?";
                             $videoInfo = stmtExecute($conn, $sql, 1, "i", $video);
 
                             $videoFile = '../assets/upload/videos/'.$videoInfo['File'][0];
@@ -164,16 +164,32 @@ require '../utils/functions.php';
                         <div class='comment__text'>
                             <p>$content</p>
                         </div>
-                    </div>
-                </div>";
+                    </div>";
+                } else {
+                    echo "<form action='?TitleId=$id&uploadVideo' enctype='multipart/form-data'>
+                        <div class='form__container'>
+                            <div class='top'>
+                                <div class='left'>
+                                    <input type='text' placeholder='Title'>
+                                    <textarea name='description' id='description' placeholder='Description'></textarea>
+                                </div>
+                                <div class='file'>
+                                    <input type=file hidden id='choose' accept='video/*'>
+                                    <input type='button' onClick='getFile.simulate();' value='Upload a Video'>
+                                    <label id='selected'>Nothing video selected</label>
+                                </div>
+                            </div>
+                            
+                            <input type='submit' value='Answer'>
+                        </div>
+                    </form>";
                 }
-            echo "</div>";
-
+            echo "</div></div>";
 
         } else {
 
         // Else
-            $sql = "SELECT Id,Title,AskDate FROM question ORDER BY AskDate DESC";
+            $sql = "SELECT Id, Title, AskDate FROM question ORDER BY AskDate DESC";
             $questions = stmtExecute($conn, $sql, 2);
 
             echo "<div class='questions__wrapper'>";
@@ -219,9 +235,12 @@ require '../utils/functions.php';
         // jQuery for: document.getElementsByClassName('.card') and listen to onHover and play hoverVideo, else play hideVideo.
         $('.card').hover(hoverVideo, hideVideo);
         var video = document.getElementById('commentVideo');
-        video.disablePictureInPicture = true;
+        if(video) {
+            video.disablePictureInPicture = true;
+        }
         var img = document.getElementById('card-top');
         var videoEnd;
+        var checkVideo;
 
         // Show or hide the element in CSS
         function hide(element) {
@@ -232,11 +251,11 @@ require '../utils/functions.php';
         }
 
         // Set interval during the play time of the video
-        const checkVideo = setInterval(() => {
+        function checkVideoTime() {
             if(video.currentTime >= videoEnd) {
                 hideVideo();
             }
-        }, 1000);
+        }
 
         function checkVideoDuration() {
             // Video must be 100 seconds or longer. This so you don't see alot of the video.
@@ -273,7 +292,7 @@ require '../utils/functions.php';
                 hide(img);  
 
                 // Check the video current time during the play time of the video
-                checkVideo;
+                checkVideo = setInterval(checkVideoTime, 1000);
             }
         }
 
@@ -301,6 +320,11 @@ require '../utils/functions.php';
             bookmarkIcon.toggleClass("fas");
             window.location = 'questions.php?TitleId=' + id + '&bookmark';
         }
+   </script>
+   <script src="https://rawgit.com/thielicious/selectFile.js/master/selectFile.js"></script>
+   <script>
+        var getFile = new selectFile;
+        getFile.targets('choose','selected');
    </script>
 </body>
 </html>

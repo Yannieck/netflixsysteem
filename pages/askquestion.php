@@ -15,7 +15,7 @@ include_once("../utils/dbconnect.php");
 
 <body>
     <?php include_once("../assets/components/header.php"); ?>
-    <div class="flex">
+    <div class="page">
         <?php include_once("../assets/components/aside.php"); ?>
         <div class="pageContent">
             <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">

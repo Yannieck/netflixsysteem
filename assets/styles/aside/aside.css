@@ -3,7 +3,7 @@ aside {
   background-color: var(--clr-neutral-600);
   color: var(--clr-neutral-100);
   padding: 2rem;
-  height: calc(95vh - 114px);
+  height: calc(100% - 4rem);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -19,32 +19,33 @@ aside {
   max-width: 240px;
 }
 
-aside > h2 {
+aside h2 {
   width: 100%;
   text-align: center;
   margin-bottom: 1rem;
 }
 
-.container {
+aside .container {
   width: 100%;
+  display: block;
 }
 
-.container .aside-element {
+aside .container .aside-element {
   border-bottom: 1px solid var(--clr-neutral-400);
   margin-bottom: 1rem;
 }
 
-.container .aside-element .aside-element-title {
+aside .container .aside-element .aside-element-title {
   color: var(--clr-accent-300);
 }
 
-.container .aside-element .tags {
+aside .container .aside-element .tags {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.container .aside-element .tags p {
+aside .container .aside-element .tags p {
   background-color: var(--clr-neutral-500);
   color: var(--clr-accent-350);
   font-size: 0.8rem;
@@ -53,7 +54,7 @@ aside > h2 {
   margin-right: 0.25rem;
 }
 
-.container .aside-element .age {
+aside .container .aside-element .age {
   color: var(--clr-neutral-400);
   width: 100%;
   text-align: right;

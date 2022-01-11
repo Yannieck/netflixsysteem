@@ -59,26 +59,25 @@ body {
   text-align: center;
 }
 
-.container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  height: calc(100vh - 100px);
-  overflow-y: hidden;
+.profile img {
+  width: 64px;
+  aspect-ratio: 1.0;
 }
 
-.container .questions__wrapper, .container .specific__question {
+.questions__wrapper,
+.specific__question {
   font-size: .9rem;
   margin: 0 auto;
   overflow-y: scroll;
   scrollbar-width: none;
 }
 
-.container .questions__wrapper::-webkit-scrollbar, .container .specific__question::-webkit-scrollbar {
+.questions__wrapper::-webkit-scrollbar,
+.specific__question::-webkit-scrollbar {
   display: none;
 }
 
-.container .questions__wrapper {
+.questions__wrapper {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -86,31 +85,31 @@ body {
   margin-top: 20px;
 }
 
-.container .questions__wrapper .question {
+.questions__wrapper .question {
   min-width: inherit;
   margin-bottom: 30px;
   padding-bottom: 10px;
   border-bottom: 1px solid #7d7d7d;
 }
 
-.container .questions__wrapper .question .question__title {
+.questions__wrapper .question .question__title {
   font-size: .8rem;
 }
 
-.container .questions__wrapper .question .question__title a {
+.questions__wrapper .question .question__title a {
   color: var(--clr-accent-300);
 }
 
-.container .questions__wrapper .question .question__title a:hover {
+.questions__wrapper .question .question__title a:hover {
   -webkit-filter: brightness(0.8);
           filter: brightness(0.8);
 }
 
-.container .specific__question {
+.specific__question {
   width: 60%;
 }
 
-.container .specific__question .question__head {
+.specific__question .question__head {
   padding: 20px;
   border-bottom: 1px solid #7d7d7d;
   display: -webkit-box;
@@ -121,15 +120,15 @@ body {
           justify-content: space-between;
 }
 
-.container .specific__question .question__head .main__info {
+.specific__question .question__head .main__info {
   width: 80%;
 }
 
-.container .specific__question .question__head .main__info .question__title {
+.specific__question .question__head .main__info .question__title {
   font-weight: 700;
 }
 
-.container .specific__question .question__head .main__info .question__info {
+.specific__question .question__head .main__info .question__info {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -141,41 +140,41 @@ body {
           justify-content: unset;
 }
 
-.container .specific__question .question__head .main__info .question__info .question__tags {
+.specific__question .question__head .main__info .question__info .question__tags {
   margin-left: 10%;
 }
 
-.container .specific__question .question__head i {
+.specific__question .question__head i {
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
   font-size: 2rem;
 }
 
-.container .specific__question .question__head i:hover {
+.specific__question .question__head i:hover {
   color: var(--clr-accent-400);
   cursor: pointer;
 }
 
-.container .specific__question .question__content {
+.specific__question .question__content {
   padding: 50px 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.container .specific__question .question__content .question__main {
+.specific__question .question__content .question__main {
   width: 80%;
   margin: 0 auto;
 }
 
-.container .specific__question .question__content .question__main code {
+.specific__question .question__content .question__main code {
   margin: 15px 0;
   border-radius: 10px;
   background-color: var(--clr-neutral-600);
 }
 
-.container .comments {
+.comments {
   border-top: 1px solid #7d7d7d;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -183,7 +182,7 @@ body {
   padding: 50px 20px;
 }
 
-.container .comments .comment__content {
+.comments .comment__content {
   width: 80%;
   margin: 0 auto;
   display: -webkit-box;
@@ -191,24 +190,132 @@ body {
   display: flex;
 }
 
-.container .comments .profile {
+.comments .profile {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
 
-.container .comments .card {
+.comments .card {
   width: 40%;
   margin-right: 15px;
 }
 
-.container .comments .card img, .container .comments .card video {
+.comments .card img,
+.comments .card video {
   width: 100%;
   height: 100%;
 }
 
-.container .comments .card video {
+.comments .card video {
   display: none;
   pointer-events: none;
+}
+
+form {
+  border-top: 1px solid #7d7d7d;
+}
+
+form .form__container {
+  width: 80%;
+  margin: 0 auto;
+  padding-top: 50px;
+}
+
+form .form__container .top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+form .form__container .top .left {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+  margin-right: 10px;
+}
+
+form .form__container .top input:not(input[type="button"]),
+form .form__container .top textarea {
+  border: 2px solid var(--clr-neutral-200);
+  background-color: var(--clr-neutral-700);
+  padding: 0.8rem;
+  color: var(--clr-neutral-200);
+}
+
+form .form__container .top input:not(input[type="button"])::-webkit-input-placeholder,
+form .form__container .top textarea::-webkit-input-placeholder {
+  color: var(--clr-neutral-100);
+  opacity: 1;
+}
+
+form .form__container .top input:not(input[type="button"]):-ms-input-placeholder,
+form .form__container .top textarea:-ms-input-placeholder {
+  color: var(--clr-neutral-100);
+  opacity: 1;
+}
+
+form .form__container .top input:not(input[type="button"])::-ms-input-placeholder,
+form .form__container .top textarea::-ms-input-placeholder {
+  color: var(--clr-neutral-100);
+  opacity: 1;
+}
+
+form .form__container .top input:not(input[type="button"])::placeholder,
+form .form__container .top textarea::placeholder {
+  color: var(--clr-neutral-100);
+  opacity: 1;
+}
+
+form .form__container .top textarea {
+  resize: none;
+  margin-top: 20px;
+  height: 150px;
+}
+
+form .form__container .top .file {
+  margin-left: 10px;
+  width: 100%;
+  border: 2px solid var(--clr-neutral-200);
+  background-color: var(--clr-neutral-700);
+  padding: 0.8rem;
+  color: var(--clr-neutral-200);
+}
+
+form .form__container input[type="submit"] {
+  margin-top: 20px;
+  padding: 10px 50px;
+}
+
+form .form__container input[type="button"] {
+  padding: 10px 20px;
+  margin-right: 10px;
+}
+
+form .form__container input[type="submit"],
+form .form__container input[type="button"] {
+  background-color: var(--clr-accent-400);
+  border: none;
+  color: var(--clr-neutral-100);
+  border-radius: 10px;
+}
+
+form .form__container input[type="submit"]:hover,
+form .form__container input[type="button"]:hover {
+  opacity: .8;
+  cursor: pointer;
+}
+
+form .form__container input:focus,
+form .form__container textarea:focus {
+  outline: none;
 }
 /*# sourceMappingURL=style.css.map */
