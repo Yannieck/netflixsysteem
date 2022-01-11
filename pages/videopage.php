@@ -26,38 +26,56 @@ include_once("../utils/functions.php");
                 if (filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT)) {
                     // Haal de informatie op over het filmpje.
                     $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
-                    $sql = "SELECT question.Title, video.Description, account.Name, video.File, video.UploadDate, question.Id FROM video, account, question WHERE video.Id = ? AND account.Id = video.AccountId AND question.Id = video.QuestionId;";
+                    $sql = "SELECT video.Id, question.Title, video.Description, account.Name, video.File, video.UploadDate, question.Id FROM video, account, question WHERE video.Id = ? AND account.Id = video.AccountId AND question.Id = video.QuestionId;";
                     $stmt = mysqli_prepare($conn, $sql);
                     mysqli_stmt_bind_param($stmt, 'i', $id);
                     mysqli_stmt_execute($stmt);
-                    mysqli_stmt_bind_result($stmt, $title, $desc, $creator, $filename, $uploadDate, $questionId);
+                    mysqli_stmt_bind_result($stmt, $videoId, $title, $desc, $creator, $filename, $uploadDate, $questionId);
                     mysqli_stmt_store_result($stmt);
                     mysqli_stmt_fetch($stmt);
 
                     // Kijk of er een resultaat is.
                     if (mysqli_stmt_num_rows($stmt) > 0) {
                         // Laat het filmpje zien.
+                        mysqli_stmt_close($stmt)
             ?>
+                        <!-- HTML van het video element en de teksten er omheen. -->
                         <div class="largeVideoContainer">
+                            <!-- Titel. -->
                             <div class="titleObj">
                                 <h2><?php echo $title ?></h2>
                             </div>
+                            <!-- Video en de teksten. -->
                             <div class="videoHolder">
+                                <!-- De video. -->
                                 <video controls autoplay controlslist="nodownload">
                                     <source src="<?php echo "../assets/upload/videos/" . $filename ?>">
                                 </video>
+                                <!-- De info onder de video. -->
                                 <div class="infoHolder">
-                                    <!-- Creator tekst en upload datum -->
+                                    <!-- Creator tekst en upload datum. -->
                                     <div>
                                         <p>Uploaded by: <span><?php echo $creator ?></span></p>
                                         <p>Uploaded: <span><?php echo calculateDate($uploadDate) ?> ago</span></p>
                                     </div>
-                                    <!-- Likes/dislikes -->
+                                    <!-- Likes/dislikes. -->
                                     <div>
-                                        <p><span>LIKES/DISLIKES</span></p>
+                                        <?php
+                                        // Query om de likes / dislikes op te halen
+                                        $sql = "SELECT (SELECT COUNT(`like`.`Type`) FROM `like`,video WHERE `like`.`VideoId` = video.Id AND video.Id = ? AND `like`.`Type` = 1), (SELECT COUNT(`like`.`Type`) FROM `like`,video WHERE `like`.`VideoId` = video.Id AND video.Id = ? AND `like`.`Type` = 0);";
+                                        $stmt = mysqli_prepare($conn, $sql);
+                                        mysqli_stmt_bind_param($stmt, 'ii', $videoId, $videoId);
+                                        mysqli_stmt_execute($stmt);
+                                        mysqli_stmt_bind_result($stmt, $likes, $dislikes);
+                                        mysqli_stmt_store_result($stmt);
+                                        mysqli_stmt_fetch($stmt);
+                                        ?>
+                                        <!-- De likes / dislike display -->
+                                        <p><i class='far fa-thumbs-up'></i>&nbsp;<?php echo $likes ?>&nbsp;&nbsp;<i class="far fa-thumbs-down">&nbsp;<?php echo $dislikes ?></i></p>
                                     </div>
                                 </div>
                             </div>
+                            <!-- Link naar de orginele vraag. -->
                             <div class="questionLink">
                                 <p>View the original question: &nbsp;</p>
                                 <a href="questions.php?TitleId=<?php echo $questionId ?>"><?php echo $title ?></a>
@@ -77,6 +95,7 @@ include_once("../utils/functions.php");
         </div>
     </div>
 </body>
+
 <?php include_once("../utils/dbclose.php"); ?>
 
 </html>
