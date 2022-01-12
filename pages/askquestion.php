@@ -35,7 +35,8 @@ include_once("../utils/dbconnect.php");
                 $account=$_SESSION ["userId"]; 
                 $content=$_POST ["text"];
                 $sql = "INSERT INTO question (Title, AccountId, Content) VALUES (?, ?, ?)";
-                stmtExecute($conn, $sql, 1, "sis", $title, $account, $content)
+                
+                stmtExecute($conn, $sql, 1, "sis", $title, $account, $content);
             }
             
             
