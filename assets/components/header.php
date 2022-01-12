@@ -1,26 +1,19 @@
 <?php
-$isAdmin = function () use ($conn) {
-    $userId = $_SESSION['userId'];
-    $query = "SELECT `MembershipName` FROM `account` WHERE `account`.`Id` = ?";
+require_once '../utils/dbconnect.php';
+require_once '../utils/functions.php';
 
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, 'i', $userId);
+$userId = $_SESSION['userId'];
+$isAdmin = function () use ($conn, $userId) {
+    $sql = "SELECT MembershipName FROM account WHERE Id = ?";
 
-    mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+    $results = stmtExecute($conn, $sql, 1, "i", $userId);
 
-    mysqli_stmt_bind_result($stmt, $membershipName) or die(mysqli_error($conn));
-    mysqli_stmt_store_result($stmt);
-
-    mysqli_stmt_fetch($stmt);
-
-    if (mysqli_stmt_num_rows($stmt) > 0) {
-        if ($membershipName === "Admin") {
-            return true;
-        } else {
-            return false;
-        }
+    $membershipName = $results["MembershipName"][0];
+    if ($membershipName === "Admin") {
+        return true;
+    } else {
+        return false;
     }
-    mysqli_stmt_close($stmt);
 };
 
 
@@ -35,9 +28,9 @@ if (isset($_POST['searchSubmit'])) {
     <div class="leftHeader">
         <a href="./main.php"><img src="../assets/img/lightlogo.svg" height="120" width="120" alt="logo"></a>
         <ul class="navtekst">
+            <li><a href="./askquestion.php">Ask a question</a></li>
             <li><a href="./main.php">Videos</a></li>
             <li><a href="./questions.php">Questions</a></li>
-            <li><a href="./askquestion.php">Ask a question</a></li>
         </ul>
     </div>
     <div class="rightHeader">
@@ -52,7 +45,75 @@ if (isset($_POST['searchSubmit'])) {
             <li>
                 <i onclick="showNotificationMenu()" class="fas fa-bell fa-2x">
                     <div id="notificationMenu" class="overlayHover notificationHover">
-                        <a href="#">Test</a>
+                        <?php 
+                        $results = checkNotifications($conn, $userId); 
+                        // debug($results);
+
+                        // Notification is gekoppeld aan de vraag of bookmark
+                        if(is_array($results) && (($results["TotalBookmarks"] > 0 || $results["TotalQuestions"] > 0))) {
+
+                            $sqlAccount = "SELECT Name, Username, Photo
+                                        FROM account 
+                                        WHERE Id = ?";
+
+                            $sqlComment = "SELECT AccountId, Content, QuestionId, CommentDate FROM comment WHERE Id = ?";
+                            $sqlQuestion = "SELECT Title FROM question WHERE Id = ?";
+
+                            for($i = 0; $i < count($results["All"]); $i++) {
+                                $commentId = $results["All"][$i];
+                                $getComment = stmtExecute($conn, $sqlComment, 1, "i", $commentId);
+
+                                $byID = $getComment['AccountId'][0];
+                                $getAccountName = stmtExecute($conn, $sqlAccount, 1, "i", $byID);
+
+                                $questionId = $getComment["QuestionId"][0];
+                                $getQuestionTitle = stmtExecute($conn, $sqlQuestion, 1, "i", $questionId);
+
+                                $title = $getQuestionTitle['Title'][0];
+                                $content = $getComment['Content'][0];
+                                $time = $getComment['CommentDate'][0];
+                                
+                                $name = ($getAccountName["Name"][0] == "Unknown") ? $getAccountName["Username"][0] : $getAccountName["Name"][0];
+                                $path = ($getAccountName["Photo"][0] == NULL) ? "unknown.png"  : $getAccountName["Photo"][0] ;
+
+                                echo "<div class='notification'>
+                                    <div class='profile'>
+                                        <div class='profile__picture'>
+                                            <img src='../assets/img/profiles/$path' alt='$name'>
+                                        </div>
+                                        <div class='profile__name'>
+                                            <p>$name</p>
+                                        </div>
+                                    </div>
+                                    <div class='content'>
+                                        <div class='type'>
+                                            <a href='questions.php?TitleId=$questionId'>";
+                                                if (is_array($results["Bookmark"]) && in_array($commentId, $results["Bookmark"])) {
+                                                    echo "<h4>$name replied to a bookmarked question.</h4>";
+                                                } else {
+                                                    echo "<h4>$name replied to your question.</h4>";
+                                                }
+                                            echo "</a>
+                                            <p>$title<p>
+                                        </div>
+                                        <div class='msg'>
+                                            <p>$content</p>
+                                        </div>
+                                    </div>
+                                    <div class='time'>
+                                        <p>";
+                                            $time = calculateDate($time);
+                                            $time = str_replace(",", ",<br>",$time);
+                                        echo "$time ago</p>
+                                    </div>
+                                </div>";
+                            }
+                            
+                        } else {
+                            echo "<p>No Notifications Available.</p>";
+                        }
+
+                        ?>
                     </div>
                 </i>
             </li>

@@ -116,6 +116,16 @@ CREATE TABLE IF NOT EXISTS `tag_question` (
     CONSTRAINT FOREIGN KEY (QuestionId) REFERENCES question(Id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS `notification` (
+    AccountId INT NOT NULL,
+    CommentId INT NOT NULL,
+    isSeen BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT PRIMARY KEY (AccountId, CommentId),
+    CONSTRAINT FOREIGN KEY (AccountId) REFERENCES account(Id) ON DELETE NO ACTION ON UPDATE CASCADE,
+    CONSTRAINT FOREIGN KEY (CommentId) REFERENCES comment(Id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 INSERT INTO `membership` (`Name`, `Price`) VALUES ('Junior', 09.99);
 INSERT INTO `membership` (`Name`, `Price`) VALUES ('Senior', 14.99);
 INSERT INTO `membership` (`Name`) VALUES ('Admin');

@@ -27,6 +27,7 @@ header {
         i:hover {
             cursor: pointer;
             color: var(--clr-accent-400);
+            
         }
     }
     a {
@@ -100,10 +101,68 @@ header {
 }
 
 .notificationHover {
-    width: 250px;
-    height: 200px;
+    min-width: 400px;
+    max-width: 600px;
+    min-height: fit-content;
+    max-height: 500px;
+    overflow-y: scroll;
     top: 30px;
-    right: 0;
+    right: -50px;
+    cursor: default;
+    .notification {
+        display: flex;
+        width: fit-content;
+        margin: 0 10px;
+        padding: 20px 10px;
+        &:not(:first-child) {
+            margin: 10px;
+            border-top: 1px solid var(--clr-accent-400);
+        }
+        p {
+            font-size: .8rem;
+            &:hover {
+                text-decoration: none;
+            }
+        }
+        .profile {
+            text-align: center;
+            align-self: center;
+            width: 70px;
+            img {
+                width: 30px;
+                aspect-ratio: 1.0;
+            }
+            .profile__name {
+                width: inherit;
+                word-break: break-all;
+            }
+        }
+        .content {
+            width: 100%;
+            margin: 0 20px;
+            .type {
+                a {
+                    font-size: .9rem;
+                    color: var(--clr-accent-300);
+                    width: max-content;
+                }
+                margin-bottom: 10px;
+                p {
+                    color: var(--clr-neutral-400);
+                    font-style: italic;
+                }
+            }    
+        }
+        .time {
+            width: fit-content;
+            align-self: end;
+            p {
+                width: max-content;
+                color: var(--clr-neutral-400);
+                font-size: .8rem;
+            }
+        }
+    }
 }
 
 .accountHover {

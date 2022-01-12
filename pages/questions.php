@@ -16,6 +16,30 @@ require '../utils/functions.php';
 </head>
 <body>
    <?php 
+    if(isset($_GET["TitleId"]) && $_GET["TitleId"] == filter_input(INPUT_GET, "TitleId", FILTER_VALIDATE_INT)) {
+                
+        $id = filter_input(INPUT_GET, "TitleId", FILTER_VALIDATE_INT);
+        // Check bookmarks
+        if(isset($_GET['Bookmark'])) {
+            $sql = "SELECT AccountId FROM bookmark WHERE QuestionId = ?";
+            $bookmarks = stmtExecute($conn, $sql, 1, "i", $id);
+            $type = $_GET['Bookmark'];                
+
+            if($type == 'del' && is_array($bookmarks) && in_array($_SESSION['userId'], $bookmarks['AccountId'])) {
+                $id = filter_input(INPUT_GET, "TitleId", FILTER_VALIDATE_INT);
+                $accId = $_SESSION['userId'];
+                $sql = "DELETE FROM bookmark WHERE QuestionId = ? AND AccountId = ?";
+                stmtExecute($conn, $sql, 1, "ii", $id, $accId);
+
+            } else if ($type == 'add' && !(is_array($bookmarks) && in_array($_SESSION['userId'], $bookmarks['AccountId']))) {
+                $id = filter_input(INPUT_GET, "TitleId", FILTER_VALIDATE_INT);
+                $accId = $_SESSION['userId'];
+                $sql = "INSERT IGNORE INTO bookmark (AccountId, QuestionId) VALUES (?, ?)";
+                stmtExecute($conn, $sql, 1, "ii", $accId, $id);
+            }
+        }
+    }
+
    require_once '../assets/components/header.php'; 
    ?> 
    <div class="page">
@@ -36,32 +60,12 @@ require '../utils/functions.php';
 
             $sql = "SELECT Title, Content, AskDate, AccountId FROM question WHERE Id = ?";
             $info = stmtExecute($conn, $sql, 1, 'i', $id);
-        
-
-            // Check bookmarks
-            if(isset($_GET['Bookmark'])) {
-                $sql = "SELECT AccountId FROM bookmark WHERE QuestionId = ?";
-                $bookmarks = stmtExecute($conn, $sql, 1, "i", $id);
-                $type = $_GET['Bookmark'];                
-            
-                if($type == 'del' && is_array($bookmarks) && in_array($_SESSION['userId'], $bookmarks['AccountId'])) {
-                    $id = filter_input(INPUT_GET, "TitleId", FILTER_VALIDATE_INT);
-                    $accId = $_SESSION['userId'];
-                    $sql = "DELETE FROM bookmark WHERE QuestionId = ? AND AccountId = ?";
-                    stmtExecute($conn, $sql, 1, "ii", $id, $accId);
-
-                } else if ($type == 'add' && !(is_array($bookmarks) && in_array($_SESSION['userId'], $bookmarks['AccountId']))) {
-                    $id = filter_input(INPUT_GET, "TitleId", FILTER_VALIDATE_INT);
-                    $accId = $_SESSION['userId'];
-                    $sql = "INSERT INTO bookmark (AccountId, QuestionId) VALUES (?, ?)";
-                    if(stmtExecute($conn, $sql, 1, "ii", $accId, $id)) {
-                        echo "this worked!";
-                    }
-                }
-            }
             
             $sql = "SELECT AccountId FROM bookmark WHERE QuestionId = ?";
             $bookmarks = stmtExecute($conn, $sql, 1, "i", $id);
+
+            $sql = "SELECT AccountId, Content, CommentDate, VideoId FROM comment WHERE QuestionId = ?";
+            $comments = stmtExecute($conn, $sql, 1, "i", $id);
 
             if(is_array($bookmarks) && in_array($_SESSION['userId'], $bookmarks['AccountId'])) {
                 $mark = 'fas';
@@ -112,9 +116,11 @@ require '../utils/functions.php';
 
                                 echo "</div>
                             </div>
-                        </div>
-                        <i class='$mark fa-bookmark' id='bookmarkIcon' onclick='bookmark($id);'></i>
-                    </div>
+                        </div>";
+                        if($accountId != $_SESSION['userId'] && !is_array($comments)) {
+                            echo "<i class='$mark fa-bookmark' id='bookmarkIcon' onclick='bookmark($id);'></i>";
+                        }
+                    echo "</div>
                     <div class='question__content'>
                         <div class='profile'>";
 
@@ -143,8 +149,6 @@ require '../utils/functions.php';
                     </div>
                 </div>";
                 
-                $sql = "SELECT AccountId, Content, CommentDate, VideoId FROM comment WHERE QuestionId = ?";
-                $comments = stmtExecute($conn, $sql, 1, "i", $id);
                 if(is_array($comments)) {
 
                     $accountId = $comments['AccountId'][0];
