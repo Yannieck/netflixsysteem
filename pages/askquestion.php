@@ -30,13 +30,12 @@ include_once("../utils/dbconnect.php");
             <!-- <p id="output"> -->
             <?php
             
-            if (isset($_POST["sumbit"])){ 
+            if (isset($_POST["submit"])){ 
                 $title=$_POST ["title"]; 
-                $account=$_SESSION ["userId"];
+                $account=$_SESSION ["userId"]; 
                 $content=$_POST ["text"];
                 $sql = "INSERT INTO question (Title, AccountId, Content) VALUES (?, ?, ?)";
-                // stmtExecute($conn, $sql, 1, "sis", $title, $account, $content);
-                if (stmtExecute($conn, $sql, 1, "sis", $title, $account, $content)) {echo "test";}
+                stmtExecute($conn, $sql, 1, "sis", $title, $account, $content)
             }
             
             
