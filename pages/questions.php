@@ -17,12 +17,11 @@ require '../utils/functions.php';
 <body>
    <?php 
     if(isset($_GET["TitleId"]) && $_GET["TitleId"] == filter_input(INPUT_GET, "TitleId", FILTER_VALIDATE_INT)) {
-        
-        // If GET["uploadVideo"] is set
-        if(isset($_GET["uploadVideo"])) {
+
+        // if a comment is placed
+        if(isset($_POST["submit"])) {
             require_once '../utils/checkfile.php';
             uploadFile($conn, $_FILES['video'], $_FILES['thumbnail']);
-            header("Location: questions.php?TitleId=".$_GET["TitleId"]);
         }
                 
         $id = filter_input(INPUT_GET, "TitleId", FILTER_VALIDATE_INT);
@@ -203,7 +202,7 @@ require '../utils/functions.php';
                         </div>
                     </div>";
                 } else {
-                    echo "<form action='?TitleId=$id&uploadVideo' enctype='multipart/form-data' method='POST'>
+                    echo "<form action='?TitleId=$id' enctype='multipart/form-data' method='POST'>
                         <div class='form__container'>
                             <div class='top'>
                                 <div class='left'>
