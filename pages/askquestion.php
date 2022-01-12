@@ -30,13 +30,16 @@ include_once("../utils/dbconnect.php");
             <!-- <p id="output"> -->
             <?php
             
-            // function stmtExecute($connection, string $sql, int $code, string $ParamChars = NULL, ...$BindParamVars) : ?array
+            if (isset($_POST["sumbit"])){ 
+                $title=$_POST ["title"]; 
+                $account=$_SESSION ["userId"];
+                $content=$_POST ["text"];
+                $sql = "INSERT INTO question (Title, AccountId, Content) VALUES (?, ?, ?)";
+                // stmtExecute($conn, $sql, 1, "sis", $title, $account, $content);
+                if (stmtExecute($conn, $sql, 1, "sis", $title, $account, $content)) {echo "test";}
+            }
             
             
- 
-            
-            $sql = "INSERT INTO question (Title, AccountId, Content) VALUES (?, ?, ?)";
-            stmtExecute($conn, $sql, 1, "sis", $title, $account, $content);
 
 
             // echo htmlentities($_POST['title']);
@@ -65,7 +68,7 @@ include_once("../utils/dbconnect.php");
             //         echo '<span style="color:red;"> Title is required! </span>';
             //     }
             // }
-            // ?>
+            // ?>   
             <!-- </p> -->
         </div>
     </div>
