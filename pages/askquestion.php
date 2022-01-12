@@ -32,8 +32,7 @@ include_once("../utils/dbconnect.php");
             
             // function stmtExecute($connection, string $sql, int $code, string $ParamChars = NULL, ...$BindParamVars) : ?array
             
-            // $_GET["title"]; 
-            // $_GET["text"];
+            
  
             
             $sql = "INSERT INTO question (Title, AccountId, Content) VALUES (?, ?, ?)";
