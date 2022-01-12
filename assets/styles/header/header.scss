@@ -24,10 +24,23 @@ header {
         height: 100%;
         display: flex;
         align-items: center;
-        i:hover {
-            cursor: pointer;
-            color: var(--clr-accent-400);
-            
+        li {
+            // position: absolute;
+            .new::after {    
+                content: '';
+                position: absolute;
+                top: -2px;
+                right: -2px;
+                display: block;
+                border-radius: 50%;
+                background-color: var(--clr-accent-500);
+                width: 10px;
+                aspect-ratio: 1.0;
+            }
+            &:hover {
+                cursor: pointer;
+                color: var(--clr-accent-400);
+            }
         }
     }
     a {
@@ -107,6 +120,10 @@ header {
 }
 
 .notificationHover {
+    display: none;
+    &.show {
+        display: block;
+    }
     min-width: 400px;
     max-width: 600px;
     min-height: fit-content;

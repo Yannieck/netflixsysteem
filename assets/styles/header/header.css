@@ -46,7 +46,19 @@ header .navicons {
           align-items: center;
 }
 
-header .navicons i:hover {
+header .navicons li .new::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  display: block;
+  border-radius: 50%;
+  background-color: var(--clr-accent-500);
+  width: 10px;
+  aspect-ratio: 1.0;
+}
+
+header .navicons li:hover {
   cursor: pointer;
   color: var(--clr-accent-400);
 }
@@ -141,6 +153,7 @@ header li i {
 }
 
 .notificationHover {
+  display: none;
   min-width: 400px;
   max-width: 600px;
   min-height: -webkit-fit-content;
@@ -151,6 +164,10 @@ header li i {
   top: 30px;
   right: -50px;
   cursor: default;
+}
+
+.notificationHover.show {
+  display: block;
 }
 
 .notificationHover .notification {

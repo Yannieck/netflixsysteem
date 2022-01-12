@@ -2,6 +2,16 @@
 require_once '../utils/dbconnect.php';
 require_once '../utils/functions.php';
 
+if(str_contains($_SERVER["REQUEST_URI"], "&reload")) {
+    if(str_contains($_SERVER["REQUEST_URI"], "Notifications=hidden")) {
+        setURL("show");
+    } else {
+        setURL("hidden");
+    }
+} else if(!str_contains($_SERVER["REQUEST_URI"], "Notifications")) {
+    setURL();
+}
+
 $userId = $_SESSION['userId'];
 $isAdmin = function () use ($conn, $userId) {
     $sql = "SELECT MembershipName FROM account WHERE Id = ?";
@@ -43,74 +53,86 @@ if (isset($_POST['searchSubmit'])) {
             </li>
             <li><i onclick="showInput()" class="fas fa-search fa-2x"></i></li>
             <li>
-                <i onclick="showNotificationMenu()" class="fas fa-bell fa-2x">
-                    <div id="notificationMenu" class="overlayHover notificationHover">
-                        <?php 
-                        $results = checkNotifications($conn, $userId); 
+                <?php
+                    $results = checkNotifications($conn, $userId); 
+                    $notify = (is_array($results) && isset($results["All"]) && count($results["All"]) > 0) ? "new" : "" ;
+                    $openBox = (isset($_GET['Notifications']) && $_GET['Notifications'] == "show") ? "show" : "" ;
+
+                    echo "<i onclick='showNotificationMenu(\"$openBox\")' class='fas fa-bell fa-2x $notify'>";
+                    echo "<div id='notificationMenu' class='overlayHover notificationHover $openBox'>";
+                         
                         // debug($results);
 
                         // Notification is gekoppeld aan de vraag of bookmark
-                        if(is_array($results) && (($results["TotalBookmarks"] > 0 || $results["TotalQuestions"] > 0))) {
+                        if ($openBox == "show") {
+                            if(is_array($results) && isset($results["All"]) && count($results["All"]) > 0) {
 
-                            $sqlAccount = "SELECT Name, Username, Photo
-                                        FROM account 
-                                        WHERE Id = ?";
+                                $sqlAccount = "SELECT Name, Username, Photo
+                                            FROM account 
+                                            WHERE Id = ?";
 
-                            $sqlComment = "SELECT AccountId, Content, QuestionId, CommentDate FROM comment WHERE Id = ?";
-                            $sqlQuestion = "SELECT Title FROM question WHERE Id = ?";
+                                $sqlComment = "SELECT AccountId, Content, QuestionId, CommentDate FROM comment WHERE Id = ?";
+                                $sqlQuestion = "SELECT Title FROM question WHERE Id = ?";
 
-                            for($i = 0; $i < count($results["All"]); $i++) {
-                                $commentId = $results["All"][$i];
-                                $getComment = stmtExecute($conn, $sqlComment, 1, "i", $commentId);
+                                for($i = 0; $i < count($results["All"]); $i++) {
+                                    $commentId = $results["All"][$i];
+                                    $getComment = stmtExecute($conn, $sqlComment, 1, "i", $commentId);
 
-                                $byID = $getComment['AccountId'][0];
-                                $getAccountName = stmtExecute($conn, $sqlAccount, 1, "i", $byID);
+                                    $byID = $getComment['AccountId'][0];
+                                    $getAccountName = stmtExecute($conn, $sqlAccount, 1, "i", $byID);
 
-                                $questionId = $getComment["QuestionId"][0];
-                                $getQuestionTitle = stmtExecute($conn, $sqlQuestion, 1, "i", $questionId);
+                                    $questionId = $getComment["QuestionId"][0];
+                                    $getQuestionTitle = stmtExecute($conn, $sqlQuestion, 1, "i", $questionId);
 
-                                $title = $getQuestionTitle['Title'][0];
-                                $content = $getComment['Content'][0];
-                                $time = $getComment['CommentDate'][0];
+                                    $title = $getQuestionTitle['Title'][0];
+                                    $content = $getComment['Content'][0];
+                                    $time = $getComment['CommentDate'][0];
+                                    
+                                    $name = ($getAccountName["Name"][0] == "Unknown") ? $getAccountName["Username"][0] : $getAccountName["Name"][0];
+                                    $path = ($getAccountName["Photo"][0] == NULL) ? "unknown.png"  : $getAccountName["Photo"][0];
+
+                                    $sql = "UPDATE notification 
+                                            SET isSeen = 1
+                                            WHERE CommentId = ? AND AccountId = ?";
+                                    stmtExecute($conn, $sql, 1, "ii", $commentId, $userId);
+
+                                    echo "<div class='notification'>
+                                        <div class='profile'>
+                                            <div class='profile__picture'>
+                                                <img src='../assets/img/profiles/$path' alt='$name'>
+                                            </div>
+                                            <div class='profile__name'>
+                                                <p>$name</p>
+                                            </div>
+                                        </div>
+                                        <div class='content'>
+                                            <div class='type'>
+                                                <a href='questions.php?TitleId=$questionId'>";
+                                                    if (is_array($results["Bookmark"]) && in_array($commentId, $results["Bookmark"])) {
+                                                        echo "<h4>$name replied to a bookmarked question.</h4>";
+                                                    } else {
+                                                        echo "<h4>$name replied to your question.</h4>";
+                                                    }
+                                                echo "</a>
+                                                <p>$title<p>
+                                            </div>
+                                            <div class='msg'>
+                                                <p>$content</p>
+                                            </div>
+                                        </div>
+                                        <div class='time'>
+                                            <p>";
+                                                $time = calculateDate($time);
+                                                $time = str_replace(",", ",<br>",$time);
+                                            echo "$time ago</p>
+                                        </div>
+                                    </div>";
+                                }
+                                unset($results);
                                 
-                                $name = ($getAccountName["Name"][0] == "Unknown") ? $getAccountName["Username"][0] : $getAccountName["Name"][0];
-                                $path = ($getAccountName["Photo"][0] == NULL) ? "unknown.png"  : $getAccountName["Photo"][0] ;
-
-                                echo "<div class='notification'>
-                                    <div class='profile'>
-                                        <div class='profile__picture'>
-                                            <img src='../assets/img/profiles/$path' alt='$name'>
-                                        </div>
-                                        <div class='profile__name'>
-                                            <p>$name</p>
-                                        </div>
-                                    </div>
-                                    <div class='content'>
-                                        <div class='type'>
-                                            <a href='questions.php?TitleId=$questionId'>";
-                                                if (is_array($results["Bookmark"]) && in_array($commentId, $results["Bookmark"])) {
-                                                    echo "<h4>$name replied to a bookmarked question.</h4>";
-                                                } else {
-                                                    echo "<h4>$name replied to your question.</h4>";
-                                                }
-                                            echo "</a>
-                                            <p>$title<p>
-                                        </div>
-                                        <div class='msg'>
-                                            <p>$content</p>
-                                        </div>
-                                    </div>
-                                    <div class='time'>
-                                        <p>";
-                                            $time = calculateDate($time);
-                                            $time = str_replace(",", ",<br>",$time);
-                                        echo "$time ago</p>
-                                    </div>
-                                </div>";
+                            } else {
+                                echo "<p>No Notifications Available.</p>";
                             }
-                            
-                        } else {
-                            echo "<p>No Notifications Available.</p>";
                         }
 
                         ?>
@@ -140,8 +162,6 @@ if (isset($_POST['searchSubmit'])) {
     searchIcon.style.display = "none";
     searchbtn.style.display = "none";
     accountMenu.style.display = "none";
-    notificationMenu.style.display = "none";
-
 
     var closeMenu = function(element) {
         return function curried_func(event) {
@@ -180,15 +200,14 @@ if (isset($_POST['searchSubmit'])) {
         }
     }
 
-    function showNotificationMenu() {
-        if (notificationMenu.style.display == "none") {
-            notificationMenu.style.display = "block";
-
+    function showNotificationMenu(show) {
+        if(show != "show") {
             accountMenu.style.display = "none";
             searchIcon.style.display = "none";
             searchbtn.style.display = "none";
+            window.location = window.location.href + "&reload";
         } else {
-            notificationMenu.style.display = "none";
+            window.location = window.location.href + "&reload";
         }
     }
 </script>

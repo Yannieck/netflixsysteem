@@ -17,6 +17,13 @@ require '../utils/functions.php';
 <body>
    <?php 
     if(isset($_GET["TitleId"]) && $_GET["TitleId"] == filter_input(INPUT_GET, "TitleId", FILTER_VALIDATE_INT)) {
+        
+        // If GET["uploadVideo"] is set
+        if(isset($_GET["uploadVideo"])) {
+            require_once '../utils/checkfile.php';
+            uploadFile($conn, $_FILES['video'], $_FILES['thumbnail']);
+            header("Location: questions.php?TitleId=".$_GET["TitleId"]);
+        }
                 
         $id = filter_input(INPUT_GET, "TitleId", FILTER_VALIDATE_INT);
         // Check bookmarks
@@ -45,13 +52,6 @@ require '../utils/functions.php';
    <div class="page">
        <?php
         require_once '../assets/components/aside.php';
-
-        // If GET["uploadVideo"] is set
-        if(isset($_GET["uploadVideo"])) {
-            require_once '../utils/checkfile.php';
-            uploadFile($conn, $_FILES['video'], $_FILES['thumbnail']);
-            header("Location: questions.php?TitleId=".$_GET["TitleId"]);
-        }
 
         // If GET["Title"] is set AND valid
     	if(isset($_GET["TitleId"]) && $_GET["TitleId"] == filter_input(INPUT_GET, "TitleId", FILTER_VALIDATE_INT)) {

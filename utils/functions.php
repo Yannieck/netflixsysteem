@@ -344,29 +344,14 @@ function checkNotifications($connection, int $userId) : array | bool {
         }
     }
     end:
-    $sql = "SELECT Id, CommentDate
+    $sql = "SELECT Id
             FROM comment
-            WHERE QuestionId IN (
-                SELECT Id
-                FROM question 
-                WHERE Id IN (
-                    SELECT QuestionId 
-                    FROM comment
-                ) AND AccountId = ?
-            )
-            UNION ALL
-            SELECT Id, CommentDate
-            FROM comment 
-            WHERE QuestionId IN (
-                SELECT QuestionId  
-                FROM bookmark 
-                WHERE QuestionId IN (
-                    SELECT QuestionId 
-                    FROM comment
-                ) AND AccountId = ?
-            )
-            ORDER BY CommentDate DESC";
-    $tmp = stmtExecute($connection, $sql, 1, "ii", $userId, $userId);
+            WHERE Id IN (
+                SELECT CommentId
+                FROM notification
+                WHERE AccountId = ? AND isSeen = 0
+            ) ORDER BY CommentDate DESC";
+    $tmp = stmtExecute($connection, $sql, 1, "i", $userId);
     if(is_array($tmp)) {
         $results["All"] = $tmp["Id"];
     }
@@ -376,5 +361,27 @@ function checkNotifications($connection, int $userId) : array | bool {
     } else {
         return false;
     }
+}
+
+function setURL($state = null) : void {
+    $path = $_SERVER["REQUEST_URI"];
+    $path = str_replace("&reload", "", $path);
+
+    switch($state) {
+        case 'hidden':
+            $old = 'show';
+            break;
+        default:
+            $old = 'hidden';
+            break;
+    }
+    $path = str_replace("Notifications=$old", "Notifications=$state", $path);
+
+    if($state === null && !str_contains($path, ".php?")) {
+        $path .= "?Notifications=$old";
+    } else if($state === null && str_contains($path, ".php?")) {
+        $path .= "&Notifications=$old";
+    }
+    header("Location: $path");
 }
 ?>
