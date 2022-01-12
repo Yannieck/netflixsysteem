@@ -29,7 +29,12 @@ include_once("../utils/dbconnect.php");
             </form>
             <!-- <p id="output"> -->
             <?php
-            // function stmtExecute($connection, string $sql, int $code, string $ParamChars = NULL, ...$BindParamVars) : ?array
+            
+            function stmtExecute($connection, string $sql, int $code, string $ParamChars = NULL, ...$BindParamVars) : ?array
+            
+            $_GET["title"]; 
+            $_GET["text"];
+ 
             
             $sql = "INSERT INTO question (Title, AccountId, Content) VALUES (?, ?, ?)";
             stmtExecute($conn, $sql, 1, "sis", $title, $account, $content);
@@ -55,13 +60,13 @@ include_once("../utils/dbconnect.php");
 
             // if (isset($_POST["submit"])) { 
             //     if (!empty($_POST["title"])) {
-            //         // $titleError = test_input($_POST["title"]);
+            //         $titleError = test_input($_POST["title"]);
             //     } else { 
 
             //         echo '<span style="color:red;"> Title is required! </span>';
             //     }
             // }
-            ?>
+            // ?>
             <!-- </p> -->
         </div>
     </div>
