@@ -79,18 +79,7 @@ h2 {
         .vidHover {
             display: none;
             width: 100%;
-            // .vidHoverTop {
-            //     width: calc(100% - 20px);
-            //     padding: 10px;
-            //     position: absolute;
-            //     left: 0;
-            //     top: 0;
-            //     display: flex;
-            //     justify-content: flex-end;
-            //     font-size: 1.25rem;
-            // }
             .vidHoverBot {
-                // width: calc(100% - 10px);
                 width: max-content;
                 padding: 10px;
                 position: absolute;
@@ -136,6 +125,12 @@ h2 {
             justify-content: space-between;
             width: 70%;
             margin-bottom: 1rem;
+            .likes {
+                display: flex;
+                * {
+                    margin-left: .25rem;
+                }
+            }
         }
     }
     .questionLink {

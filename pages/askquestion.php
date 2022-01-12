@@ -1,5 +1,6 @@
 <?php
 include_once("../assets/components/loginCheck.php");
+include_once("../utils/functions.php");
 include_once("../utils/dbconnect.php");
 ?>
 <!DOCTYPE html>

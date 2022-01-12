@@ -97,12 +97,16 @@ body {
 }
 
 .questions__wrapper .question .question__title a {
-  color: var(--clr-accent-300);
+  color: var(--clr-accent-300) !important;
 }
 
 .questions__wrapper .question .question__title a:hover {
   -webkit-filter: brightness(0.8);
           filter: brightness(0.8);
+}
+
+.questions__wrapper .question .question__title a h2 {
+  color: inherit;
 }
 
 .specific__question {
@@ -231,7 +235,7 @@ form .form__container .top {
           justify-content: space-between;
 }
 
-form .form__container .top .left {
+form .form__container .top .left, form .form__container .top .right {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -288,6 +292,11 @@ form .form__container .top .file {
   background-color: var(--clr-neutral-700);
   padding: 0.8rem;
   color: var(--clr-neutral-200);
+  height: 100%;
+}
+
+form .form__container .top .file:first-child {
+  margin-bottom: 20px;
 }
 
 form .form__container input[type="submit"] {
