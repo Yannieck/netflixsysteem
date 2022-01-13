@@ -37,31 +37,32 @@ include_once("../utils/dbconnect.php");
                     <option value="C#">C#</option>
                 <label for="subtag"> Enter optional tags here...</label> 
                 <textarea name="subtag" id="subtag" Placeholder="enter optional tag here"></textarea> 
-                <input name="submit" class="button" type="submit" value="Submit">
+                <input name="submit" class="button" type="submit" value="submit">
             </form>
 
             <?php
             
             if (isset($_POST["submit"])){ 
-                $title=$_POST ["title"]; 
-                $account=$_SESSION ["userId"]; 
-                $content=$_POST ["text"];
+                $title=$_POST["title"]; 
+                $account=$_SESSION["userId"]; 
+                $content=$_POST["text"];
                 if (isset($_POST["tag"])){
                     $sql = "SELECT Category FROM tag WHERE Category=?";
-                    
+                    $test=stmtExecute($sql, 1, "s", $tag);
+                    debug($test);
                 }
-                // $category=$_POST["tag"];
-                //  $TagId=$_POST[];
-                $subCatergory=$_POST["subtag"]; 
-                if (isset($_POST["subtag"])){
-                //  $sql = "INSERT INTO tag (Category) VALUES (?)"; 
-                    $sql = "INSERT INTO subtag (SubCategory) VALUES (?)"; 
-                    stmtExecute($sql, 1, "s", $subCatergory);
-                }
+            //     // $category=$_POST["tag"];
+            //     //  $TagId=$_POST[];
+            //     $subCatergory=$_POST["subtag"]; 
+            //     if (isset($_POST["subtag"])){
+            //     //  $sql = "INSERT INTO tag (Category) VALUES (?)"; 
+            //         $sql = "INSERT INTO subtag (SubCategory) VALUES (?)"; 
+            //         stmtExecute($sql, 1, "s", $subCatergory);
+            //     }
               
-                $sql = "INSERT INTO question (Title, AccountId, Content) VALUES (?, ?, ?)";
-                stmtExecute($sql, 1, "sis", $title, $account, $content);
-            }
+            //     $sql = "INSERT INTO question (Title, AccountId, Content) VALUES (?, ?, ?)";
+            //     stmtExecute($sql, 1, "sis", $title, $account, $content);
+             }
         
 
              
