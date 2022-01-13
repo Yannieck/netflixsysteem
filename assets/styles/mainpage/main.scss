@@ -190,6 +190,9 @@ h2 {
                     cursor: pointer;
                 }
             }
+            .commentError {
+                display: none;
+            }
         }
         .comment {
             margin-bottom: .5rem;
@@ -199,6 +202,12 @@ h2 {
                 margin-top: 5px;
                 .username {
                     margin-bottom: .25rem;
+                }
+                .likes {
+                    display: flex;
+                    a {
+                        width: max-content
+                    }
                 }
             }
         }

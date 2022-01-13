@@ -110,11 +110,12 @@ ob_start();
                             <div class="commentContainer">
                                 <h3>Comments:</h3>
                                 <div class="postComment">
-                                    <img class="pfp" src="../assets/img/image_placeholder.png">
+                                    <img class="pfp" src="../assets/img/profiles/unknown.png">
                                     <form action="<?php echo $_SERVER['PHP_SELF'] . "?id=" . $videoId ?>" method="POST">
                                         <input type="text" name="commentText" placeholder="Comment...">
                                         <button class="send" type="submit" name="postComment"><i class="far fa-paper-plane"></i></button>
                                     </form>
+                                    <p class="errorText commentError" id="commentError">Please enter a comment.</p>
                                 </div>
                                 <?php
                                 $sql = "SELECT comment.Content, comment.CommentDate, account.Username FROM comment, account WHERE comment.VideoId = ? AND comment.AccountId = account.Id";
@@ -127,20 +128,45 @@ ob_start();
                                     while (mysqli_stmt_fetch($stmt)) {
                                 ?>
                                         <div class="comment">
-                                            <img class="pfp" src="../assets/img/image_placeholder.png">
+                                            <img class="pfp" src="../assets/img/profiles/unknown.png">
                                             <div class="commentText">
                                                 <p class="username"><?php echo $commentUser ?> - <?php echo calculateDate($commentTime) ?> ago</p>
                                                 <p class="text"><span><?php echo $commentText ?><span></p>
 
+                                                <?php
+                                                $sqlCom = "SELECT (SELECT COUNT(`like`.`Type`) FROM `like`,comment WHERE `like`.`CommentId` = comment.Id AND comment.Id = ? AND `like`.`Type` = 1) as 'likes',
+                                                (SELECT COUNT(`like`.`Type`) FROM `like`,comment WHERE `like`.`CommentId` = comment.Id AND comment.Id = ? AND `like`.`Type` = 0) as 'dislikes',
+                                                (SELECT GROUP_CONCAT(`like`.`AccountId`) FROM `like` WHERE `like`.`Type` = 1 AND `like`.`CommentId` = ?) as 'likedAccs',
+                                                (SELECT GROUP_CONCAT(`like`.`AccountId`) FROM `like` WHERE `like`.`Type` = 0 AND `like`.`CommentId` = ?) as 'dislikedAccs';";
+                                                
+                                                $results = stmtExecute($sql, 1, 'iiii', $videoId, $videoId, $videoId, $videoId);
+                                                // $stmtCom = mysqli_prepare($conn, $sqlCom);
+                                                // mysqli_stmt_bind_param($stmtCom, 'iiii', $videoId, $videoId, $videoId, $videoId);
+                                                // mysqli_stmt_execute($stmtCom);
+                                                // mysqli_stmt_bind_result($stmtCom, $likes, $dislikes, $likedUsers, $dislikedUsers);
+                                                // mysqli_stmt_store_result($stmtCom);
+                                                // mysqli_stmt_fetch($stmtCom);
+                                                // mysqli_stmt_close($stmtCom);
+                                                var_dump($result);
+                                                ?>
+
                                                 <div class="likes">
+                                                    <a href="?id=<?php echo $videoId ?>&like=<?php echo $likeType ?>">
+                                                        <i class="<?php echo $likedStr ?> fa-thumbs-up"></i>
+                                                    </a>
+                                                    <p><?php echo $likes ?></p>
                                                     <a href="?id=<?php echo $videoId ?>&like=<?php echo $dislikeType ?>">
                                                         <i class="<?php echo $dislikedStr ?> fa-thumbs-down"></i>
                                                     </a>
+                                                    <p><?php echo $dislikes ?></p>
                                                 </div>
                                             </div>
                                         </div>
-                                <?php }
-                                } ?>
+                                <?php
+                                    }
+                                }
+                                mysqli_stmt_close($stmt)
+                                ?>
                             </div>
                         </div>
             <?php
@@ -160,14 +186,16 @@ ob_start();
 
 <?php
 if (isset($_POST['postComment'])) {
-    $comment = filter_input(INPUT_POST, 'commentText', FILTER_SANITIZE_SPECIAL_CHARS);
-    $accountId = $_SESSION["userId"];
-    $sql = "INSERT INTO comment (VideoId, AccountId, Content) VALUES (?,?,?)";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, 'iis', $videoId, $accountId, $comment);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_fetch($stmt);
-    header("Location: " . $_SERVER["PHP_SELF"] . "?id=" . $videoId);
+    if (!empty($_POST['commentText'])) {
+        $comment = filter_input(INPUT_POST, 'commentText', FILTER_SANITIZE_SPECIAL_CHARS);
+        $accountId = $_SESSION["userId"];
+        $sql = "INSERT INTO comment (VideoId, AccountId, Content) VALUES (?,?,?)";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, 'iis', $videoId, $accountId, $comment);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_fetch($stmt);
+        header("Location: " . $_SERVER["PHP_SELF"] . "?id=" . $videoId);
+    }
 }
 
 $addLike = function ($type, $vidId, $userId) use ($conn) {

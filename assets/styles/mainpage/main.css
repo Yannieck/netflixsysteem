@@ -249,6 +249,10 @@ h2 {
   cursor: pointer;
 }
 
+.largeVideoContainer .commentContainer .postComment .commentError {
+  display: none;
+}
+
 .largeVideoContainer .commentContainer .comment {
   margin-bottom: .5rem;
   width: 70%;
@@ -263,6 +267,18 @@ h2 {
 
 .largeVideoContainer .commentContainer .comment .commentText .username {
   margin-bottom: .25rem;
+}
+
+.largeVideoContainer .commentContainer .comment .commentText .likes {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.largeVideoContainer .commentContainer .comment .commentText .likes a {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
 }
 
 .largeVideoContainer .commentContainer .pfp {
