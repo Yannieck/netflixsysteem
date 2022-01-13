@@ -68,7 +68,7 @@ ob_start();
                                         (SELECT COUNT(`like`.`Type`) FROM `like`,video WHERE `like`.`VideoId` = video.Id AND video.Id = ? AND `like`.`Type` = 0),
                                         (SELECT GROUP_CONCAT(`like`.`AccountId`) FROM `like` WHERE `like`.`Type` = 1 AND `like`.`VideoId` = ?),
                                         (SELECT GROUP_CONCAT(`like`.`AccountId`) FROM `like` WHERE `like`.`Type` = 0 AND `like`.`VideoId` = ?);";
-                                        
+
                                         $stmt = mysqli_prepare($conn, $sql);
                                         mysqli_stmt_bind_param($stmt, 'iiii', $videoId, $videoId, $videoId, $videoId);
                                         mysqli_stmt_execute($stmt);
@@ -160,7 +160,7 @@ ob_start();
                                                 mysqli_stmt_store_result($stmtCom);
                                                 mysqli_stmt_fetch($stmtCom);
                                                 mysqli_stmt_close($stmtCom);
-                                                
+
                                                 // Array met alle id's van mensen die de comment geliked hebben.
                                                 $comLikedUserArr = explode(',', $comLikedUsers);
                                                 $comLiked = in_array($_SESSION['userId'], $comLikedUserArr);
