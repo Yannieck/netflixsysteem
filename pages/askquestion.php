@@ -25,8 +25,8 @@ include_once("../utils/dbconnect.php");
                 <!-- <p class="errortext" id="titelerror" style="display: block;">Please enter a mooie titel</p>  -->
                 <label for="text">Enter your question here:</label>
                 <textarea name="text" id="text" placeholder="Question..."></textarea>
-                <label for="category">Enter your tag here:</label>
-                <select name="category" id="category"> 
+                <label for="tag">Enter your tag here:</label>
+                <select name="tag" id="tag"> 
                     <option value="Python">Python</option>
                     <option value="Java">Java</option>
                     <option value="C++">C++</option>
@@ -35,8 +35,8 @@ include_once("../utils/dbconnect.php");
                     <option value="PHP">PHP</option>
                     <option value="Javascript">Javascript</option>
                     <option value="C#">C#</option>
-                <!-- <label for="subtag"> Enter optional tags here...</label> 
-                <textarea name="subtag" id="text" Placeholder="enter optional tag here"></textarea>  -->
+                <label for="subtag"> Enter optional tags here...</label> 
+                <textarea name="subtag" id="subtag" Placeholder="enter optional tag here"></textarea> 
                 <input name="submit" class="button" type="submit" value="Submit">
             </form>
 
@@ -46,19 +46,25 @@ include_once("../utils/dbconnect.php");
                 $title=$_POST ["title"]; 
                 $account=$_SESSION ["userId"]; 
                 $content=$_POST ["text"];
-            $sql = "INSERT INTO question (Title, AccountId, Content) VALUES (?, ?, ?)";
-            stmtExecute($conn, $sql, 1, "sis", $title, $account, $content);
+                if (isset($_POST["tag"])){
+                    $sql = "SELECT Category FROM tag WHERE Category=?";
+                    
+                }
+                // $category=$_POST["tag"];
+                //  $TagId=$_POST[];
+                $subCatergory=$_POST["subtag"]; 
+                if (isset($_POST["subtag"])){
+                //  $sql = "INSERT INTO tag (Category) VALUES (?)"; 
+                    $sql = "INSERT INTO subtag (SubCategory) VALUES (?)"; 
+                    stmtExecute($sql, 1, "s", $subCatergory);
+                }
+              
+                $sql = "INSERT INTO question (Title, AccountId, Content) VALUES (?, ?, ?)";
+                stmtExecute($sql, 1, "sis", $title, $account, $content);
             }
-            
-            if (isset($_POST["submit"])){ 
-               $category=$_POST["category"];
-             //  $TagId=$_POST[];
-              // $SubCatergory=$_POST["subtag"]; 
-               $sql = "INSERT INTO tag (Category) VALUES (?)"; 
-             //  $sql = "INSERT INTO subtag (SubCategory) VALUES (?)"; 
-                stmtExecute($conn, $sql, 1, "i", $category);
-            }
-            
+        
+
+             
 
 
             // echo htmlentities($_POST['title']);
