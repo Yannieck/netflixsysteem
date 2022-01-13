@@ -74,7 +74,6 @@ function fail($code = NULL, $info = NULL) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                      //
-// @Param $connection: Use $conn from dbconnect.php                                                     //
 // @Param $code: Use a code for fail messages, You can easily create 1 above                            //
 // @Param $Paramchars: Use this when need to use WHERE conditions -> Use given type: s, i, d or b       //
 // @Param $BindParamVars: Use this when need to use WHERE conditions -> Use known DB variables          //
@@ -83,10 +82,11 @@ function fail($code = NULL, $info = NULL) {
 // By:          Joris Hummel                                                                            //
 //                                                                                                      //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-function stmtExecute($connection, string $sql, int $code, string $ParamChars = NULL, ...$BindParamVars) : array| bool {
+function stmtExecute(string $sql, int $code = 0, string $ParamChars = NULL, ...$BindParamVars) : array| bool {
 
+    require "../utils/dbconnect.php";
     // Check if the statement can be prepared
-    if($stmt = mysqli_prepare($connection, $sql)) {
+    if($stmt = mysqli_prepare($conn, $sql)) {
 
         // If true
         // Check if the statement needs to bind
@@ -131,7 +131,7 @@ function stmtExecute($connection, string $sql, int $code, string $ParamChars = N
                                 // If true
                                 // Check if it's possible to bind and continue the function
                                 if(!mysqli_stmt_bind_param($stmt, $ParamChars, ...$BindParamVars)) {
-                                    fail("DB".$code."4", mysqli_error($connection));
+                                    fail("DB".$code."4", mysqli_error($conn));
                                     return false;
                                 } 
                             } else {
@@ -261,19 +261,19 @@ function stmtExecute($connection, string $sql, int $code, string $ParamChars = N
                     // echo "####<br>";
                     return $results;
                 } else {
-                    fail("DB".$code."2", mysqli_error($connection));
+                    fail("DB".$code."2", mysqli_error($conn));
                     return false;
                 }
             } else {
                 return true;
             }
         } else {
-            fail("DB".$code."1", mysqli_error($connection));
+            fail("DB".$code."1", mysqli_error($conn));
             return false;
         }
 
     } else {
-        fail("DB00", mysqli_error($connection));
+        fail("DB00", mysqli_error($conn));
         return false;
     }
 }
@@ -289,7 +289,7 @@ function debug($var, int $type = 0) {
     echo "</pre>";
 }
 
-function checkNotifications($connection, int $userId) : array | bool {
+function checkNotifications(int $userId) : array | bool {
 
     $sql = "SELECT Id
             FROM comment
@@ -301,7 +301,7 @@ function checkNotifications($connection, int $userId) : array | bool {
                     FROM comment
                 ) AND AccountId = ?
             )";
-    $allRepliedOwnQuestions = stmtExecute($connection, $sql, 1, "i", $userId);
+    $allRepliedOwnQuestions = stmtExecute($sql, 1, "i", $userId);
     if(is_array($allRepliedOwnQuestions)) {
         $results["TotalQuestions"] = count($allRepliedOwnQuestions["Id"]);
     }
@@ -316,7 +316,7 @@ function checkNotifications($connection, int $userId) : array | bool {
                     FROM comment
                 ) AND AccountId = ?
             )";
-    $allRepliedBookmarkedQuestions = stmtExecute($connection, $sql, 1, "i", $userId);
+    $allRepliedBookmarkedQuestions = stmtExecute($sql, 1, "i", $userId);
     if(is_array($allRepliedBookmarkedQuestions)) {
         $results["TotalBookmarks"] = count($allRepliedBookmarkedQuestions["Id"]);
         $results["Bookmark"] = $allRepliedBookmarkedQuestions["Id"];
@@ -340,7 +340,7 @@ function checkNotifications($connection, int $userId) : array | bool {
             }
         }
         for($i = 0; $i < count($commentId); $i++) {
-            stmtExecute($connection, $sql, 1, "ii", $userId, $commentId[$i]);
+            stmtExecute($sql, 1, "ii", $userId, $commentId[$i]);
         }
     }
     end:
@@ -351,7 +351,7 @@ function checkNotifications($connection, int $userId) : array | bool {
                 FROM notification
                 WHERE AccountId = ? AND isSeen = 0
             ) ORDER BY CommentDate DESC";
-    $tmp = stmtExecute($connection, $sql, 1, "i", $userId);
+    $tmp = stmtExecute($sql, 1, "i", $userId);
     if(is_array($tmp)) {
         $results["All"] = $tmp["Id"];
     }

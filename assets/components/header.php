@@ -13,10 +13,10 @@ if(str_contains($_SERVER["REQUEST_URI"], "&reload")) {
 }
 
 $userId = $_SESSION['userId'];
-$isAdmin = function () use ($conn, $userId) {
+$isAdmin = function () use ($userId) {
     $sql = "SELECT MembershipName FROM account WHERE Id = ?";
 
-    $results = stmtExecute($conn, $sql, 1, "i", $userId);
+    $results = stmtExecute($sql, 1, "i", $userId);
 
     $membershipName = $results["MembershipName"][0];
     if ($membershipName === "Admin") {
@@ -54,7 +54,7 @@ if (isset($_POST['searchSubmit'])) {
             <li><i onclick="showInput()" class="fas fa-search fa-2x"></i></li>
             <li>
                 <?php
-                    $results = checkNotifications($conn, $userId); 
+                    $results = checkNotifications($userId); 
                     $notify = (is_array($results) && isset($results["All"]) && count($results["All"]) > 0) ? "new" : "" ;
                     $openBox = (isset($_GET['Notifications']) && $_GET['Notifications'] == "show") ? "show" : "" ;
 
@@ -76,13 +76,13 @@ if (isset($_POST['searchSubmit'])) {
 
                                 for($i = 0; $i < count($results["All"]); $i++) {
                                     $commentId = $results["All"][$i];
-                                    $getComment = stmtExecute($conn, $sqlComment, 1, "i", $commentId);
+                                    $getComment = stmtExecute($sqlComment, 1, "i", $commentId);
 
                                     $byID = $getComment['AccountId'][0];
-                                    $getAccountName = stmtExecute($conn, $sqlAccount, 1, "i", $byID);
+                                    $getAccountName = stmtExecute($sqlAccount, 1, "i", $byID);
 
                                     $questionId = $getComment["QuestionId"][0];
-                                    $getQuestionTitle = stmtExecute($conn, $sqlQuestion, 1, "i", $questionId);
+                                    $getQuestionTitle = stmtExecute($sqlQuestion, 1, "i", $questionId);
 
                                     $title = $getQuestionTitle['Title'][0];
                                     $content = $getComment['Content'][0];
@@ -94,7 +94,7 @@ if (isset($_POST['searchSubmit'])) {
                                     $sql = "UPDATE notification 
                                             SET isSeen = 1
                                             WHERE CommentId = ? AND AccountId = ?";
-                                    stmtExecute($conn, $sql, 1, "ii", $commentId, $userId);
+                                    stmtExecute($sql, 1, "ii", $commentId, $userId);
 
                                     echo "<div class='notification'>
                                         <div class='profile'>

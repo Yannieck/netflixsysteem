@@ -47,7 +47,7 @@ include_once("../utils/dbconnect.php");
                 $account=$_SESSION ["userId"]; 
                 $content=$_POST ["text"];
             $sql = "INSERT INTO question (Title, AccountId, Content) VALUES (?, ?, ?)";
-            stmtExecute($conn, $sql, 1, "sis", $title, $account, $content);
+            stmtExecute($sql, 1, "sis", $title, $account, $content);
             }
             
             if (isset($_POST["submit"])){ 
@@ -56,7 +56,7 @@ include_once("../utils/dbconnect.php");
               // $SubCatergory=$_POST["subtag"]; 
                $sql = "INSERT INTO tag (Category) VALUES (?)"; 
              //  $sql = "INSERT INTO subtag (SubCategory) VALUES (?)"; 
-                stmtExecute($conn, $sql, 1, "i", $category);
+                stmtExecute($sql, 1, "i", $category);
             }
             
 

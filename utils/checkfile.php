@@ -7,7 +7,7 @@ define('MB', 1048576);
 define('GB', 1073741824);
 define('TB', 1099511627776);
 
-function uploadFile($connection, Array $video, Array $thumbnail) : bool {
+function uploadFile(Array $video, Array $thumbnail) : bool {
     if($video["size"] < 20*GB) {
         $acceptedVideoTypes = ["video/x-flv", 
                                 "video/mp4", 
@@ -46,14 +46,14 @@ function uploadFile($connection, Array $video, Array $thumbnail) : bool {
                         $description = filter_input(INPUT_POST, "description", FILTER_SANITIZE_STRING);
                         $thumbnailPath = $thumbnail["name"];
 
-                        if(stmtExecute($connection, $sql, 1, "iiss", $questionId, $accId, $title, $thumbnailPath)) {
-                            $videoIdArray = stmtExecute($connection, $sql3, 1, "i", $questionId);
+                        if(stmtExecute($sql, 1, "iiss", $questionId, $accId, $title, $thumbnailPath)) {
+                            $videoIdArray = stmtExecute($sql3, 1, "i", $questionId);
                             $videoId = $videoIdArray["Id"][0];
-                            if(stmtExecute($connection, $sql2, 1, "iisi", $videoId ,$accId, $description, $questionId)) {
+                            if(stmtExecute($sql2, 1, "iisi", $videoId ,$accId, $description, $questionId)) {
                                 return true;
                             } else {
                                 $sql = "DELETE FROM video WHERE Id = ?";
-                                stmtExecute($connection, $sql, 1, "i", $videoId);
+                                stmtExecute($sql, 1, "i", $videoId);
                                 return false;
                             }
                         } else {
