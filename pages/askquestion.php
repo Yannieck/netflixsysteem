@@ -35,8 +35,8 @@ include_once("../utils/dbconnect.php");
                     <option value=6>PHP</option>
                     <option value=7>Javascript</option>
                     <option value=8>C#</option>
-                    <option value=9>android</option>
-                    <option value=10>apple</option>
+                    <option value=9>Sndroid</option>
+                    <option value=10>Apple</option>
                     <label for="subtag"> Enter optional tags here...</label>
                     <textarea name="subtag" id="subtag" Placeholder="enter optional tag here"></textarea>
                     <input name="submit" class="button" type="submit" value="submit">
