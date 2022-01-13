@@ -1,6 +1,5 @@
 <?php
 include_once("../assets/components/loginCheck.php");
-require '../utils/dbconnect.php';
 require '../utils/functions.php';
 ?>
 
@@ -16,18 +15,41 @@ require '../utils/functions.php';
 </head>
 <body>
    <?php 
+    if(isset($_GET["TitleId"]) && $_GET["TitleId"] == filter_input(INPUT_GET, "TitleId", FILTER_VALIDATE_INT)) {
+
+        // if a comment is placed
+        if(isset($_POST["submit"])) {
+            require_once '../utils/checkfile.php';
+            uploadFile($_FILES['video'], $_FILES['thumbnail']);
+        }
+                
+        $id = filter_input(INPUT_GET, "TitleId", FILTER_VALIDATE_INT);
+        // Check bookmarks
+        if(isset($_GET['Bookmark'])) {
+            $sql = "SELECT AccountId FROM bookmark WHERE QuestionId = ?";
+            $bookmarks = stmtExecute($sql, 1, "i", $id);
+            $type = $_GET['Bookmark'];                
+
+            if($type == 'del' && is_array($bookmarks) && in_array($_SESSION['userId'], $bookmarks['AccountId'])) {
+                $id = filter_input(INPUT_GET, "TitleId", FILTER_VALIDATE_INT);
+                $accId = $_SESSION['userId'];
+                $sql = "DELETE FROM bookmark WHERE QuestionId = ? AND AccountId = ?";
+                stmtExecute($sql, 1, "ii", $id, $accId);
+
+            } else if ($type == 'add' && !(is_array($bookmarks) && in_array($_SESSION['userId'], $bookmarks['AccountId']))) {
+                $id = filter_input(INPUT_GET, "TitleId", FILTER_VALIDATE_INT);
+                $accId = $_SESSION['userId'];
+                $sql = "INSERT IGNORE INTO bookmark (AccountId, QuestionId) VALUES (?, ?)";
+                stmtExecute($sql, 1, "ii", $accId, $id);
+            }
+        }
+    }
+
    require_once '../assets/components/header.php'; 
    ?> 
    <div class="page">
        <?php
         require_once '../assets/components/aside.php';
-
-        // If GET["uploadVideo"] is set
-        if(isset($_GET["uploadVideo"])) {
-            require_once '../utils/checkfile.php';
-            uploadFile($conn, $_FILES['video'], $_FILES['thumbnail']);
-            header("Location: questions.php?TitleId=".$_GET["TitleId"]);
-        }
 
         // If GET["Title"] is set AND valid
     	if(isset($_GET["TitleId"]) && $_GET["TitleId"] == filter_input(INPUT_GET, "TitleId", FILTER_VALIDATE_INT)) {
@@ -35,33 +57,13 @@ require '../utils/functions.php';
             $id = filter_input(INPUT_GET, "TitleId", FILTER_VALIDATE_INT);
 
             $sql = "SELECT Title, Content, AskDate, AccountId FROM question WHERE Id = ?";
-            $info = stmtExecute($conn, $sql, 1, 'i', $id);
-        
-
-            // Check bookmarks
-            if(isset($_GET['Bookmark'])) {
-                $sql = "SELECT AccountId FROM bookmark WHERE QuestionId = ?";
-                $bookmarks = stmtExecute($conn, $sql, 1, "i", $id);
-                $type = $_GET['Bookmark'];                
-            
-                if($type == 'del' && is_array($bookmarks) && in_array($_SESSION['userId'], $bookmarks['AccountId'])) {
-                    $id = filter_input(INPUT_GET, "TitleId", FILTER_VALIDATE_INT);
-                    $accId = $_SESSION['userId'];
-                    $sql = "DELETE FROM bookmark WHERE QuestionId = ? AND AccountId = ?";
-                    stmtExecute($conn, $sql, 1, "ii", $id, $accId);
-
-                } else if ($type == 'add' && !(is_array($bookmarks) && in_array($_SESSION['userId'], $bookmarks['AccountId']))) {
-                    $id = filter_input(INPUT_GET, "TitleId", FILTER_VALIDATE_INT);
-                    $accId = $_SESSION['userId'];
-                    $sql = "INSERT INTO bookmark (AccountId, QuestionId) VALUES (?, ?)";
-                    if(stmtExecute($conn, $sql, 1, "ii", $accId, $id)) {
-                        echo "this worked!";
-                    }
-                }
-            }
+            $info = stmtExecute($sql, 1, 'i', $id);
             
             $sql = "SELECT AccountId FROM bookmark WHERE QuestionId = ?";
-            $bookmarks = stmtExecute($conn, $sql, 1, "i", $id);
+            $bookmarks = stmtExecute($sql, 1, "i", $id);
+
+            $sql = "SELECT AccountId, Content, CommentDate, VideoId FROM comment WHERE QuestionId = ?";
+            $comments = stmtExecute($sql, 1, "i", $id);
 
             if(is_array($bookmarks) && in_array($_SESSION['userId'], $bookmarks['AccountId'])) {
                 $mark = 'fas';
@@ -105,21 +107,23 @@ require '../utils/functions.php';
 
                                     $sql = "SELECT SubCategory FROM subtag WHERE Id IN (SELECT SubTagId FROM tag_question WHERE QuestionId = ?)";
 
-                                    $tags = stmtExecute($conn, $sql, 1, "i", $id);
+                                    $tags = stmtExecute($sql, 1, "i", $id);
                                     foreach($tags["SubCategory"] as $index => $TagName) {
                                         echo "<p class='tag'>$TagName</p>";
                                     }
 
                                 echo "</div>
                             </div>
-                        </div>
-                        <i class='$mark fa-bookmark' id='bookmarkIcon' onclick='bookmark($id);'></i>
-                    </div>
+                        </div>";
+                        if($accountId != $_SESSION['userId'] && !is_array($comments)) {
+                            echo "<i class='$mark fa-bookmark' id='bookmarkIcon' onclick='bookmark($id);'></i>";
+                        }
+                    echo "</div>
                     <div class='question__content'>
                         <div class='profile'>";
 
                             $sql = "SELECT Username, Name, Photo FROM account WHERE Id = ?";
-                            $profileInfo = stmtExecute($conn, $sql, 1, "i", $accountId);
+                            $profileInfo = stmtExecute($sql, 1, "i", $accountId);
 
                             // Line below means:
                             // if ($profileInfo['Username'][0] !== NULL) {
@@ -143,8 +147,6 @@ require '../utils/functions.php';
                     </div>
                 </div>";
                 
-                $sql = "SELECT AccountId, Content, CommentDate, VideoId FROM comment WHERE QuestionId = ?";
-                $comments = stmtExecute($conn, $sql, 1, "i", $id);
                 if(is_array($comments)) {
 
                     $accountId = $comments['AccountId'][0];
@@ -158,7 +160,7 @@ require '../utils/functions.php';
                         <div class='profile__picture'>";
 
                             $sql = "SELECT Username, Name, Photo FROM account WHERE Id = ?";
-                            $profileInfo = stmtExecute($conn, $sql, 1, "i", $accountId);
+                            $profileInfo = stmtExecute($sql, 1, "i", $accountId);
 
                             $name = ($profileInfo['Username'][0] !== NULL) ? $profileInfo['Username'][0] : $profileInfo['Name'][0];
                             $photo = ($profileInfo['Photo'][0] !== NULL) ? $profileInfo['Photo'][0] : 'unknown.png';
@@ -176,7 +178,7 @@ require '../utils/functions.php';
                         <div class='card'>";
 
                             $sql = "SELECT File, Thumbnail FROM video WHERE Id = ?";
-                            $videoInfo = stmtExecute($conn, $sql, 1, "i", $video);
+                            $videoInfo = stmtExecute($sql, 1, "i", $video);
 
                             $videoFile = '../assets/upload/videos/'.$videoInfo['File'][0];
                             $thumbnail = '../assets/upload/thumbnails/'.$videoInfo['Thumbnail'][0];
@@ -199,30 +201,7 @@ require '../utils/functions.php';
                         </div>
                     </div>";
                 } else {
-                    echo "<form action='?TitleId=$id&uploadVideo' enctype='multipart/form-data' method='POST'>
-                        <div class='form__container'>
-                            <div class='top'>
-                                <div class='left'>
-                                    <input type='text' name='title' placeholder='Title' required>
-                                    <textarea name='description' id='description' placeholder='Description' required></textarea>
-                                </div>
-                                <div class='right'>
-                                    <div class='file'>
-                                        <input type='file' hidden name='video' id='chooseVideo' accept='video/*' required>
-                                        <input type='button' onClick='triggerFileSelector(\"chooseVideo\", \"selectedVideo\");' value='Upload a Video'>
-                                        <label id='selectedVideo'>No video selected</label>
-                                    </div>
-                                    <div class='file'>
-                                        <input type='file' hidden name='thumbnail' id='chooseThumbnail' accept='image/*' required>
-                                        <input type='button' onClick='triggerFileSelector(\"chooseThumbnail\", \"selectedThumbnail\");' value='Upload a Thumbnail'>
-                                        <label id='selectedThumbnail'>No thumbnail selected</label>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <input type='submit' value='Answer'>
-                        </div>
-                    </form>";
+                    include_once 'videoReply.php';
                 }
             echo "</div></div>";
 
@@ -230,7 +209,7 @@ require '../utils/functions.php';
 
         // Else
             $sql = "SELECT Id, Title, AskDate FROM question ORDER BY AskDate DESC";
-            $questions = stmtExecute($conn, $sql, 2);
+            $questions = stmtExecute($sql, 2);
 
             echo "<div class='questions__wrapper'>";
 
@@ -251,7 +230,7 @@ require '../utils/functions.php';
 
                 $sql = "SELECT SubCategory FROM subtag WHERE Id IN (SELECT SubTagId FROM tag_question WHERE QuestionId = ?)";
 
-                $tags = stmtExecute($conn, $sql, 1, "i", $id);
+                $tags = stmtExecute($sql, 1, "i", $id);
                 foreach($tags["SubCategory"] as $index => $TagName) {
                     echo "<p class='tag'>$TagName</p>";
                 }
@@ -363,14 +342,6 @@ require '../utils/functions.php';
             } else {
                 window.location = 'questions.php?TitleId=' + id + '&Bookmark=del';
             }
-        }
-   </script>
-   <script src="https://rawgit.com/thielicious/selectFile.js/master/selectFile.js"></script>
-   <script>
-        var getFile = new selectFile;
-        function triggerFileSelector(choose, selector) {
-            getFile.targets(choose, selector);
-            getFile.simulate();
         }
    </script>
 </body>

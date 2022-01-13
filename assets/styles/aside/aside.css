@@ -44,6 +44,11 @@ aside .container .aside-element .aside-element-title {
   color: var(--clr-accent-300);
 }
 
+aside .container .aside-element .aside-element-title:hover {
+  -webkit-filter: brightness(0.8);
+          filter: brightness(0.8);
+}
+
 aside .container .aside-element .tags {
   display: -webkit-box;
   display: -ms-flexbox;

@@ -26,6 +26,9 @@ aside {
             height: fit-content;
             .aside-element-title {
                 color: var(--clr-accent-300);
+                &:hover {
+                    filter: brightness(.8);
+                }
             }
             .tags {
                 display: flex;

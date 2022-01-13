@@ -47,14 +47,14 @@ $showLikes = function($type, $postId) use ($conn)
                 // ===== Haal video's uit de database =====
 
                 // Pak standaard van de video: id, title, accountnaam, upload datum, bestandslocatie
-                $sql = "SELECT DISTINCT video.Id, question.title, account.Name, video.UploadDate, video.File
+                $sql = "SELECT DISTINCT video.Id, question.title, account.Username, video.UploadDate, video.File
                         FROM video, question, account
                         WHERE video.QuestionId = question.Id AND video.AccountId = account.Id
                         ORDER BY video.UploadDate;";
 
                 // Als er een get waarde is gezet; als er wordt gefilterd: filter op tag id
                 if (isset($_GET['tag'])) {
-                    $sql = "SELECT DISTINCT video.Id, question.title, account.Name, video.UploadDate, video.File
+                    $sql = "SELECT DISTINCT video.Id, question.title, account.Username, video.UploadDate, video.File
                             FROM video, question, account, tag_question, subtag, tag
                             WHERE video.QuestionId = question.Id 
                                 AND video.AccountId = account.Id
@@ -63,7 +63,7 @@ $showLikes = function($type, $postId) use ($conn)
                                 AND subtag.TagId = tag.Id
                                 AND tag.id = ?;";
                 } else if (isset($_GET['search'])) {
-                    $sql = "SELECT DISTINCT video.Id, question.title, account.Name, video.UploadDate, video.File
+                    $sql = "SELECT DISTINCT video.Id, question.title, account.Username, video.UploadDate, video.File
                             FROM video, question, account
                             WHERE video.QuestionId = question.Id 
                                 AND video.AccountId = account.Id
@@ -146,7 +146,7 @@ $showLikes = function($type, $postId) use ($conn)
 <script>
     // Stukje javascript daar link naar de video waar op is geklikt
     function openVideo(videoId) {
-        window.location.href = "./videopage.php?id=" + videoId;
+        window.location.href = "./videopage.php?VideoId=" + videoId;
     }
 </script>
 

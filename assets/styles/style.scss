@@ -20,14 +20,12 @@ a {
     display: inline-block;
     color: var(--clr-neutral-100);
     text-decoration: none;
-    &:not(.headerBtn):hover {
-        text-decoration: underline;
-    }
 }
 
 h1,
 h2,
 h3,
+h4,
 p,
 a {
     color: var(--clr-neutral-100);

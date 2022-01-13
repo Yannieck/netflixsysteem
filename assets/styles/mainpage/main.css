@@ -170,14 +170,17 @@ h2 {
 
 .largeVideoContainer .questionLink {
   margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: .75rem;
+  padding-bottom: 0.5em;
   width: 70%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  border-bottom: 2px solid var(--clr-neutral-500);
 }
 
-.largeVideoContainer p {
+.largeVideoContainer p,
+.largeVideoContainer label {
   color: var(--clr-neutral-400);
   text-overflow: ellipsis;
   min-width: -webkit-max-content;
@@ -185,7 +188,8 @@ h2 {
   min-width: max-content;
 }
 
-.largeVideoContainer p span {
+.largeVideoContainer p span,
+.largeVideoContainer label span {
   color: var(--clr-neutral-100);
 }
 
@@ -195,5 +199,96 @@ h2 {
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.largeVideoContainer .commentContainer h3 {
+  margin-bottom: .75rem;
+}
+
+.largeVideoContainer .commentContainer .postComment {
+  width: 70%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 50px;
+  margin-bottom: 1.5rem;
+}
+
+.largeVideoContainer .commentContainer .postComment form {
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-bottom: 1px solid darkgray;
+}
+
+.largeVideoContainer .commentContainer .postComment form input {
+  height: 60%;
+  width: 100%;
+  padding: .5em;
+  background-color: transparent;
+  color: white;
+  border: none;
+}
+
+.largeVideoContainer .commentContainer .postComment form .send {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  margin: 0 1rem;
+  cursor: pointer;
+}
+
+.largeVideoContainer .commentContainer .postComment .commentError {
+  display: none;
+}
+
+.largeVideoContainer .commentContainer .comment {
+  margin-bottom: .5rem;
+  width: 70%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.largeVideoContainer .commentContainer .comment .commentText {
+  margin-top: 5px;
+}
+
+.largeVideoContainer .commentContainer .comment .commentText .username {
+  margin-bottom: .25rem;
+}
+
+.largeVideoContainer .commentContainer .comment .commentText .likes {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.largeVideoContainer .commentContainer .comment .commentText .likes a {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.largeVideoContainer .commentContainer .comment .commentText .likes p {
+  margin-right: 1ch;
+}
+
+.largeVideoContainer .commentContainer .pfp {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  margin-right: 1.5ch;
 }
 /*# sourceMappingURL=main.css.map */
