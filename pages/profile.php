@@ -16,17 +16,17 @@
         <div class="contentBlock">
             <div class="profileBlock">
                 <h1>Profile</h1>
-                <form action="">
+                <form action="profile.php" method="post">
                     <?php
                     $accountId = $_SESSION['userId'];
 
-                    $query = "SELECT `Name`, `Username`, `Email`, `Password` FROM account WHERE Id = ?";
+                    $query = "SELECT `Name`, `Username`, `Email` FROM account WHERE Id = ?";
 
                     $stmt = mysqli_prepare($conn, $query);
                     mysqli_stmt_bind_param($stmt, 'i', $accountId);
 
                     mysqli_stmt_execute($stmt);
-                    mysqli_stmt_bind_result($stmt, $name, $username, $email, $password);
+                    mysqli_stmt_bind_result($stmt, $name, $username, $email);
                     mysqli_stmt_store_result($stmt);
 
                     if (mysqli_stmt_num_rows($stmt)) {
@@ -41,18 +41,33 @@
                             <label for="name">Email</label>
                             <input type="email" name="email" value="<?php echo $email; ?>">
 
-                            <label for="name">Password</label>
-                            <input type="password" name="password" value="<?php echo $password; ?>">
                     <?php
                         }
                     }
                     mysqli_stmt_close($stmt);
                     ?>
+                    <input class="profileBtn" type="submit" name="update" value="Save profile">
+                    
+              <?php 
+                      if(isset($_POST["update"])){
+                        echo "test";
+                        $updatequery = "UPDATE account
+                        SET `Name`= ?, `Username` = ?, `Email` = ?
+                        WHERE `Id` = ?";
+            
+                        $updatestmt = mysqli_prepare($conn, $updatequery);
+                        mysqli_stmt_bind_param($updatestmt, 'sssi', $_POST["name"], $_POST["username"],$_POST["email"], $accountId);
+            
+                        mysqli_stmt_execute($updatestmt);
+                    }
+              
+              ?>
                 </form>
+              
                 <div class="buttons">
-                    <input class="profileBtn" type="submit" name="submit" value="Save profile">
                     <!-- <a class="profileBtn deleteBtn" href="deleteprofile.php">Delete profile</a> -->
                     <button class="profileBtn deleteBtn" onclick="window.location.href = './deleteprofile.php';">Delete profile</button>
+                    <button class="profileBtn deleteBtn" onclick="window.location.href = './changepassword.php';">Change password</button>
                 </div>
             </div>
             <div class="membershipBlock">

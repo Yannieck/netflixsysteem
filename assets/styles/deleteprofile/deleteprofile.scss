@@ -35,12 +35,14 @@ body {
             border: none;
             color: #ffffff;
         }
+
+        
         .buttons {
             display: flex;
             justify-content: space-between;
             width: 30vw;
             
-            button {
+            input[type=submit] {
                 background-color: #FF5959;
                 color: white;
                 padding: 15px;
