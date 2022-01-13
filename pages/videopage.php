@@ -126,71 +126,73 @@ ob_start();
                                 </div>
                                 <?php
                                 // Haal de informatie over de comment op uit de database.
-                                $sql = "SELECT comment.Id, comment.Content, comment.CommentDate, account.Username FROM comment, account WHERE comment.VideoId = ? AND comment.AccountId = account.Id";
+                                $sql = "SELECT comment.Id, comment.Content, comment.CommentDate, comment.QuestionId, account.Username FROM comment, account WHERE comment.VideoId = ? AND comment.AccountId = account.Id";
                                 $stmt = mysqli_prepare($conn, $sql);
                                 mysqli_stmt_bind_param($stmt, 'i', $videoId);
                                 mysqli_stmt_execute($stmt);
-                                mysqli_stmt_bind_result($stmt, $commentId, $commentText, $commentTime, $commentUser);
+                                mysqli_stmt_bind_result($stmt, $commentId, $commentText, $commentTime, $commentQuestion, $commentUser);
                                 mysqli_stmt_store_result($stmt);
                                 // Als er resultaten zijn, loop door alle resultaten heen.
                                 if (mysqli_stmt_num_rows($stmt) > 0) {
                                     while (mysqli_stmt_fetch($stmt)) {
-                                        // Voor elk resultaat: maar een comment aan in html.
+                                        if ($commentQuestion == null) {
+                                            // Voor elk resultaat: maar een comment aan in html.
                                 ?>
-                                        <div class="comment">
-                                            <img class="pfp" src="../assets/img/profiles/unknown.png">
-                                            <div class="commentText">
-                                                <p class="username"><?php echo $commentUser ?> - <?php echo calculateDate($commentTime) ?> ago</p>
-                                                <p class="text"><span><?php echo $commentText ?><span></p>
+                                            <div class="comment">
+                                                <img class="pfp" src="../assets/img/profiles/unknown.png">
+                                                <div class="commentText">
+                                                    <p class="username"><?php echo $commentUser ?> - <?php echo calculateDate($commentTime) ?> ago</p>
+                                                    <p class="text"><span><?php echo $commentText ?><span></p>
 
-                                                <?php
-                                                $sqlCom = "SELECT (SELECT COUNT(`like`.`Type`) FROM `like`,comment WHERE `like`.`CommentId` = comment.Id AND comment.Id = ? AND `like`.`Type` = 1) as 'likes',
+                                                    <?php
+                                                    $sqlCom = "SELECT (SELECT COUNT(`like`.`Type`) FROM `like`,comment WHERE `like`.`CommentId` = comment.Id AND comment.Id = ? AND `like`.`Type` = 1) as 'likes',
                                                 (SELECT COUNT(`like`.`Type`) FROM `like`,comment WHERE `like`.`CommentId` = comment.Id AND comment.Id = ? AND `like`.`Type` = 0) as 'dislikes',
                                                 (SELECT GROUP_CONCAT(`like`.`AccountId`) FROM `like` WHERE `like`.`Type` = 1 AND `like`.`CommentId` = ?) as 'likedAccs',
                                                 (SELECT GROUP_CONCAT(`like`.`AccountId`) FROM `like` WHERE `like`.`Type` = 0 AND `like`.`CommentId` = ?) as 'dislikedAccs';";
 
-                                                // $results = stmtExecute($sql, 1, 'iiii', $videoId, $videoId, $videoId, $videoId);
-                                                // var_dump($result);
+                                                    // $results = stmtExecute($sql, 1, 'iiii', $videoId, $videoId, $videoId, $videoId);
+                                                    // var_dump($result);
 
-                                                // Haal de informatie over de comment likes en dislikes op uit de database.
-                                                $stmtCom = mysqli_prepare($conn, $sqlCom);
-                                                mysqli_stmt_bind_param($stmtCom, 'iiii', $commentId, $commentId, $commentId, $commentId);
-                                                mysqli_stmt_execute($stmtCom);
-                                                mysqli_stmt_bind_result($stmtCom, $comLikes, $comDislikes, $comLikedUsers, $comDislikedUsers);
-                                                mysqli_stmt_store_result($stmtCom);
-                                                mysqli_stmt_fetch($stmtCom);
-                                                mysqli_stmt_close($stmtCom);
+                                                    // Haal de informatie over de comment likes en dislikes op uit de database.
+                                                    $stmtCom = mysqli_prepare($conn, $sqlCom);
+                                                    mysqli_stmt_bind_param($stmtCom, 'iiii', $commentId, $commentId, $commentId, $commentId);
+                                                    mysqli_stmt_execute($stmtCom);
+                                                    mysqli_stmt_bind_result($stmtCom, $comLikes, $comDislikes, $comLikedUsers, $comDislikedUsers);
+                                                    mysqli_stmt_store_result($stmtCom);
+                                                    mysqli_stmt_fetch($stmtCom);
+                                                    mysqli_stmt_close($stmtCom);
 
-                                                // Array met alle id's van mensen die de comment geliked hebben.
-                                                $comLikedUserArr = explode(',', $comLikedUsers);
-                                                $comLiked = in_array($_SESSION['userId'], $comLikedUserArr);
-                                                $comLikedStr = $comLiked ? "fas" : "far";
+                                                    // Array met alle id's van mensen die de comment geliked hebben.
+                                                    $comLikedUserArr = explode(',', $comLikedUsers);
+                                                    $comLiked = in_array($_SESSION['userId'], $comLikedUserArr);
+                                                    $comLikedStr = $comLiked ? "fas" : "far";
 
-                                                // Array met alle id's van mensen die de comment gedisliked hebben.
-                                                $comDislikedUserArr = explode(',', $comDislikedUsers);
-                                                $comDisliked = in_array($_SESSION['userId'], $comDislikedUserArr);
-                                                $comDislikedStr = $comDisliked ? "fas" : "far";
+                                                    // Array met alle id's van mensen die de comment gedisliked hebben.
+                                                    $comDislikedUserArr = explode(',', $comDislikedUsers);
+                                                    $comDisliked = in_array($_SESSION['userId'], $comDislikedUserArr);
+                                                    $comDislikedStr = $comDisliked ? "fas" : "far";
 
-                                                // Als de comment al geliked is, tel bij de type 2 op.
-                                                // Dit zorgt er voor dat een like uit de database wordt gehaalt.
-                                                // Dit wordt afgevangen in de functies addLike en removeLike.
-                                                $comLikeType = $comLiked ? 3 : 1;
-                                                $comDislikeType = $comDisliked ? 2 : 0;
-                                                ?>
+                                                    // Als de comment al geliked is, tel bij de type 2 op.
+                                                    // Dit zorgt er voor dat een like uit de database wordt gehaalt.
+                                                    // Dit wordt afgevangen in de functies addLike en removeLike.
+                                                    $comLikeType = $comLiked ? 3 : 1;
+                                                    $comDislikeType = $comDisliked ? 2 : 0;
+                                                    ?>
 
-                                                <div class="likes">
-                                                    <a href="?id=<?php echo $videoId ?>&comlike=<?php echo $comLikeType ?>">
-                                                        <i class="<?php echo $comLikedStr ?> fa-thumbs-up"></i>
-                                                    </a>
-                                                    <p><?php echo $comLikes ?></p>
-                                                    <a href="?id=<?php echo $videoId ?>&comlike=<?php echo $comDislikeType ?>">
-                                                        <i class="<?php echo $comDislikedStr ?> fa-thumbs-down"></i>
-                                                    </a>
-                                                    <p><?php echo $comDislikes ?></p>
+                                                    <div class="likes">
+                                                        <a href="?id=<?php echo $videoId ?>&comlike=<?php echo $comLikeType ?>">
+                                                            <i class="<?php echo $comLikedStr ?> fa-thumbs-up"></i>
+                                                        </a>
+                                                        <p><?php echo $comLikes ?></p>
+                                                        <a href="?id=<?php echo $videoId ?>&comlike=<?php echo $comDislikeType ?>">
+                                                            <i class="<?php echo $comDislikedStr ?> fa-thumbs-down"></i>
+                                                        </a>
+                                                        <p><?php echo $comDislikes ?></p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                 <?php
+                                        }
                                     }
                                 }
                                 mysqli_stmt_close($stmt)
