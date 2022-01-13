@@ -224,13 +224,19 @@ function stmtExecute(string $sql, int $code = 0, string $ParamChars = NULL, ...$
                                 } else if($i + 1 == $totalOPENKey) {
                                     goto finish;
                                 }
+                            } else {
+                                $posFrom = 0;
                             }
                         }
                     } 
                 }
                 finish:
                 // echo $posFrom;
-                $SelectResults = substr($sql, 7, $posFrom - 8);
+                if($posFrom != 0) {
+                    $SelectResults = substr($sql, 7, $posFrom - 8);
+                } else {
+                    $SelectResults = substr($sql, 7);
+                }
                 // echo "$SelectResults<br>";
                 
                 $SelectResults = explode(",", $SelectResults);
@@ -246,6 +252,7 @@ function stmtExecute(string $sql, int $code = 0, string $ParamChars = NULL, ...$
                 }
 
                 // echo $sql;
+                // debug($SelectResults);
                 // debug($BindResults);
                 if(mysqli_stmt_bind_result($stmt, ...$BindResults)) {
                     $i = 0;
