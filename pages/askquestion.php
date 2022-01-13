@@ -52,7 +52,6 @@ include_once("../utils/dbconnect.php");
                 if (isset($_POST["tag"])) {
                     $sql = "SELECT Category FROM tag WHERE Id=?";
                     $catogory = stmtExecute($sql, 1, "i", $tag);
-                    debug($catogory);
                 }
                 $sql = "INSERT INTO question (Title, AccountId, Content) VALUES (?, ?, ?)";
                 stmtExecute($sql, 1, "sis", $title, $account, $content);
@@ -60,13 +59,13 @@ include_once("../utils/dbconnect.php");
                     $subCatergory = $_POST["subtag"];
                     $sql = "INSERT INTO subtag (SubCategory, TagId) VALUES (?, ?)";
                     stmtExecute($sql, 1, "si", $subCatergory, $tag);
-                    $sql = "SELECT Id FROM subtag WHERE SubCatagory = ? AND TagId=?";
+                    $sql = "SELECT Id FROM subtag WHERE SubCategory = ? AND TagId=?";
                     $subtagId=stmtExecute($sql, 1, "si", $subCatergory, $tag);
                     $sql = "SELECT Id FROM question WHERE Title = ? AND AccountId=?";
                     $questionId=stmtExecute($sql, 1, "si", $title, $account);
-                    var_dump($subtagId);
+                    debug($subtagId);
                     $sql = "INSERT INTO tag_question (SubTagId, QuestionId) VALUES (?, ?)";
-                    stmtExecute($sql, 1, "ii", $subtagId["Id"], $questionId["Id"]);
+                    stmtExecute($sql, 1, "ii", $subtagId["Id"][0], $questionId["Id"][0]);
                     
                 }
 
@@ -74,7 +73,7 @@ include_once("../utils/dbconnect.php");
             }
 
 
-
+        //    <?php echo htmlentities($_SERVER['PHP_SELF']); 
 
 
             // echo htmlentities($_POST['title']);
