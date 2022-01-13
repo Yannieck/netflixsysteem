@@ -1,4 +1,5 @@
 <?php include_once("../utils/dbconnect.php"); ?>
+<?php include_once("../utils/functions.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 
