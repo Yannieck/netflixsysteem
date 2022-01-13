@@ -111,7 +111,7 @@ ob_start();
                                 <h3>Comments:</h3>
                                 <div class="postComment">
                                     <img class="pfp" src="../assets/img/image_placeholder.png">
-                                    <form action="<?php echo $_SERVER['PHP_SELF']."?id=".$videoId ?>" method="POST">
+                                    <form action="<?php echo $_SERVER['PHP_SELF'] . "?id=" . $videoId ?>" method="POST">
                                         <input type="text" name="commentText" placeholder="Comment...">
                                         <button class="send" type="submit" name="postComment"><i class="far fa-paper-plane"></i></button>
                                     </form>
@@ -131,6 +131,12 @@ ob_start();
                                             <div class="commentText">
                                                 <p class="username"><?php echo $commentUser ?> - <?php echo calculateDate($commentTime) ?> ago</p>
                                                 <p class="text"><span><?php echo $commentText ?><span></p>
+
+                                                <div class="likes">
+                                                    <a href="?id=<?php echo $videoId ?>&like=<?php echo $dislikeType ?>">
+                                                        <i class="<?php echo $dislikedStr ?> fa-thumbs-down"></i>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                 <?php }
@@ -161,7 +167,7 @@ if (isset($_POST['postComment'])) {
     mysqli_stmt_bind_param($stmt, 'iis', $videoId, $accountId, $comment);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_fetch($stmt);
-    header("Location: ".$_SERVER["PHP_SELF"]."?id=".$videoId);
+    header("Location: " . $_SERVER["PHP_SELF"] . "?id=" . $videoId);
 }
 
 $addLike = function ($type, $vidId, $userId) use ($conn) {
