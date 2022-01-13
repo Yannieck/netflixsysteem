@@ -91,15 +91,25 @@ h2 {
   height: 100%;
   overflow: hidden;
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
-.vidHolder .overflowHidden video {
+.vidHolder .overflowHidden img {
   width: 100%;
+  margin: 0 auto;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
 }
 
 .vidHolder .overflowHidden .vidHover {
   display: none;
   width: 100%;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
 .vidHolder .overflowHidden .vidHover .vidHoverBot {

@@ -34,7 +34,7 @@ function calculateDate($timestamp) : string {
     }
 }
 
-function fail($code = NULL, $info = NULL) {
+function fail(?string $code = NULL, ?string $info = NULL) {
     switch ($code) {
         // Database Fail: Common
             case 'DB00':
@@ -82,7 +82,7 @@ function fail($code = NULL, $info = NULL) {
 // By:          Joris Hummel                                                                            //
 //                                                                                                      //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-function stmtExecute(string $sql, int $code = 0, string $ParamChars = NULL, ...$BindParamVars) : array| bool {
+function stmtExecute(string $sql, int $code = 0, ?string $ParamChars = NULL, ...$BindParamVars) : array| bool {
 
     require "../utils/dbconnect.php";
     // Check if the statement can be prepared
@@ -283,6 +283,7 @@ function stmtExecute(string $sql, int $code = 0, string $ParamChars = NULL, ...$
         fail("DB00", mysqli_error($conn));
         return false;
     }
+    mysqli_close($conn);
 }
 
 // $type:   1 for print_r(), 0 or empty for var_dump()
@@ -390,5 +391,15 @@ function setURL($state = null) : void {
         $path .= "&Notifications=$old";
     }
     header("Location: $path");
+}
+
+function getLikes(int $type, int $postId) : int {
+    $sql = "SELECT COUNT(`like`.`type`) AS TotalLikes
+            FROM `like` 
+            WHERE `like`.`type` = ? 
+            AND `like`.`VideoId` = ?";
+   
+    $likes = ($results = stmtExecute($sql, 1, "ii", $type, $postId)) ? $results["TotalLikes"][0] : 0;
+    return $likes;
 }
 ?>

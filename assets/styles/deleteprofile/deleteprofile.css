@@ -39,6 +39,10 @@ body {
           flex-direction: column;
 }
 
+.container .contentBlock span {
+  color: var(--clr-accent-500);
+}
+
 .container .contentBlock .textBlock {
   padding-bottom: 10vh;
 }
@@ -64,7 +68,7 @@ body {
   width: 30vw;
 }
 
-.container .contentBlock .buttons button {
+.container .contentBlock .buttons input[type=submit] {
   background-color: #FF5959;
   color: white;
   padding: 15px;

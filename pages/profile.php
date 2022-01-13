@@ -1,5 +1,31 @@
-<?php include_once("../assets/components/loginCheck.php") ?>
-<?php require_once("../utils/dbconnect.php"); ?>
+<?php
+include_once("../assets/components/loginCheck.php");
+require_once("../utils/functions.php"); 
+
+$accountId = $_SESSION['userId'];
+
+// Update user data
+if(isset($_POST["update"])){
+    $sql = "UPDATE account
+            SET `Name`= ?, `Username` = ?, `Email` = ?
+            WHERE `Id` = ?";
+
+    $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING);
+    $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_STRING);
+    $email = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);
+
+    stmtExecute($sql, 1, 'sssi', $name, $username, $email, $accountId);
+}
+
+// Get user data
+$sql = "SELECT Name, Username, Email FROM account WHERE Id = ?";
+
+$results = stmtExecute($sql, 1, 'i', $accountId);
+
+$name = $results["Name"][0];
+$username = $results["Username"][0];
+$email = $results["Email"][0];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,43 +42,22 @@
         <div class="contentBlock">
             <div class="profileBlock">
                 <h1>Profile</h1>
-                <form action="">
-                    <?php
-                    $accountId = $_SESSION['userId'];
+                <form action="profile.php" method="post">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" value="<?php echo $name; ?>">
 
-                    $query = "SELECT `Name`, `Username`, `Email`, `Password` FROM account WHERE Id = ?";
+                    <label for="name">Username</label>
+                    <input type="text" name="username" value="<?php echo $username; ?>">
 
-                    $stmt = mysqli_prepare($conn, $query);
-                    mysqli_stmt_bind_param($stmt, 'i', $accountId);
+                    <label for="name">Email</label>
+                    <input type="email" name="email" value="<?php echo $email; ?>">
 
-                    mysqli_stmt_execute($stmt);
-                    mysqli_stmt_bind_result($stmt, $name, $username, $email, $password);
-                    mysqli_stmt_store_result($stmt);
-
-                    if (mysqli_stmt_num_rows($stmt)) {
-                        while (mysqli_stmt_fetch($stmt)) {
-                    ?>
-                            <label for="name">Name</label>
-                            <input type="text" name="name" value="<?php echo $name; ?>">
-
-                            <label for="name">Username</label>
-                            <input type="text" name="username" value="<?php echo $username; ?>">
-
-                            <label for="name">Email</label>
-                            <input type="email" name="email" value="<?php echo $email; ?>">
-
-                            <label for="name">Password</label>
-                            <input type="password" name="password" value="<?php echo $password; ?>">
-                    <?php
-                        }
-                    }
-                    mysqli_stmt_close($stmt);
-                    ?>
+                    <input class="profileBtn" type="submit" name="update" value="Save profile">
                 </form>
                 <div class="buttons">
-                    <input class="profileBtn" type="submit" name="submit" value="Save profile">
                     <!-- <a class="profileBtn deleteBtn" href="deleteprofile.php">Delete profile</a> -->
                     <button class="profileBtn deleteBtn" onclick="window.location.href = './deleteprofile.php';">Delete profile</button>
+                    <button class="profileBtn deleteBtn" onclick="window.location.href = './changepassword.php';">Change password</button>
                 </div>
             </div>
             <div class="membershipBlock">
@@ -100,6 +105,4 @@
 
     }
 </script>
-
 </html>
-<?php include_once("../utils/dbclose.php"); ?>

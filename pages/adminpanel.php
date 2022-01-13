@@ -14,19 +14,25 @@
     include_once('../assets/components/header.php');
     include_once("../utils/functions.php");
 
-    $sql = "SELECT COUNT(DISTINCT account.Id), COUNT(DISTINCT question.Id), COUNT(DISTINCT video.Id), COUNT(DISTINCT comment.Id),
-            (SELECT COUNT(membership.Name) FROM membership, account WHERE account.MembershipName = membership.Name AND membership.Name = 'Junior'),
-            (SELECT COUNT(membership.Name) FROM membership, account WHERE account.MembershipName = membership.Name AND membership.Name = 'Senior')
-            FROM account, question, video, comment";
+    $sql = "SELECT COUNT(DISTINCT account.Id) AS AccountAMT, 
+                    COUNT(DISTINCT question.Id) AS QuestionAMT, 
+                    COUNT(DISTINCT video.Id) AS VideoAMT, 
+                    COUNT(DISTINCT comment.Id) AS CommentAMT,
+                    (SELECT COUNT(account.MembershipName) 
+                        FROM account
+                        WHERE account.MembershipName = 'Junior') AS JuniorAMT,
+                    (SELECT COUNT(account.MembershipName) 
+                    FROM account 
+                    WHERE account.MembershipName = 'Senior') AS SeniorAMT
+                FROM account, question, video, comment;";
 
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_execute($stmt);
-
-    mysqli_stmt_bind_result($stmt, $accountAmt, $questionAmt, $videoAmt, $commentAmt, $juniorAmt, $seniorAmt);
-    mysqli_stmt_store_result($stmt);
-    mysqli_stmt_fetch($stmt);
-
-    mysqli_stmt_close($stmt);
+    $results = stmtExecute($sql, 0);
+    $accountAmt = $results["AccountAMT"][0];
+    $questionAmt = $results["QuestionAMT"][0];
+    $videoAmt = $results["VideoAMT"][0];
+    $commentAmt = $results["CommentAMT"][0];
+    $juniorAmt = $results["JuniorAMT"][0];
+    $seniorAmt = $results["SeniorAMT"][0];
 
     $moneyEarned = ($juniorAmt * 9.99) + ($seniorAmt * 14.99);
     ?>
@@ -82,4 +88,3 @@
 ?>
 
 </html>
-<?php include_once("../utils/dbclose.php"); ?>
