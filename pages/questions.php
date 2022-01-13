@@ -1,6 +1,5 @@
 <?php
 include_once("../assets/components/loginCheck.php");
-// require '../utils/dbconnect.php';
 require '../utils/functions.php';
 ?>
 
@@ -202,30 +201,6 @@ require '../utils/functions.php';
                         </div>
                     </div>";
                 } else {
-                    // echo "<form action='?TitleId=$id' enctype='multipart/form-data' method='POST'>
-                    //     <div class='form__container'>
-                    //         <div class='top'>
-                    //             <div class='left'>
-                    //                 <input type='text' name='title' placeholder='Title' required>
-                    //                 <textarea name='description' id='description' placeholder='Description' required></textarea>
-                    //             </div>
-                    //             <div class='right'>
-                    //                 <div class='file'>
-                    //                     <input type='file' hidden name='video' id='chooseVideo' accept='video/*' required>
-                    //                     <input type='button' onClick='triggerFileSelector(\"chooseVideo\", \"selectedVideo\");' value='Upload a Video'>
-                    //                     <label id='selectedVideo'>No video selected</label>
-                    //                 </div>
-                    //                 <div class='file'>
-                    //                     <input type='file' hidden name='thumbnail' id='chooseThumbnail' accept='image/*' required>
-                    //                     <input type='button' onClick='triggerFileSelector(\"chooseThumbnail\", \"selectedThumbnail\");' value='Upload a Thumbnail'>
-                    //                     <label id='selectedThumbnail'>No thumbnail selected</label>
-                    //                 </div>
-                    //             </div>
-                    //         </div>
-                            
-                    //         <input type='submit' value='Answer'>
-                    //     </div>
-                    // </form>";
                     include_once 'videoReply.php';
                 }
             echo "</div></div>";
@@ -367,14 +342,6 @@ require '../utils/functions.php';
             } else {
                 window.location = 'questions.php?TitleId=' + id + '&Bookmark=del';
             }
-        }
-   </script>
-   <script src="https://rawgit.com/thielicious/selectFile.js/master/selectFile.js"></script>
-   <script>
-        var getFile = new selectFile;
-        function triggerFileSelector(choose, selector) {
-            getFile.targets(choose, selector);
-            getFile.simulate();
         }
    </script>
 </body>

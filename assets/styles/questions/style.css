@@ -6,7 +6,7 @@
 
 body {
   background-color: var(--clr-neutral-800);
-  color: #DADADA;
+  color: var(--clr-neutral-300);
 }
 
 .question__info {
@@ -214,117 +214,5 @@ body {
 .comments .card video {
   display: none;
   pointer-events: none;
-}
-
-form {
-  border-top: 1px solid #7d7d7d;
-}
-
-form .form__container {
-  width: 80%;
-  margin: 0 auto;
-  padding-top: 50px;
-}
-
-form .form__container .top {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
-form .form__container .top .left, form .form__container .top .right {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  width: 100%;
-  margin-right: 10px;
-}
-
-form .form__container .top input:not(input[type="button"]),
-form .form__container .top textarea {
-  border: 2px solid var(--clr-neutral-200);
-  background-color: var(--clr-neutral-700);
-  padding: 0.8rem;
-  color: var(--clr-neutral-200);
-}
-
-form .form__container .top input:not(input[type="button"])::-webkit-input-placeholder,
-form .form__container .top textarea::-webkit-input-placeholder {
-  color: var(--clr-neutral-100);
-  opacity: 1;
-}
-
-form .form__container .top input:not(input[type="button"]):-ms-input-placeholder,
-form .form__container .top textarea:-ms-input-placeholder {
-  color: var(--clr-neutral-100);
-  opacity: 1;
-}
-
-form .form__container .top input:not(input[type="button"])::-ms-input-placeholder,
-form .form__container .top textarea::-ms-input-placeholder {
-  color: var(--clr-neutral-100);
-  opacity: 1;
-}
-
-form .form__container .top input:not(input[type="button"])::placeholder,
-form .form__container .top textarea::placeholder {
-  color: var(--clr-neutral-100);
-  opacity: 1;
-}
-
-form .form__container .top textarea {
-  resize: none;
-  margin-top: 20px;
-  height: 150px;
-}
-
-form .form__container .top .file {
-  margin-left: 10px;
-  width: 100%;
-  border: 2px solid var(--clr-neutral-200);
-  background-color: var(--clr-neutral-700);
-  padding: 0.8rem;
-  color: var(--clr-neutral-200);
-  height: 100%;
-}
-
-form .form__container .top .file:first-child {
-  margin-bottom: 20px;
-}
-
-form .form__container input[type="submit"] {
-  margin-top: 20px;
-  padding: 10px 50px;
-}
-
-form .form__container input[type="button"] {
-  padding: 10px 20px;
-  margin-right: 10px;
-}
-
-form .form__container input[type="submit"],
-form .form__container input[type="button"] {
-  background-color: var(--clr-accent-400);
-  border: none;
-  color: var(--clr-neutral-100);
-  border-radius: 10px;
-}
-
-form .form__container input[type="submit"]:hover,
-form .form__container input[type="button"]:hover {
-  opacity: .8;
-  cursor: pointer;
-}
-
-form .form__container input:focus,
-form .form__container textarea:focus {
-  outline: none;
 }
 /*# sourceMappingURL=style.css.map */
