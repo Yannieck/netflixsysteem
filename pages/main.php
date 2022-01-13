@@ -30,7 +30,7 @@ include_once("../utils/functions.php");
                     <a class="button" href="./main.php">Cancel search
                         <i class="hoverCross fas fa-times"></i>
                     </a>
-                <?php
+                    <?php
                 }
                 // ===== Haal video's uit de database =====
 
@@ -47,8 +47,8 @@ include_once("../utils/functions.php");
                                 AND tag_question.QuestionId = video.QuestionId
                                 AND tag_question.SubTagID = subtag.Id
                                 AND subtag.TagId = tag.Id
-                                AND tag.id = ?;"; 
-                    
+                                AND tag.id = ?;";
+
                     $tagId = filter_input(INPUT_GET, "tag", FILTER_SANITIZE_NUMBER_INT);
                     $results = stmtExecute($sql, 1, "i", $tagId);
                 } else if (isset($_GET['search'])) {
@@ -61,7 +61,7 @@ include_once("../utils/functions.php");
                             WHERE video.QuestionId = question.Id 
                                 AND video.AccountId = account.Id
                                 AND question.title LIKE CONCAT('%', ?, '%')";
-                                
+
                     $search = filter_input(INPUT_GET, "search", FILTER_SANITIZE_SPECIAL_CHARS);
                     $results = stmtExecute($sql, 1, "i", $search);
                 } else {
@@ -77,54 +77,61 @@ include_once("../utils/functions.php");
                     $results = stmtExecute($sql);
                 }
 
-                if (is_array($results) && count($results["VideoId"]) > 0) {
-                    echo "<div class='vidRow'>";
-                        for($i = 0; $i < count($results["VideoId"]); $i++) {
+                $numResults = count($results["VideoId"]);
+                if (is_array($results) && $numResults > 0) {
+                    for ($i = 0; $i < $numResults; $i += 10) {
+                        echo "<div class='vidRow'>";
+                        for ($i = 0; $i < $numResults; $i++) {
                             if ($i < 10) {
                                 $videoId = $results["VideoId"][$i];
                                 $videoPath = $results["Thumbnail"][$i];
                                 $videoDate = $results["UploadDate"][$i];
                                 $accountName = $results["Username"][$i];
                                 $questionTitle = $results["QuestionTitle"][$i];
+
+                                // Als er geen thumbnail is geselecteerd, zet er een placeholder afbeelding neer.
+                                $fullPath = "../assets/upload/thumbnails/" . $videoPath;
+                                if (empty($videoPath)) {
+                                    $fullPath = "../assets/img/image_placeholder.png";
+                                }
+
                                 // Zorg dat er maar maximaal 10 video's getoond kunnen worden
                                 // Voor elke video die is gevonden doe dit:
-                                
-                                echo "<a href='videopage.php?VideoId=$videoId'>
-                                        <div class='vidHolder'>
-                                            <div class='overflowHidden'>
-                                                <!-- De Thumbnail: -->
-                                                <img src='../assets/upload/thumbnails/$videoPath' alt='$questionTitle'>
+                    ?>
+                                <a href='videopage.php?VideoId=$videoId'>
+                                    <div class='vidHolder'>
+                                        <div class='overflowHidden'>
+                                            <!-- De Thumbnail: -->
+                                            <img src='<?php echo $fullPath ?>' alt='<?php echo $questionTitle ?>'>
 
-                                                <!-- De video hover die de likes laat zien: -->
-                                                <div class='vidHover'>
-                                                    <!-- <div class='vidHoverTop'>
-                                                        <a href='#'><i class='far fa-bookmark'></i></a>
-                                                    </div> -->
-                                                    <div class='vidHoverBot'>
-                                                        <p>
-                                                            <i class='far fa-thumbs-up'></i>
-                                                            &nbsp; ".getLikes(1, $videoId)."&nbsp;&nbsp;
-                                                            <i class='far fa-thumbs-down'></i>
-                                                            &nbsp; ".getLikes(0, $videoId)."
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- Het element onder de video die de titel, upload datum en de uploader weergeeft -->
-                                            <div class='vidInfoHolder'>
-                                                <p class='title'>$questionTitle</p>
-                                                <div class='otherInfo'>
-                                                    <p>$accountName</p>
-                                                    <p>".calculateDate($videoDate)." ago</p>
+                                            <!-- De video hover die de likes laat zien: -->
+                                            <div class='vidHover'>
+                                                <div class='vidHoverBot'>
+                                                    <p>
+                                                        <i class='far fa-thumbs-up'></i>
+                                                        <?php echo getLikes(1, $videoId) ?>
+                                                        <i class='far fa-thumbs-down'></i>
+                                                        <?php echo getLikes(0, $videoId) ?>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
-                                    </a>";
-
+                                        <!-- Het element onder de video die de titel, upload datum en de uploader weergeeft -->
+                                        <div class='vidInfoHolder'>
+                                            <p class='title'><?php echo $questionTitle ?></p>
+                                            <div class='otherInfo'>
+                                                <p><?php echo $accountName ?></p>
+                                                <p><?php echo calculateDate($videoDate) ?> ago</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                <?php
                             } else {
                                 break;
                             }
                         }
+                    }
                     echo "</div>";
                 } else {
                     // Als er een get is met tag, laat de tag error zien,
@@ -140,4 +147,5 @@ include_once("../utils/functions.php");
         </div>
     </div>
 </body>
+
 </html>

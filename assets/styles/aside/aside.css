@@ -41,6 +41,10 @@ aside .container .aside-element {
 }
 
 aside .container .aside-element .aside-element-title {
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: var(--clr-accent-300);
 }
 
