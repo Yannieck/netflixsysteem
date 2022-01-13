@@ -96,12 +96,12 @@ ob_start();
                                         <!-- De likes / dislike display -->
                                         <!-- Als de like btn is geklikt, zet de get['like'] naar 1 -->
                                         <!-- Als de dislike btn is geklikt, zet de get['like'] naar 0 -->
-                                        <a href="?id=<?php echo $videoId ?>&like=<?php echo $likeType ?>">
+                                        <a href="?VideoId=<?php echo $videoId ?>&like=<?php echo $likeType ?>">
                                             <i class="<?php echo $likedStr ?> fa-thumbs-up"></i>
                                         </a>
                                         <p><?php echo $likes ?></p>
 
-                                        <a href="?id=<?php echo $videoId ?>&like=<?php echo $dislikeType ?>">
+                                        <a href="?VideoId=<?php echo $videoId ?>&like=<?php echo $dislikeType ?>">
                                             <i class="<?php echo $dislikedStr ?> fa-thumbs-down"></i>
                                         </a>
                                         <p><?php echo $dislikes ?></p>
@@ -118,7 +118,7 @@ ob_start();
                                 <h3>Comments:</h3>
                                 <div class="postComment">
                                     <img class="pfp" src="../assets/img/profiles/unknown.png">
-                                    <form action="<?php echo $_SERVER['PHP_SELF'] . "?id=" . $videoId ?>" method="POST">
+                                    <form action="<?php echo $_SERVER['PHP_SELF'] . "?VideoId=" . $videoId ?>" method="POST">
                                         <input type="text" name="commentText" placeholder="Comment...">
                                         <button class="send" type="submit" name="postComment"><i class="far fa-paper-plane"></i></button>
                                     </form>
@@ -180,11 +180,11 @@ ob_start();
                                                     ?>
 
                                                     <div class="likes">
-                                                        <a href="?id=<?php echo $videoId ?>&comlike=<?php echo $comLikeType ?>">
+                                                        <a href="?VideoId=<?php echo $videoId ?>&comlike=<?php echo $comLikeType ?>">
                                                             <i class="<?php echo $comLikedStr ?> fa-thumbs-up"></i>
                                                         </a>
                                                         <p><?php echo $comLikes ?></p>
-                                                        <a href="?id=<?php echo $videoId ?>&comlike=<?php echo $comDislikeType ?>">
+                                                        <a href="?VideoId=<?php echo $videoId ?>&comlike=<?php echo $comDislikeType ?>">
                                                             <i class="<?php echo $comDislikedStr ?> fa-thumbs-down"></i>
                                                         </a>
                                                         <p><?php echo $comDislikes ?></p>
@@ -225,7 +225,7 @@ if (isset($_POST['postComment'])) {
         mysqli_stmt_bind_param($stmt, 'iis', $videoId, $accountId, $comment);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_fetch($stmt);
-        header("Location: " . $_SERVER["PHP_SELF"] . "?id=" . $videoId);
+        header("Location: " . $_SERVER["PHP_SELF"] . "?VideoId=" . $videoId);
     }
 }
 // === Stop een like in de database ===
@@ -316,7 +316,7 @@ if (isset($_GET['comlike']) && isset($_GET['VideoId'])) {
         $removeLike($type, $vidId, $userId, false);
     }
     // Haal de like waarde weer uit de get.
-    header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $vidId);
+    header("Location: " . $_SERVER['PHP_SELF'] . "?VideoId=" . $vidId);
 }
 ?>
 
