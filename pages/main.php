@@ -2,6 +2,18 @@
 include_once("../assets/components/loginCheck.php");
 include_once("../utils/dbconnect.php");
 include_once("../utils/functions.php");
+
+$showLikes = function($type, $postId) use ($conn)
+{
+    $sql = "SELECT COUNT(`like`.`type`) FROM `like` WHERE `like`.`type` = ? AND `like`.`VideoId` = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, 'ii', $type, $postId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $likes);
+    mysqli_stmt_store_result($stmt);
+    mysqli_stmt_fetch($stmt);
+    return $likes;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +29,7 @@ include_once("../utils/functions.php");
 
 <body>
     <?php include_once("../assets/components/header.php"); ?>
-    <div class="flex">
+    <div class="page">
         <?php include_once("../assets/components/aside.php"); ?>
         <div class="pageContent">
             <!-- Include de tag lijst boven aan het scherm -->
@@ -34,15 +46,15 @@ include_once("../utils/functions.php");
                 }
                 // ===== Haal video's uit de database =====
 
-                // Pak standaard van de video: id, title, accountnaam, upload datum, bestandslocatie, aantal likes, aantal dislike.
-                $sql = "SELECT video.Id, question.title, account.Name, video.UploadDate, video.File, (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 1) as 'Likes', (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 0) as 'Dislike'
+                // Pak standaard van de video: id, title, accountnaam, upload datum, bestandslocatie
+                $sql = "SELECT DISTINCT video.Id, question.title, account.Username, video.UploadDate, video.File
                         FROM video, question, account
                         WHERE video.QuestionId = question.Id AND video.AccountId = account.Id
                         ORDER BY video.UploadDate;";
 
                 // Als er een get waarde is gezet; als er wordt gefilterd: filter op tag id
                 if (isset($_GET['tag'])) {
-                    $sql = "SELECT video.Id, question.title, account.Name, video.UploadDate, video.File, (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 1) as 'Likes', (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 0) as 'Dislike'
+                    $sql = "SELECT DISTINCT video.Id, question.title, account.Username, video.UploadDate, video.File
                             FROM video, question, account, tag_question, subtag, tag
                             WHERE video.QuestionId = question.Id 
                                 AND video.AccountId = account.Id
@@ -51,7 +63,7 @@ include_once("../utils/functions.php");
                                 AND subtag.TagId = tag.Id
                                 AND tag.id = ?;";
                 } else if (isset($_GET['search'])) {
-                    $sql = "SELECT video.Id, question.title, account.Name, video.UploadDate, video.File, (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 1) as 'Likes', (SELECT COUNT(`like`.`Type`) FROM `like`,account WHERE `like`.`Type` = 0) as 'Dislike'
+                    $sql = "SELECT DISTINCT video.Id, question.title, account.Username, video.UploadDate, video.File
                             FROM video, question, account
                             WHERE video.QuestionId = question.Id 
                                 AND video.AccountId = account.Id
@@ -71,7 +83,7 @@ include_once("../utils/functions.php");
                 // Standaard database resultaat vergrijgen
                 mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
 
-                mysqli_stmt_bind_result($stmt, $videoId, $questionTitle, $accountName, $videoDate, $videoPath, $likes, $dislikes)  or die(mysqli_error($conn));
+                mysqli_stmt_bind_result($stmt, $videoId, $questionTitle, $accountName, $videoDate, $videoPath)  or die(mysqli_error($conn));
                 mysqli_stmt_store_result($stmt);
 
                 if (mysqli_stmt_num_rows($stmt) > 0) {
@@ -98,7 +110,7 @@ include_once("../utils/functions.php");
                                                 <a href="#"><i class="far fa-bookmark"></i></a>
                                             </div>
                                             <div class="vidHoverBot">
-                                                <p><i class="far fa-thumbs-up"></i>&nbsp;<?php echo $likes ?>&nbsp;&nbsp;<i class="far fa-thumbs-down">&nbsp;<?php echo $dislikes ?></i></p>
+                                                <p><i class="far fa-thumbs-up"></i>&nbsp;<?php echo $showLikes(1, $videoId); ?>&nbsp;&nbsp;<i class="far fa-thumbs-down"></i>&nbsp;<?php echo $showLikes(0, $videoId); ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -134,7 +146,7 @@ include_once("../utils/functions.php");
 <script>
     // Stukje javascript daar link naar de video waar op is geklikt
     function openVideo(videoId) {
-        console.log(videoId);
+        window.location.href = "./videopage.php?VideoId=" + videoId;
     }
 </script>
 

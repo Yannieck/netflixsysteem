@@ -23,14 +23,13 @@ a {
   text-decoration: none;
 }
 
-a:not(.headerBtn):hover {
-  text-decoration: underline;
-}
-
 h1,
 h2,
+h3,
+h4,
 p,
 a {
+  color: var(--clr-neutral-100);
   margin-bottom: 0.5rem;
 }
 
@@ -77,9 +76,16 @@ a {
   background-color: var(--clr-neutral-800);
 }
 
+.page {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: calc(100% - 5vh - 50px);
+}
+
 .pageContent {
   width: calc(100% - 244px - 4rem);
-  height: calc(95vh - 50px);
+  height: 100%;
   background-color: var(--clr-neutral-800);
 }
 

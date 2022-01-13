@@ -46,7 +46,19 @@ header .navicons {
           align-items: center;
 }
 
-header .navicons i:hover {
+header .navicons li .new::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  display: block;
+  border-radius: 50%;
+  background-color: var(--clr-accent-500);
+  width: 10px;
+  aspect-ratio: 1.0;
+}
+
+header .navicons li:hover {
   cursor: pointer;
   color: var(--clr-accent-400);
 }
@@ -93,16 +105,23 @@ header li i {
 }
 
 .navtekst {
-  margin-left: 110px;
+  margin-left: 120px;
 }
 
 .navtekst a {
   padding: 10px;
 }
 
-.navtekst a:hover {
+.navtekst a:hover, .navtekst li:first-child a {
   background-color: var(--clr-accent-400);
   border-radius: 5px;
+  text-decoration: none;
+}
+
+.navtekst li:first-child a:hover {
+  background-color: unset;
+  padding: 7px;
+  border: 3px solid var(--clr-accent-400);
 }
 
 .overlayHover {
@@ -134,10 +153,106 @@ header li i {
 }
 
 .notificationHover {
-  width: 250px;
-  height: 200px;
+  display: none;
+  min-width: 400px;
+  max-width: 600px;
+  min-height: -webkit-fit-content;
+  min-height: -moz-fit-content;
+  min-height: fit-content;
+  max-height: 500px;
+  overflow-y: scroll;
   top: 30px;
-  right: 0;
+  right: -50px;
+  cursor: default;
+}
+
+.notificationHover.show {
+  display: block;
+}
+
+.notificationHover .notification {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 0 10px;
+  padding: 20px 10px;
+}
+
+.notificationHover .notification:not(:first-child) {
+  margin: 10px;
+  border-top: 1px solid var(--clr-accent-400);
+}
+
+.notificationHover .notification p {
+  font-size: .8rem;
+}
+
+.notificationHover .notification p:hover {
+  text-decoration: none;
+}
+
+.notificationHover .notification .profile {
+  text-align: center;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  width: 70px;
+}
+
+.notificationHover .notification .profile img {
+  width: 30px;
+  aspect-ratio: 1.0;
+}
+
+.notificationHover .notification .profile .profile__name {
+  width: inherit;
+  word-break: break-all;
+}
+
+.notificationHover .notification .content {
+  width: 100%;
+  margin: 0 20px;
+}
+
+.notificationHover .notification .content .type {
+  margin-bottom: 10px;
+}
+
+.notificationHover .notification .content .type a {
+  font-size: .9rem;
+  color: var(--clr-accent-300);
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.notificationHover .notification .content .type p {
+  color: var(--clr-neutral-400);
+  font-style: italic;
+}
+
+.notificationHover .notification .time {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  -ms-flex-item-align: end;
+      -ms-grid-row-align: end;
+      align-self: end;
+}
+
+.notificationHover .notification .time p {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  color: var(--clr-neutral-400);
+  font-size: .8rem;
+}
+
+.accountHover {
+  right: -40px;
 }
 
 .accountHover a {
@@ -150,6 +265,6 @@ header li i {
 .accountHover a:hover {
   background-color: var(--clr-accent-400);
   color: var(--clr-neutral-100);
-  text-decoration: underline;
+  text-decoration: none;
 }
 /*# sourceMappingURL=header.css.map */

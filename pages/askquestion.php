@@ -1,5 +1,6 @@
 <?php
 include_once("../assets/components/loginCheck.php");
+include_once("../utils/functions.php");
 include_once("../utils/dbconnect.php");
 ?>
 <!DOCTYPE html>
@@ -15,18 +16,58 @@ include_once("../utils/dbconnect.php");
 
 <body>
     <?php include_once("../assets/components/header.php"); ?>
-    <div class="flex">
+    <div class="page">
         <?php include_once("../assets/components/aside.php"); ?>
         <div class="pageContent">
             <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
                 <label for="title">Enter your question title:</label>
                 <input type="text" name="title" id="title" placeholder="Title...">
+                <!-- <p class="errortext" id="titelerror" style="display: block;">Please enter a mooie titel</p>  -->
                 <label for="text">Enter your question here:</label>
                 <textarea name="text" id="text" placeholder="Question..."></textarea>
-                <input name="submit" class="button" type="submit" value="Submit">
+                <label for="tag">Enter your tag here:</label>
+                <select name="tag" id="tag"> 
+                    <option value="Python">Python</option>
+                    <option value="Java">Java</option>
+                    <option value="C++">C++</option>
+                    <option value="CSS">CSS</option>
+                    <option value="HTML">HTML</option>
+                    <option value="PHP">PHP</option>
+                    <option value="Javascript">Javascript</option>
+                    <option value="C#">C#</option>
+                <label for="subtag"> Enter optional tags here...</label> 
+                <textarea name="subtag" id="subtag" Placeholder="enter optional tag here"></textarea> 
+                <input name="submit" class="button" type="submit" value="submit">
             </form>
-            <!-- <p id="output"> -->
+
             <?php
+            
+            if (isset($_POST["submit"])){ 
+                $title=$_POST["title"]; 
+                $account=$_SESSION["userId"]; 
+                $content=$_POST["text"];
+                if (isset($_POST["tag"])){
+                    $sql = "SELECT Category FROM tag WHERE Category=?";
+                    $test=stmtExecute($sql, 1, "s", $tag);
+                    debug($test);
+                }
+            //     // $category=$_POST["tag"];
+            //     //  $TagId=$_POST[];
+            //     $subCatergory=$_POST["subtag"]; 
+            //     if (isset($_POST["subtag"])){
+            //     //  $sql = "INSERT INTO tag (Category) VALUES (?)"; 
+            //         $sql = "INSERT INTO subtag (SubCategory) VALUES (?)"; 
+            //         stmtExecute($sql, 1, "s", $subCatergory);
+            //     }
+              
+            //     $sql = "INSERT INTO question (Title, AccountId, Content) VALUES (?, ?, ?)";
+            //     stmtExecute($sql, 1, "sis", $title, $account, $content);
+             }
+        
+
+             
+
+
             // echo htmlentities($_POST['title']);
             // echo "<br>";
             // $rawinput = $_POST['text'];
@@ -47,13 +88,13 @@ include_once("../utils/dbconnect.php");
 
             // if (isset($_POST["submit"])) { 
             //     if (!empty($_POST["title"])) {
-            //         // $titleError = test_input($_POST["title"]);
+            //         $titleError = test_input($_POST["title"]);
             //     } else { 
 
             //         echo '<span style="color:red;"> Title is required! </span>';
             //     }
             // }
-            ?>
+            // ?>   
             <!-- </p> -->
         </div>
     </div>

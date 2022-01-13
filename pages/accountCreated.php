@@ -3,7 +3,6 @@
 
 <head>
     <?php include_once('../assets/components/head.php') ?>
-    <link rel="stylesheet" href="../assets/styles/style.css">
     <link rel="stylesheet" href="../assets/styles/login/login.css">
 </head>
 

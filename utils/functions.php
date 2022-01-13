@@ -1,7 +1,7 @@
 <?php
 
 // Calculate Time Difference
-function calculateDate($timestamp) {
+function calculateDate($timestamp) : string {
     $diff = strtotime(date("Y-m-d H:i:s")) - strtotime($timestamp);
 
     $years = floor($diff / (365*60*60*24));
@@ -74,25 +74,19 @@ function fail($code = NULL, $info = NULL) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                      //
-// @Param $connection: Use $conn from dbconnect.php                                                     //
 // @Param $code: Use a code for fail messages, You can easily create 1 above                            //
 // @Param $Paramchars: Use this when need to use WHERE conditions -> Use given type: s, i, d or b       //
 // @Param $BindParamVars: Use this when need to use WHERE conditions -> Use known DB variables          //
-// @Param $sql: Don't use spaces between the commas in your statement                                   //
-//                                                                                                      //
-//  Example:                                                                                            //
-//                                                                                                      //
-//  "SELECT Title,AskDate FROM question ORDER BY AskDate DESC"                                          //
-//               ^                                                                                      //
-//               |                                                                                      //
+// @Param $sql: Give the sql query to execute                                                           //
 //                                                                                                      //
 // By:          Joris Hummel                                                                            //
 //                                                                                                      //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-function stmtExecute($connection, string $sql, int $code, string $ParamChars = NULL, ...$BindParamVars) : ?array {
+function stmtExecute(string $sql, int $code = 0, string $ParamChars = NULL, ...$BindParamVars) : array| bool {
 
+    require "../utils/dbconnect.php";
     // Check if the statement can be prepared
-    if($stmt = mysqli_prepare($connection, $sql)) {
+    if($stmt = mysqli_prepare($conn, $sql)) {
 
         // If true
         // Check if the statement needs to bind
@@ -137,41 +131,129 @@ function stmtExecute($connection, string $sql, int $code, string $ParamChars = N
                                 // If true
                                 // Check if it's possible to bind and continue the function
                                 if(!mysqli_stmt_bind_param($stmt, $ParamChars, ...$BindParamVars)) {
-                                    fail("DB".$code."4", mysqli_error($connection));
-                                    return null;
+                                    fail("DB".$code."4", mysqli_error($conn));
+                                    return false;
                                 } 
                             } else {
                                 fail("DB".$code."1", substr_count($sql, "?"));
-                                return null;
+                                return false;
                             }
                         } else {
                             fail("DB".$code."0");
-                            return null;
+                            return false;
                         }
                     } else {
                         fail("DB".$code."3", substr_count($sql, "?"));
-                        return null;
+                        return false;
                     }
                 } else {
                     fail("DB".$code."5");
-                    return null;
+                    return false;
                 }
             } else {
                 fail("DB".$code."2");
-                return null;
+                return false;
             }
         }  
-
-        $sql = str_replace("&nbsp;", "", $sql);
-        $SelectResults = substr($sql, 7, strpos($sql, "FROM") - 8);
-        $SelectResults = explode(",", $SelectResults);
-        foreach($SelectResults as $BindParamResult) {
-            $BindResults[] = $BindParamResult;
-        }
 
         if(mysqli_stmt_execute($stmt)) {
             mysqli_stmt_store_result($stmt);
             if(mysqli_stmt_num_rows($stmt) > 0) {
+
+                $sql = str_replace("DISTINCT ", "", $sql);
+                $totalFROMKey = substr_count($sql, "FROM");
+                $totalENDKey = substr_count($sql, ")");
+                $totalOPENKey = substr_count($sql, "(");
+                
+                // Check FROM
+                for($i = 0; $i < $totalFROMKey; $i++) {
+                    if($i === 0) {
+                        $posFROMKey[$i] = strpos($sql, "FROM");
+                    } else {
+                        $posFROMKey[$i] = strpos($sql, "FROM", $posFROMKey[$i - 1] + 1);
+                        if($i - 1 >= 0 && $posFROMKey[$i] == $posFROMKey[$i - 1]) {
+                            $posFROMKey[$i] = strpos($sql, "FROM", $posFROMKey[$i - 1] + 1);
+                        }
+                    }
+                }
+
+                // Check nested query open sign
+                for($i = 0; $i < $totalOPENKey; $i++) {
+                    if($i === 0) {
+                        $posOPENKey[$i] = strpos($sql, "(");
+                    } else {
+                        $posOPENKey[$i] = strpos($sql, "(", $posOPENKey[$i - 1] + 1);
+                        if($i - 1 >= 0 && $posOPENKey[$i] == $posOPENKey[$i - 1]) {
+                            $posOPENKey[$i] = strpos($sql, "(", $posOPENKey[$i - 1] + 1);
+                        }
+                    }
+                }
+
+                // Check nested query end sign
+                for($i = 0; $i < $totalENDKey; $i++) {
+                    if($i === 0) {
+                        $posENDKey[$i] = strpos($sql, ")");
+                    } else {
+                        $posENDKey[$i] = strpos($sql, ")", $posENDKey[$i - 1] + 1);
+                        if($i - 1 >= 0 && $posENDKey[$i] == $posENDKey[$i - 1]) {
+                            $posENDKey[$i] = strpos($sql, ")", $posENDKey[$i - 1] + 1);
+                        }
+                    }
+                }
+
+                // debug($posOPENKey);
+                // debug($posENDKey);
+                // debug($posFROMKey);
+                
+                // Get Right positions in nested queries and form for array values
+                for($k = 0; $k < count($posFROMKey); $k++) {
+                    $posFrom = $posFROMKey[$k];
+                    if(!empty($posENDKey) && !empty($posOPENKey)) {
+
+                        if($posOPENKey[0] > $posFROMKey[0]) {
+                            goto finish;
+                        }
+                       
+                        for($i = 0; $i < count($posOPENKey); $i++) {
+                            $posOpen = $posOPENKey[$i];
+                            $posEnd = $posENDKey[$i];
+                            // echo "$i, $posOpen, $posEnd, $posFrom<br>";
+                            if($posFrom > $posEnd && $posEnd > $posOpen) {
+                                if($i + 1 < $totalOPENKey && $posOPENKey[$i + 1] > $posFrom && $posENDKey[$i + 1] > $posOPENKey[$i + 1]) {
+                                    goto finish;
+                                } else if($i + 1 == $totalOPENKey) {
+                                    goto finish;
+                                }
+                            } else {
+                                $posFrom = 0;
+                            }
+                        }
+                    } 
+                }
+                finish:
+                // echo $posFrom;
+                if($posFrom != 0) {
+                    $SelectResults = substr($sql, 7, $posFrom - 8);
+                } else {
+                    $SelectResults = substr($sql, 7);
+                }
+                // echo "$SelectResults<br>";
+                
+                $SelectResults = explode(",", $SelectResults);
+                // debug($SelectResults);
+
+                for($i = 0; $i < count($SelectResults); $i++) {
+                    if(str_contains($SelectResults[$i], " AS ")) {
+                        $SelectResults[$i] = substr($SelectResults[$i], strpos($SelectResults[$i], " AS ") + 4);
+                    }
+                    $SelectResults[$i] = str_replace('\s', '', $SelectResults[$i]);
+                    $SelectResults[$i] = trim($SelectResults[$i]);
+                    $BindResults[] = $SelectResults[$i];
+                }
+
+                // echo $sql;
+                // debug($SelectResults);
+                // debug($BindResults);
                 if(mysqli_stmt_bind_result($stmt, ...$BindResults)) {
                     $i = 0;
                     while(mysqli_stmt_fetch($stmt)) {
@@ -183,25 +265,25 @@ function stmtExecute($connection, string $sql, int $code, string $ParamChars = N
                         $i++;
                     }
                     mysqli_stmt_close($stmt);
+                    // echo "####<br>";
                     return $results;
                 } else {
-                    fail("DB".$code."2", mysqli_error($connection));
-                    return null;
+                    fail("DB".$code."2", mysqli_error($conn));
+                    return false;
                 }
             } else {
-                return null;
+                return true;
             }
         } else {
-            fail("DB".$code."1", mysqli_error($connection));
-            return null;
+            fail("DB".$code."1", mysqli_error($conn));
+            return false;
         }
 
     } else {
-        fail("DB00", mysqli_error($connection));
-        return null;
+        fail("DB00", mysqli_error($conn));
+        return false;
     }
 }
-
 
 // $type:   1 for print_r(), 0 or empty for var_dump()
 function debug($var, int $type = 0) {
@@ -214,4 +296,99 @@ function debug($var, int $type = 0) {
     echo "</pre>";
 }
 
+function checkNotifications(int $userId) : array | bool {
+
+    $sql = "SELECT Id
+            FROM comment
+            WHERE QuestionId IN (
+                SELECT Id
+                FROM question 
+                WHERE Id IN (
+                    SELECT QuestionId 
+                    FROM comment
+                ) AND AccountId = ?
+            )";
+    $allRepliedOwnQuestions = stmtExecute($sql, 1, "i", $userId);
+    if(is_array($allRepliedOwnQuestions)) {
+        $results["TotalQuestions"] = count($allRepliedOwnQuestions["Id"]);
+    }
+
+    $sql = "SELECT Id
+            FROM comment
+            WHERE QuestionId IN (
+                SELECT QuestionId  
+                FROM bookmark 
+                WHERE QuestionId IN (
+                    SELECT QuestionId 
+                    FROM comment
+                ) AND AccountId = ?
+            )";
+    $allRepliedBookmarkedQuestions = stmtExecute($sql, 1, "i", $userId);
+    if(is_array($allRepliedBookmarkedQuestions)) {
+        $results["TotalBookmarks"] = count($allRepliedBookmarkedQuestions["Id"]);
+        $results["Bookmark"] = $allRepliedBookmarkedQuestions["Id"];
+    }
+    
+
+
+    $sql = "INSERT IGNORE INTO notification (AccountId, CommentId)
+            VALUES (?, ?)";
+
+    for($k = 0; $k < 2; $k++) {
+        $commentId = 0;
+        if($k == 0 && is_array($allRepliedOwnQuestions)) {
+            $commentId = $allRepliedOwnQuestions["Id"];
+        } else {
+            $k++;
+            if(is_array($allRepliedBookmarkedQuestions)) {
+                $commentId = $allRepliedBookmarkedQuestions["Id"];
+            } else {
+                goto end;
+            }
+        }
+        for($i = 0; $i < count($commentId); $i++) {
+            stmtExecute($sql, 1, "ii", $userId, $commentId[$i]);
+        }
+    }
+    end:
+    $sql = "SELECT Id
+            FROM comment
+            WHERE Id IN (
+                SELECT CommentId
+                FROM notification
+                WHERE AccountId = ? AND isSeen = 0
+            ) ORDER BY CommentDate DESC";
+    $tmp = stmtExecute($sql, 1, "i", $userId);
+    if(is_array($tmp)) {
+        $results["All"] = $tmp["Id"];
+    }
+
+    if(isset($results)) {
+        return $results;
+    } else {
+        return false;
+    }
+}
+
+function setURL($state = null) : void {
+    $path = $_SERVER["REQUEST_URI"];
+    $path = str_replace("&reload", "", $path);
+
+    switch($state) {
+        case 'hidden':
+            $old = 'show';
+            break;
+        default:
+            $old = 'hidden';
+            break;
+    }
+    $path = str_replace("Notifications=$old", "Notifications=$state", $path);
+
+    if($state === null && !str_contains($path, ".php?")) {
+        $path .= "?Notifications=$old";
+    } else if($state === null && str_contains($path, ".php?")) {
+        $path .= "&Notifications=$old";
+    }
+    header("Location: $path");
+}
 ?>
