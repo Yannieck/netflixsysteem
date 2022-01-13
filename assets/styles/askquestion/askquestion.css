@@ -21,6 +21,10 @@ textarea {
   resize: none;
 }
 
+.scroll {
+  overflow-y: scroll;
+}
+
 #text {
   height: 200px;
 }

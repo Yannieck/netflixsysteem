@@ -87,7 +87,6 @@ a {
   width: calc(100% - 244px - 4rem);
   height: 100%;
   background-color: var(--clr-neutral-800);
-  overflow-y: scroll;
 }
 
 .logo {

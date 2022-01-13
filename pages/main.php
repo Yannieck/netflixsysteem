@@ -77,8 +77,8 @@ include_once("../utils/functions.php");
                     $results = stmtExecute($sql);
                 }
 
-                $numResults = count($results["VideoId"]);
-                if (is_array($results) && $numResults > 0) {
+                if (is_array($results) && count($results["VideoId"]) > 0) {
+                    $numResults = count($results["VideoId"]);
                     for ($i = 0; $i < $numResults; $i += 10) {
                         echo "<div class='vidRow'>";
                         for ($i = 0; $i < $numResults; $i++) {
@@ -98,7 +98,7 @@ include_once("../utils/functions.php");
                                 // Zorg dat er maar maximaal 10 video's getoond kunnen worden
                                 // Voor elke video die is gevonden doe dit:
                     ?>
-                                <a href='videopage.php?VideoId=$videoId'>
+                                <a href='videopage.php?VideoId=<?php echo $videoId ?>'>
                                     <div class='vidHolder'>
                                         <div class='overflowHidden'>
                                             <!-- De Thumbnail: -->

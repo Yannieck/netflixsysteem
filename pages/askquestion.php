@@ -18,7 +18,7 @@ include_once("../utils/dbconnect.php");
     <?php include_once("../assets/components/header.php"); ?>
     <div class="page">
         <?php include_once("../assets/components/aside.php"); ?>
-        <div class="pageContent">
+        <div class="pageContent scroll">
             <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
                 <label for="title">Enter your question title:</label>
                 <input type="text" name="title" id="title" placeholder="Title...">
