@@ -69,15 +69,11 @@ if (isset($_GET['type'])) {
                                     $hashedPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
                                     // Database connectie
-                                    $query = "INSERT INTO account (`MembershipName`, `Username`, `Email`, `Password`) VALUES(
+                                    $sql = "INSERT INTO account (`MembershipName`, `Username`, `Email`, `Password`) VALUES(
                                         ?, ?, ?, ?
                                     )";
 
-                                    $stmt = mysqli_prepare($conn, $query) or die(mysqli_error($conn));
-                                    mysqli_stmt_bind_param($stmt, 'ssss', $typename, $username, $email, $hashedPassword);
-
-                                    mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
-                                    mysqli_stmt_close($stmt);
+                                    stmtExecute($sql, 1, 'ssss', $typename, $username, $email, $hashedPassword);
 
                                     header("Location: ./payment.php?type={$_GET['type']}");
                                 } else {

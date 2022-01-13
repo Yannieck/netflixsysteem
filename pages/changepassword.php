@@ -33,33 +33,23 @@
                         
                         $accountId = $_SESSION['userId'];
 
-                        $query = "SELECT `Password` FROM account WHERE Id = ?";
+                        $sql = "SELECT Password FROM account WHERE Id = ?";
 
-                        $stmt = mysqli_prepare($conn, $query);
-                        mysqli_stmt_bind_param($stmt, 'i', $accountId);
-
-                        mysqli_stmt_execute($stmt);
-                        mysqli_stmt_bind_result($stmt, $password);
-                        mysqli_stmt_store_result($stmt);
-                        mysqli_stmt_fetch($stmt);
-                        mysqli_stmt_close($stmt);
-                        
+                        $result = stmtExecute($sql, 1, "i", $accountId);
+                        $password = $result["Password"][0];
 
                         $hashedpassword =  $_POST['password'];
                         if(password_verify($hashedpassword,$password)){                            
                             $newhashedpw =   password_hash($_POST['newpassword'], PASSWORD_DEFAULT);
-                        $updatequery = "UPDATE account
-                        SET `Password`= ?
-                        WHERE `Id` = ?";
-            
-                        $updatestmt = mysqli_prepare($conn, $updatequery);
-                        mysqli_stmt_bind_param($updatestmt, 'si', $newhashedpw, $accountId);
-            
-                        mysqli_stmt_execute($updatestmt);
+                            $sql = "UPDATE account
+                                            SET Password = ?
+                                            WHERE Id = ?";
+                
+                            stmtExecute($sql, 1, 'si', $newhashedpw, $accountId);
 
-                        echo "Password succesfully changed!";
+                            echo "<p>Password succesfully changed!</p>";
                         }else{
-                            echo "password incorrect!";
+                            echo "<p>password incorrect!</p>";
                         }
                         
 

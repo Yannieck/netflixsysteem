@@ -1,5 +1,14 @@
-<?php include_once("../assets/components/loginCheck.php") ?>
-<?php require_once("../utils/dbconnect.php"); ?>
+<?php 
+include_once("../assets/components/loginCheck.php");
+require_once("../utils/functions.php"); 
+ 
+$accountId = $_SESSION['userId'];
+
+$sql = "SELECT Username FROM `account` WHERE `Id` = ?";
+
+$results = stmtExecute($sql, 1, 'i', $accountId);
+$name = $results["Username"][0];
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +25,7 @@
                     <h4 style="color: #FF5959">This can't be undone!</h4>
                 </div>
                 <div class="inputBlock">
-                    <h3>Type @accountname to delete your account</h3>
+                    <h3>Type <span>@<?php echo $name?></span> to delete your account</h3>
                     <input type="text" name="username" placeholder="Type here...">
                 </div>
                 <div class="buttons">
@@ -28,30 +37,15 @@
     </div>
 
     <?php
-        $accountId = $_SESSION['userId'];
-
-        $query = "SELECT Username FROM `account` WHERE `Id` = ?";
-
-        $stmt = mysqli_prepare($conn, $query);
-        mysqli_stmt_bind_param($stmt, 'i', $accountId);
-
-        
-        mysqli_stmt_bind_result($stmt, $name);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_fetch($stmt);
-        mysqli_stmt_close($stmt);
 
         if(isset($_POST["submit"])){
             echo $name;
             if(!empty($_POST["username"])){
                 if($_POST["username"] == $name){
                 
-                    $delquery = "DELETE FROM account WHERE Id = ?";
+                    $sql = "DELETE FROM account WHERE Id = ?";
 
-                    $stmt = mysqli_prepare($conn, $delquery);
-                    mysqli_stmt_bind_param($stmt, 'i', $accountId);
-
-                    mysqli_stmt_execute($stmt);
+                    stmtExecute($sql, 1, 'i', $accountId);
 
                     header("Location: logout.php");
                 }else{

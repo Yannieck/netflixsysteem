@@ -21,6 +21,10 @@ body {
         align-items: center;
         flex-direction: column;
 
+        span {
+            color: var(--clr-accent-500);
+        }
+
         .textBlock {
             padding-bottom: 10vh;
         }

@@ -1,4 +1,4 @@
-<?php require_once("../utils/dbconnect.php"); ?>
+<?php require_once("../utils/functions.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,17 +49,12 @@
                 $remember = isset($_POST['remember']) == 1 ? 1 : 0;
                 
                 // Database connectie
-                $query = "SELECT `Password`,`Id` FROM `account` WHERE Email = ?";
+                $sql = "SELECT Password, Id FROM `account` WHERE Email = ?";
 
-                $stmt = mysqli_prepare($conn, $query);
-                mysqli_stmt_bind_param($stmt, 's', $email);
+                $results = stmtExecute($sql, 1, 's', $email);
 
-                mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
-
-                mysqli_stmt_bind_result($stmt, $passResult, $id) or die(mysqli_error($conn));
-                mysqli_stmt_store_result($stmt);
-
-                mysqli_stmt_fetch($stmt);
+                $passResult = $results["Password"][0];
+                $id = $results["Id"][0];
 
                 if (password_verify($_POST['password'], $passResult)) {
                     header("Location: ./loginredirect.php?rem={$remember}&id={$id}");
@@ -72,7 +67,6 @@
                         document.getElementById('email').value = '" . $_POST['email'] . "';
                     </script>";
                 }
-                mysqli_stmt_close($stmt);
             } else {
                 // Stukje javascript dat de display van de error van 'none' naar 'block' verandert
                 // en het email veld weer invult
@@ -95,4 +89,3 @@
 </body>
 
 </html>
-<?php include_once("../utils/dbclose.php"); ?>

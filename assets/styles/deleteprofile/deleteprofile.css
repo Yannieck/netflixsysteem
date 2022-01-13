@@ -39,6 +39,10 @@ body {
           flex-direction: column;
 }
 
+.container .contentBlock span {
+  color: var(--clr-accent-500);
+}
+
 .container .contentBlock .textBlock {
   padding-bottom: 10vh;
 }

@@ -73,12 +73,19 @@ h2 {
         height: 100%;
         overflow: hidden;
         position: relative;
-        video {
+        display: flex;
+        img {
+            // height: 100%;
             width: 100%;
+            margin: 0 auto;
+            align-self: center;
         }
         .vidHover {
             display: none;
             width: 100%;
+            position: absolute;
+            right: 0;
+            bottom: 0;
             .vidHoverBot {
                 width: max-content;
                 padding: 10px;
