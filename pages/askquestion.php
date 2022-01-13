@@ -26,46 +26,55 @@ include_once("../utils/dbconnect.php");
                 <label for="text">Enter your question here:</label>
                 <textarea name="text" id="text" placeholder="Question..."></textarea>
                 <label for="tag">Enter your tag here:</label>
-                <select name="tag" id="tag"> 
-                    <option value="Python">Python</option>
-                    <option value="Java">Java</option>
-                    <option value="C++">C++</option>
-                    <option value="CSS">CSS</option>
-                    <option value="HTML">HTML</option>
-                    <option value="PHP">PHP</option>
-                    <option value="Javascript">Javascript</option>
-                    <option value="C#">C#</option>
-                <label for="subtag"> Enter optional tags here...</label> 
-                <textarea name="subtag" id="subtag" Placeholder="enter optional tag here"></textarea> 
-                <input name="submit" class="button" type="submit" value="submit">
+                <select name="tag" id="tag">
+                    <option value=1>Python</option>
+                    <option value=2>Java</option>
+                    <option value=3>C++</option>
+                    <option value=4>CSS</option>
+                    <option value=5>HTML</option>
+                    <option value=6>PHP</option>
+                    <option value=7>Javascript</option>
+                    <option value=8>C#</option>
+                    <option value=9>android</option>
+                    <option value=10>apple</option>
+                    <label for="subtag"> Enter optional tags here...</label>
+                    <textarea name="subtag" id="subtag" Placeholder="enter optional tag here"></textarea>
+                    <input name="submit" class="button" type="submit" value="submit">
             </form>
 
             <?php
-            
-            if (isset($_POST["submit"])){ 
-                $title=$_POST["title"]; 
-                $account=$_SESSION["userId"]; 
-                $content=$_POST["text"];
-                if (isset($_POST["tag"])){
-                    $sql = "SELECT Category FROM tag WHERE Category=?";
-                    $test=stmtExecute($sql, 1, "s", $tag);
-                    debug($test);
-                }
-            //     // $category=$_POST["tag"];
-            //     //  $TagId=$_POST[];
-            //     $subCatergory=$_POST["subtag"]; 
-            //     if (isset($_POST["subtag"])){
-            //     //  $sql = "INSERT INTO tag (Category) VALUES (?)"; 
-            //         $sql = "INSERT INTO subtag (SubCategory) VALUES (?)"; 
-            //         stmtExecute($sql, 1, "s", $subCatergory);
-            //     }
-              
-            //     $sql = "INSERT INTO question (Title, AccountId, Content) VALUES (?, ?, ?)";
-            //     stmtExecute($sql, 1, "sis", $title, $account, $content);
-             }
-        
 
-             
+            if (isset($_POST["submit"])) {
+                $title = $_POST["title"];
+                $account = $_SESSION["userId"];
+                $content = $_POST["text"];
+                $tag = $_POST["tag"];
+                if (isset($_POST["tag"])) {
+                    $sql = "SELECT Category FROM tag WHERE Id=?";
+                    $catogory = stmtExecute($sql, 1, "i", $tag);
+                    debug($catogory);
+                }
+                $sql = "INSERT INTO question (Title, AccountId, Content) VALUES (?, ?, ?)";
+                stmtExecute($sql, 1, "sis", $title, $account, $content);
+                if (!empty($_POST["subtag"])) {
+                    $subCatergory = $_POST["subtag"];
+                    $sql = "INSERT INTO subtag (SubCategory, TagId) VALUES (?, ?)";
+                    stmtExecute($sql, 1, "si", $subCatergory, $tag);
+                    $sql = "SELECT Id FROM subtag WHERE SubCatagory = ? AND TagId=?";
+                    $subtagId=stmtExecute($sql, 1, "si", $subCatergory, $tag);
+                    $sql = "SELECT Id FROM question WHERE Title = ? AND AccountId=?";
+                    $questionId=stmtExecute($sql, 1, "si", $title, $account);
+                    var_dump($subtagId);
+                    $sql = "INSERT INTO tag_question (SubTagId, QuestionId) VALUES (?, ?)";
+                    stmtExecute($sql, 1, "ii", $subtagId["Id"], $questionId["Id"]);
+                    
+                }
+
+               
+            }
+
+
+
 
 
             // echo htmlentities($_POST['title']);
@@ -94,7 +103,8 @@ include_once("../utils/dbconnect.php");
             //         echo '<span style="color:red;"> Title is required! </span>';
             //     }
             // }
-            // ?>   
+            // 
+            ?>
             <!-- </p> -->
         </div>
     </div>
@@ -102,4 +112,5 @@ include_once("../utils/dbconnect.php");
 <?php
 include_once("../utils/dbclose.php");
 ?>
+
 </html>
