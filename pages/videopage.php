@@ -22,11 +22,11 @@ ob_start();
         <div class="pageContent">
             <?php
             // Kijk of er een get is gezet.
-            if (isset($_GET['id'])) {
+            if (isset($_GET['VideoId'])) {
                 // Kijk of de get een geldige id waarde heeft.
-                if (filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT)) {
+                if (filter_input(INPUT_GET, "VideoId", FILTER_VALIDATE_INT)) {
                     // Haal de informatie op over het filmpje.
-                    $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
+                    $id = filter_input(INPUT_GET, "VideoId", FILTER_SANITIZE_NUMBER_INT);
                     $sql = "SELECT video.Id, question.Title, video.Description, account.Username, video.File, video.UploadDate, question.Id FROM video, account, question WHERE video.Id = ? AND account.Id = video.AccountId AND question.Id = video.QuestionId;";
                     $stmt = mysqli_prepare($conn, $sql);
                     mysqli_stmt_bind_param($stmt, 'i', $id);
@@ -266,9 +266,9 @@ $removeLike = function ($type, $vidId, $userId, $isVid) use ($conn) {
 // === Video likes ===
 
 // Als er een get zijn voor "like" en "id", voeg de like toe.
-if (isset($_GET['like']) && isset($_GET['id'])) {
+if (isset($_GET['like']) && isset($_GET['VideoId'])) {
     // Zet voor het gemak de waarden in een variabel.
-    $vidId = $_GET['id'];
+    $vidId = $_GET['VideoId'];
     $type = $_GET['like'];
     $userId = $_SESSION['userId'];
 
@@ -285,15 +285,15 @@ if (isset($_GET['like']) && isset($_GET['id'])) {
         $removeLike($type, $vidId, $userId, true);
     }
     // Haal de like waarde weer uit de get.
-    header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $vidId);
+    header("Location: " . $_SERVER['PHP_SELF'] . "?VideoId=" . $vidId);
 }
 
 // === Comment likes ===
 
 // Als er een get zijn voor "comLike" en "id", voeg de like toe.
-if (isset($_GET['comlike']) && isset($_GET['id'])) {
+if (isset($_GET['comlike']) && isset($_GET['VideoId'])) {
     // Zet voor het gemak de waarden in een variabel.
-    $vidId = $_GET['id'];
+    $vidId = $_GET['VideoId'];
     $type = $_GET['comlike'];
     $userId = $_SESSION['userId'];
 

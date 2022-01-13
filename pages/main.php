@@ -146,7 +146,7 @@ $showLikes = function($type, $postId) use ($conn)
 <script>
     // Stukje javascript daar link naar de video waar op is geklikt
     function openVideo(videoId) {
-        window.location.href = "./videopage.php?id=" + videoId;
+        window.location.href = "./videopage.php?VideoId=" + videoId;
     }
 </script>
 
