@@ -1,5 +1,7 @@
 <?php include_once("../assets/components/loginCheck.php") ?>
-<?php require_once("../utils/dbconnect.php"); ?>
+<?php require_once("../utils/dbconnect.php");
+ob_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -63,17 +65,18 @@
                     foreach ($files as $file) {
                         $name = explode("_", $file)[1];
                         $email = str_replace(".png", "", str_replace(".jpg", "", str_replace(".jpeg", "", explode("_", $file)[2])));
+                        $imgDir = $dir . "/" . $file
                     ?>
                         <div class="imgElement">
-                            <img src=<?php echo $dir . "/" . $file ?> alt="">
+                            <img src=<?php echo $imgDir ?> alt="">
                             <div class="imgInfoHolder">
                                 <div class="imgText">
                                     <p>Name: <?php echo $name ?></p>
                                     <p>Email: <?php echo $email ?></p>
                                 </div>
                                 <div class="imgBtns">
-                                    <a href="" class="decl">Decline</a>
-                                    <a href="" class="accept">Accept</a>
+                                    <a href="?decl=<?php echo $imgDir ?>" class="decl">Decline</a>
+                                    <a href="?acc=<?php echo $email ?>&dir=<?php echo $imgDir ?>" class="accept">Accept</a>
                                 </div>
                             </div>
                         </div>
@@ -83,8 +86,27 @@
         </div>
     </div>
 </body>
-<?php
 
+<?php
+if (isset($_GET['decl'])) {
+    $dir = filter_input(INPUT_GET, 'decl', FILTER_SANITIZE_SPECIAL_CHARS);
+    unlink($dir);
+    $page = $_SERVER['PHP_SELF'] . "?Notifications=hidden";
+    header("Location: $page");
+}
+if (isset($_GET['acc'])) {
+    $email = filter_input(INPUT_GET, 'acc', FILTER_SANITIZE_EMAIL);
+    $sql = "UPDATE account SET account.MembershipName = 'Prof' WHERE account.Email = ?;";
+    $result = stmtExecute($sql, 1, 's', $email);
+
+    $dir = filter_input(INPUT_GET, 'dir', FILTER_SANITIZE_SPECIAL_CHARS);
+    unlink($dir);
+    $page = $_SERVER['PHP_SELF'] . "?Notifications=hidden";
+
+    debug($result);
+    header("Location: $page");
+}
+ob_end_flush();
 ?>
 
 </html>
