@@ -7,7 +7,7 @@ $_SESSION["userId"] = $id;
 
 if (isset($_GET['rem'])) {
     if ($_GET['rem'] == 1) {
-        setcookie("rememberLoggedIn", 1, time() + (60 * 60 * 24));
+        setcookie("rememberLoggedIn", true, time() + (60 * 60 * 24));
         header("Location: ./main.php");
     } else {
         echo "Don't enable cookie";

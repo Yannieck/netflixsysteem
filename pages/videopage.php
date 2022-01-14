@@ -48,8 +48,13 @@ ob_start();
                             </div>
                             <!-- Video en de teksten. -->
                             <div class="videoHolder">
+                                <?php
+                                $sql = "SELECT membership.Name FROM membership, account WHERE account.MembershipName = membership.Name AND account.Id = ?";
+                                $userMembership = stmtExecute($sql, 1, 'i', $_SESSION['userId']);
+
+                                ?>
                                 <!-- De video. -->
-                                <video controls controlslist="nodownload">
+                                <video controls controlslist="nodownload" <?php if ($userMembership['membership.Name'][0] == "Junior") { ?>style="filter: blur(2px)" <?php } ?>>
                                     <!--autoplay-->
                                     <source src="<?php echo "../assets/upload/videos/" . $filename ?>">
                                 </video>
