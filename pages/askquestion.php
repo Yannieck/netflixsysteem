@@ -19,7 +19,7 @@ include_once("../utils/dbconnect.php");
     <div class="page">
         <?php include_once("../assets/components/aside.php"); ?>
         <div class="pageContent scroll">
-            <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
+            <form action="<?php echo htmlentities($_SERVER['PHP_SELF']);?>" method="post">
                 <label for="title">Enter your question title:</label>
                 <input type="text" name="title" id="title" placeholder="Title...">
                 <!-- <p class="errortext" id="titelerror" style="display: block;">Please enter a mooie titel</p>  -->
@@ -43,7 +43,6 @@ include_once("../utils/dbconnect.php");
             </form>
 
             <?php
-
             if (isset($_POST["submit"])) {
                 $title = $_POST["title"];
                 $account = $_SESSION["userId"];
@@ -71,7 +70,7 @@ include_once("../utils/dbconnect.php");
 
                
             }
-
+// 
 
         //    <?php echo htmlentities($_SERVER['PHP_SELF']); 
 
