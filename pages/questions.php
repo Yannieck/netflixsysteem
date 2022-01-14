@@ -122,7 +122,7 @@ require '../utils/functions.php';
                     <div class='question__content'>
                         <div class='profile'>";
 
-                            $sql = "SELECT Username, Name, Photo FROM account WHERE Id = ?";
+                            $sql = "SELECT Username, Name, Photo, MembershipName FROM account WHERE Id = ?";
                             $profileInfo = stmtExecute($sql, 1, "i", $accountId);
 
                             // Line below means:
@@ -138,7 +138,12 @@ require '../utils/functions.php';
                                 <img src='../assets/img/profiles/$photo' alt='$name'>
                             </div>
                             <div class='profile__name'>
-                                <p>$name</p>
+                                <p>";
+                                if ($profileInfo['MembershipName'][0] == "Admin") {
+                                    echo "<i class='fas fa-check'>&nbsp;</i>";
+                                }
+                                echo $name;
+                                echo "</p>
                             </div>";
 
 
@@ -159,7 +164,7 @@ require '../utils/functions.php';
                     <div class='profile'>
                         <div class='profile__picture'>";
 
-                            $sql = "SELECT Username, Name, Photo FROM account WHERE Id = ?";
+                            $sql = "SELECT Username, Name, Photo, MembershipName FROM account WHERE Id = ?";
                             $profileInfo = stmtExecute($sql, 1, "i", $accountId);
 
                             $name = ($profileInfo['Username'][0] !== NULL) ? $profileInfo['Username'][0] : $profileInfo['Name'][0];
@@ -167,7 +172,12 @@ require '../utils/functions.php';
 
                             echo "<img src='../assets/img/profiles/$photo' alt='$name'>
                             <div class='profile__name'>
-                                <p>$name</p>
+                                <p>";
+                                if ($profileInfo['MembershipName'][0] == "Admin") {
+                                    echo "<i class='fas fa-check'>&nbsp;</i>";
+                                }
+                                echo $name;
+                                echo "</p>
                             </div>
                         </div>
                         <div class='time'>

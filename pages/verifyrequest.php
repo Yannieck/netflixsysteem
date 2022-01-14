@@ -1,4 +1,7 @@
-<?php require_once("../utils/dbconnect.php"); ?>
+<?php
+require_once("../utils/dbconnect.php"); 
+ob_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +17,7 @@
             <h1>Verified account</h1>
             <p>This is where professional programmers can submit their information to possibly get a professional account. This account will be free of charge and you will have a checkmark next to your name.</p>
             <form action="<?php echo htmlentities($_SERVER['PHP_SELF']) ?>" method="post" enctype="multipart/form-data">
-                <div class="content">
+                <div class="flex">
                     <div class="half-form">
                         <!-- Voledige naam -->
                         <input class="formfield" type="text" name="fullname" id="fullname" placeholder="Full name...">
@@ -191,4 +194,7 @@
 </body>
 
 </html>
-<?php include_once("../utils/dbclose.php"); ?>
+<?php
+include_once("../utils/dbclose.php");
+ob_end_flush();
+?>

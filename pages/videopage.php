@@ -27,11 +27,11 @@ ob_start();
                 if (filter_input(INPUT_GET, "VideoId", FILTER_VALIDATE_INT)) {
                     // Haal de informatie op over het filmpje.
                     $id = filter_input(INPUT_GET, "VideoId", FILTER_SANITIZE_NUMBER_INT);
-                    $sql = "SELECT video.Id, question.Title, video.Description, account.Username, video.File, video.UploadDate, question.Id FROM video, account, question WHERE video.Id = ? AND account.Id = video.AccountId AND question.Id = video.QuestionId;";
+                    $sql = "SELECT video.Id, question.Title, video.Description, account.Username, account.MembershipName, video.File, video.UploadDate, question.Id FROM video, account, question WHERE video.Id = ? AND account.Id = video.AccountId AND question.Id = video.QuestionId;";
                     $stmt = mysqli_prepare($conn, $sql);
                     mysqli_stmt_bind_param($stmt, 'i', $id);
                     mysqli_stmt_execute($stmt);
-                    mysqli_stmt_bind_result($stmt, $videoId, $title, $desc, $creator, $filename, $uploadDate, $questionId);
+                    mysqli_stmt_bind_result($stmt, $videoId, $title, $desc, $creator, $creatorMembership, $filename, $uploadDate, $questionId);
                     mysqli_stmt_store_result($stmt);
                     mysqli_stmt_fetch($stmt);
 
@@ -62,7 +62,15 @@ ob_start();
                                 <div class="infoHolder">
                                     <!-- Creator tekst en upload datum. -->
                                     <div>
-                                        <p>Uploaded by: <span><?php echo $creator ?></span></p>
+                                        <p>Uploaded by:
+                                            <span>
+                                                <?php
+                                                if ($creatorMembership == "Admin") {
+                                                ?><i class='fas fa-check'>&nbsp;</i>
+                                                <?php }
+                                                echo $creator ?>
+                                            </span>
+                                        </p>
                                         <p>Uploaded: <span><?php echo calculateDate($uploadDate) ?> ago</span></p>
                                     </div>
                                     <!-- Likes/dislikes. -->
@@ -131,11 +139,11 @@ ob_start();
                                 </div>
                                 <?php
                                 // Haal de informatie over de comment op uit de database.
-                                $sql = "SELECT comment.Id, comment.Content, comment.CommentDate, comment.QuestionId, account.Username FROM comment, account WHERE comment.VideoId = ? AND comment.AccountId = account.Id";
+                                $sql = "SELECT comment.Id, comment.Content, comment.CommentDate, comment.QuestionId, account.Username, account.MembershipName FROM comment, account WHERE comment.VideoId = ? AND comment.AccountId = account.Id";
                                 $stmt = mysqli_prepare($conn, $sql);
                                 mysqli_stmt_bind_param($stmt, 'i', $videoId);
                                 mysqli_stmt_execute($stmt);
-                                mysqli_stmt_bind_result($stmt, $commentId, $commentText, $commentTime, $commentQuestion, $commentUser);
+                                mysqli_stmt_bind_result($stmt, $commentId, $commentText, $commentTime, $commentQuestion, $commentUser, $commentMembership);
                                 mysqli_stmt_store_result($stmt);
                                 // Als er resultaten zijn, loop door alle resultaten heen.
                                 if (mysqli_stmt_num_rows($stmt) > 0) {
@@ -146,7 +154,12 @@ ob_start();
                                             <div class="comment">
                                                 <img class="pfp" src="../assets/img/profiles/unknown.png">
                                                 <div class="commentText">
-                                                    <p class="username"><?php echo $commentUser ?> - <?php echo calculateDate($commentTime) ?> ago</p>
+                                                    <p class="username">
+                                                        <?php
+                                                        if ($commentMembership == "Admin") {
+                                                        ?><i class='fas fa-check'>&nbsp;</i>
+                                                        <?php }
+                                                        echo $commentUser ?> - <?php echo calculateDate($commentTime) ?> ago</p>
                                                     <p class="text"><span><?php echo $commentText ?><span></p>
 
                                                     <?php

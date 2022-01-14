@@ -39,6 +39,7 @@ include_once("../utils/functions.php");
                     $sql = "SELECT DISTINCT video.Id AS VideoId, 
                                             question.title AS QuestionTitle, 
                                             account.Username AS Username, 
+                                            account.MembershipName AS Membership,
                                             video.UploadDate AS UploadDate, 
                                             video.Thumbnail AS Thumbnail
                             FROM video, question, account, tag_question, subtag, tag
@@ -47,7 +48,8 @@ include_once("../utils/functions.php");
                                 AND tag_question.QuestionId = video.QuestionId
                                 AND tag_question.SubTagID = subtag.Id
                                 AND subtag.TagId = tag.Id
-                                AND tag.id = ?;";
+                                AND tag.id = ?
+                            ORDER BY video.UploadDate;";
 
                     $tagId = filter_input(INPUT_GET, "tag", FILTER_SANITIZE_NUMBER_INT);
                     $results = stmtExecute($sql, 1, "i", $tagId);
@@ -55,12 +57,14 @@ include_once("../utils/functions.php");
                     $sql = "SELECT DISTINCT video.Id AS VideoId, 
                                             question.title AS QuestionTitle, 
                                             account.Username AS Username, 
+                                            account.MembershipName AS Membership,
                                             video.UploadDate AS UploadDate, 
                                             video.File AS File
                             FROM video, question, account
                             WHERE video.QuestionId = question.Id 
                                 AND video.AccountId = account.Id
-                                AND question.title LIKE CONCAT('%', ?, '%')";
+                                AND question.title LIKE CONCAT('%', ?, '%')
+                            ORDER BY video.UploadDate;";
 
                     $search = filter_input(INPUT_GET, "search", FILTER_SANITIZE_SPECIAL_CHARS);
                     $results = stmtExecute($sql, 1, "i", $search);
@@ -69,10 +73,12 @@ include_once("../utils/functions.php");
                     $sql = "SELECT DISTINCT video.Id AS VideoId, 
                                             question.title AS QuestionTitle, 
                                             account.Username AS Username, 
+                                            account.MembershipName AS Membership,
                                             video.UploadDate AS UploadDate, 
                                             video.Thumbnail AS Thumbnail
                             FROM video, question, account
-                            WHERE video.QuestionId = question.Id AND video.AccountId = account.Id
+                            WHERE video.QuestionId = question.Id 
+                            AND video.AccountId = account.Id
                             ORDER BY video.UploadDate;";
                     $results = stmtExecute($sql);
                 }
@@ -88,6 +94,7 @@ include_once("../utils/functions.php");
                                 $videoDate = $results["UploadDate"][$i];
                                 $accountName = $results["Username"][$i];
                                 $questionTitle = $results["QuestionTitle"][$i];
+                                $membershipName = $results["Membership"][$i];
 
                                 // Als er geen thumbnail is geselecteerd, zet er een placeholder afbeelding neer.
                                 $fullPath = "../assets/upload/thumbnails/" . $videoPath;
@@ -120,7 +127,12 @@ include_once("../utils/functions.php");
                                         <div class='vidInfoHolder'>
                                             <p class='title'><?php echo $questionTitle ?></p>
                                             <div class='otherInfo'>
-                                                <p><?php echo $accountName ?></p>
+                                                <p>
+                                                    <?php
+                                                    if ($membershipName == "Admin") {
+                                                    ?><i class='fas fa-check'>&nbsp;</i>
+                                                    <?php }
+                                                    echo $accountName ?></p>
                                                 <p><?php echo calculateDate($videoDate) ?> ago</p>
                                             </div>
                                         </div>
