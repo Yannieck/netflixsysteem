@@ -66,7 +66,14 @@
   width: 100%;
 }
 
-.videoReply form.URLForm .file, .videoReply form.URLForm input[type="url"], .videoReply form.URLForm textarea {
+.videoReply form.URLForm .form-seperate input,
+.videoReply form.URLForm .form-seperate textarea {
+  color: var(--clr-neutral-100);
+}
+
+.videoReply form.URLForm .file,
+.videoReply form.URLForm input[type="url"],
+.videoReply form.URLForm textarea {
   background-color: var(--clr-neutral-600);
   padding: 10px 10px 10px 0;
   border-radius: 10px;
@@ -80,28 +87,33 @@
   width: inherit;
 }
 
-.videoReply form.URLForm input[type="url"], .videoReply form.URLForm textarea {
+.videoReply form.URLForm input[type="url"],
+.videoReply form.URLForm textarea {
   outline: none;
   caret-color: var(--clr-neutral-100);
   padding: 10px;
 }
 
-.videoReply form.URLForm input[type="url"]::-webkit-input-placeholder, .videoReply form.URLForm textarea::-webkit-input-placeholder {
+.videoReply form.URLForm input[type="url"]::-webkit-input-placeholder,
+.videoReply form.URLForm textarea::-webkit-input-placeholder {
   color: var(--clr-neutral-200) !important;
   font-size: .8rem;
 }
 
-.videoReply form.URLForm input[type="url"]:-ms-input-placeholder, .videoReply form.URLForm textarea:-ms-input-placeholder {
+.videoReply form.URLForm input[type="url"]:-ms-input-placeholder,
+.videoReply form.URLForm textarea:-ms-input-placeholder {
   color: var(--clr-neutral-200) !important;
   font-size: .8rem;
 }
 
-.videoReply form.URLForm input[type="url"]::-ms-input-placeholder, .videoReply form.URLForm textarea::-ms-input-placeholder {
+.videoReply form.URLForm input[type="url"]::-ms-input-placeholder,
+.videoReply form.URLForm textarea::-ms-input-placeholder {
   color: var(--clr-neutral-200) !important;
   font-size: .8rem;
 }
 
-.videoReply form.URLForm input[type="url"]::placeholder, .videoReply form.URLForm textarea::placeholder {
+.videoReply form.URLForm input[type="url"]::placeholder,
+.videoReply form.URLForm textarea::placeholder {
   color: var(--clr-neutral-200) !important;
   font-size: .8rem;
 }
@@ -153,7 +165,8 @@
           justify-content: space-between;
 }
 
-.videoReply form.uploadForm .form__container .top .left, .videoReply form.uploadForm .form__container .top .right {
+.videoReply form.uploadForm .form__container .top .left,
+.videoReply form.uploadForm .form__container .top .right {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

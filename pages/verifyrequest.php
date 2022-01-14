@@ -1,5 +1,6 @@
 <?php
 require_once("../utils/dbconnect.php"); 
+require_once("../utils/functions.php"); 
 ob_start();
 ?>
 <!DOCTYPE html>
@@ -82,16 +83,11 @@ ob_start();
                     if (!empty($_FILES["uploadedFile"]["tmp_name"])) {
                         // Kijk of het account bestaat door naar de gegevens te zoeken in de database.
                         $sql = "SELECT account.`password` FROM account WHERE account.`name` = ? AND email = ?";
-                        $stmt = mysqli_prepare($conn, $sql);
-                        mysqli_stmt_bind_param($stmt, "ss", $fullname, $email);
-                        mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
-                        mysqli_stmt_bind_result($stmt, $passResult) or die(mysqli_error($conn));
-                        mysqli_stmt_store_result($stmt);
-                        mysqli_stmt_fetch($stmt);
+                        $result = stmtExecute($sql, 1, 'ss', $fullname, $email);
 
                         // Kijk of er resultaten zijn.
-                        if (mysqli_stmt_num_rows($stmt) > 0) {
-                            if (password_verify($_POST['password'], $passResult)) {
+                        if ($result['account.`password`'] > 0) {
+                            if (password_verify($_POST['password'], $result['account.`password`'][0])) {
                                 // Grootte kleiner dan 60 kb
                                 if ($_FILES["uploadedFile"]["size"] < 60000) {
                                     $acceptedFileTypes = ["image/png", "image/jpg", "image/jpeg"];
