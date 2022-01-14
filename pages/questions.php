@@ -131,8 +131,8 @@ require '../utils/functions.php';
                             // } else {
                             //     $name = $profileInfo['Name'][0];    
                             // }
-                            $name = ($profileInfo['Username'][0] !== NULL) ? $profileInfo['Username'][0] : $profileInfo['Name'][0];
-                            $photo = ($profileInfo['Photo'][0] !== NULL) ? $profileInfo['Photo'][0] : 'unknown.png';
+                            $name = ($profileInfo['Username'][0] != NULL) ? $profileInfo['Username'][0] : $profileInfo['Name'][0];
+                            $photo = ($profileInfo['Photo'][0] != NULL) ? $profileInfo['Photo'][0] : 'unknown.png';
 
                             echo "<div class='profile__picture'>
                                 <img src='../assets/img/profiles/$photo' alt='$name'>
@@ -167,8 +167,8 @@ require '../utils/functions.php';
                             $sql = "SELECT Username, Name, Photo, MembershipName FROM account WHERE Id = ?";
                             $profileInfo = stmtExecute($sql, 1, "i", $accountId);
 
-                            $name = ($profileInfo['Username'][0] !== NULL) ? $profileInfo['Username'][0] : $profileInfo['Name'][0];
-                            $photo = ($profileInfo['Photo'][0] !== NULL) ? $profileInfo['Photo'][0] : 'unknown.png';
+                            $name = ($profileInfo['Username'][0] != NULL) ? $profileInfo['Username'][0] : $profileInfo['Name'][0];
+                            $photo = ($profileInfo['Photo'][0] != NULL) ? $profileInfo['Photo'][0] : 'unknown.png';
 
                             echo "<img src='../assets/img/profiles/$photo' alt='$name'>
                             <div class='profile__name'>

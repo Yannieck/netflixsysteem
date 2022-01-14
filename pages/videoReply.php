@@ -25,7 +25,7 @@
                     <form action='answerQuestion.php?TitleId=$id' class='URLForm' enctype='multipart/form-data' method='POST'>
                         <div class='form-seperate url'>
                             <p>Give a video URL</p>
-                            <input type='url' name='url' id='url' placeholder='$url' required>
+                            <input type='url' name='url' id='url' placeholder='Enter a video link here...' required>
                             <textarea name='description' placeholder='Comment Here...'></textarea>
                         </div>
                         <input type='submit' name='submit' class='btn form' value='Reply'>
@@ -45,19 +45,19 @@
                         </div>
                         <div class='right'>
                             <div class='file'>
-                                <input type='file' hidden name='video' id='chooseVideo' accept='video/*' required>
-                                <input type='button' onClick='triggerFileSelector(\"chooseVideo\", \"selectedVideo\");' value='Upload a Video'>
+                                <input type='file' id='videoFileInput' hidden name='video' id='chooseVideo' accept='video/*' required>
+                                <input type='button' id='videoFileBtn' value='Upload a Video'>
                                 <label id='selectedVideo'>No video selected</label>
                             </div>
                             <div class='file'>
-                                <input type='file' hidden name='thumbnail' id='chooseThumbnail' accept='image/*' required>
-                                <input type='button' onClick='triggerFileSelector(\"chooseThumbnail\", \"selectedThumbnail\");' value='Upload a Thumbnail'>
+                                <input type='file' id='thumbnailFileInput' hidden name='thumbnail' id='chooseThumbnail' accept='image/*' required>
+                                <input type='button' id='thumbnailFileBtn' value='Upload a Thumbnail'>
                                 <label id='selectedThumbnail'>No thumbnail selected</label>
                             </div>
                         </div>
                     </div>
                     
-                    <input type='submit' value='Answer'>
+                    <input type='submit' name='submit' value='Answer'>
                 </div>
             </form>";
 
@@ -67,21 +67,33 @@
                         <a href='?TitleId=$id&AnswerQuestion' class='btn answer'>Answer</a>
                     </div>";
         }
-
+        // onClick='triggerFileSelector(\"chooseVideo\", \"selectedVideo\");' 
+        // onClick='triggerFileSelector(\"chooseThumbnail\", \"selectedThumbnail\");' 
+        // ?TitleId=$id
     ?>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
     // For customizing input[type='file']....
 
-    // On click on the .file-btn -> you can select a file
-    $(".file-btn").bind('click', function() {
-        $(".file-input").click();
+    // On click on the #videoFileBtn -> you can select a file
+    $("#videoFileBtn").bind('click', function() {
+        $("#videoFileInput").click();
     });
 
-    // On file change -> set innerhtml of .file-input-label
-    $(".file-input").on("change", function() {
+    // On click on the #thumbnailFileBtn -> you can select a file
+    $("#thumbnailFileBtn").bind('click', function() {
+        $("#thumbnailFileInput").click();
+    });
+
+    // On file change -> set innerhtml of #videoFileInput-label
+    $("#videoFileInput").on("change", function() {
         var fileName = $(this).val().split("\\").pop();
-        $(this).siblings(".file-input-label").addClass("selected").html(fileName);
+        $('#selectedVideo').addClass("selected").text(fileName);
+    });
+    // On file change -> set innerhtml of #thumbnailFileInput-label
+    $("#thumbnailFileInput").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $('#selectedThumbnail').addClass("selected").text(fileName);
     });
 </script>

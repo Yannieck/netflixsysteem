@@ -64,6 +64,16 @@ body {
   aspect-ratio: 1.0;
 }
 
+#card-top {
+  aspect-ratio: calc(16/9);
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+#commentVideo {
+  aspect-ratio: calc(16/9);
+}
+
 .questions__wrapper,
 .specific__question {
   font-size: .9rem;

@@ -43,6 +43,15 @@ body {
     }
 }
 
+#card-top {
+    aspect-ratio: calc(16/9);
+    object-fit: cover;
+}
+
+#commentVideo {
+    aspect-ratio: calc(16/9);
+}
+
 .questions__wrapper,
 .specific__question {
     font-size: .9rem;
