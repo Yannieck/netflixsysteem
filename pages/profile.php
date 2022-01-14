@@ -1,30 +1,40 @@
 <?php
 include_once("../assets/components/loginCheck.php");
-require_once("../utils/functions.php"); 
+require_once("../utils/functions.php");
 
 $accountId = $_SESSION['userId'];
 
 // Update user data
-if(isset($_POST["update"])){
+if (isset($_POST["update"])) {
     $sql = "UPDATE account
-            SET `Name`= ?, `Username` = ?, `Email` = ?
+            SET `Name`= ?, `Username` = ?, `Email` = ?, `Biography` = ?, `GithubLink` = ?, `Photo` = ?
             WHERE `Id` = ?";
 
     $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING);
     $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_STRING);
-    $email = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);
+    $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
+    $biography = filter_input(INPUT_POST, "biography", FILTER_SANITIZE_SPECIAL_CHARS);
+    $photo = "";
 
-    stmtExecute($sql, 1, 'sssi', $name, $username, $email, $accountId);
+    $githublink = filter_input(INPUT_POST, "github", FILTER_SANITIZE_SPECIAL_CHARS);
+    if (!filter_var($githublink, FILTER_VALIDATE_URL)) {
+        $githublink = "-invalid URL-";
+    }
+
+    stmtExecute($sql, 1, 'ssssssi', $name, $username, $email, $biography, $githublink, "", $accountId);
 }
 
 // Get user data
-$sql = "SELECT Name, Username, Email FROM account WHERE Id = ?";
+$sql = "SELECT Name, Username, Email, Biography, GithubLink, Photo FROM account WHERE Id = ?";
 
 $results = stmtExecute($sql, 1, 'i', $accountId);
 
 $name = $results["Name"][0];
 $username = $results["Username"][0];
 $email = $results["Email"][0];
+$bio = $results['Biography'][0] == null ? "" : $results['Biography'][0];
+$github = $results['GithubLink'][0] == null ? "" : $results['GithubLink'][0];
+$photo = $results['Photo'][0] == null ? "" : $results['Photo'][0];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +52,8 @@ $email = $results["Email"][0];
         <div class="contentBlock">
             <div class="profileBlock">
                 <h1>Profile</h1>
-                <form action="profile.php" method="post">
+                <!-- profile.php -->
+                <form action="" method="post">
                     <label for="name">Name</label>
                     <input type="text" name="name" value="<?php echo $name; ?>">
 
@@ -51,6 +62,12 @@ $email = $results["Email"][0];
 
                     <label for="name">Email</label>
                     <input type="email" name="email" value="<?php echo $email; ?>">
+
+                    <label for="bio">Bio</label>
+                    <input type="text" name="biography" value="<?php echo $bio; ?>">
+
+                    <label for="github">Github Link</label>
+                    <input type="text" name="github" value="<?php echo $github; ?>">
 
                     <input class="profileBtn" type="submit" name="update" value="Save profile">
                 </form>
@@ -105,4 +122,5 @@ $email = $results["Email"][0];
 
     }
 </script>
+
 </html>

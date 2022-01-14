@@ -17,6 +17,16 @@ body {
   height: 85%;
 }
 
+.contentBlock .profileBlock {
+  overflow-y: scroll;
+  height: calc(100% - 4rem);
+  padding: 2rem;
+}
+
+.contentBlock .profileBlock .buttons {
+  margin-top: 1rem;
+}
+
 .contentBlock .profileBlock form {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -76,5 +86,22 @@ body {
   cursor: pointer;
   border: none;
   border-radius: 5px;
+}
+
+::-webkit-scrollbar {
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--clr-neutral-600);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--clr-neutral-400);
+  height: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--clr-neutral-500);
 }
 /*# sourceMappingURL=profile.css.map */

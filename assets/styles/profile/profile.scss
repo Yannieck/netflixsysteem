@@ -11,6 +11,12 @@ body {
     width: 90%;
     height: 85%;
     .profileBlock {
+        overflow-y: scroll;
+        height: calc(100% - 4rem);
+        padding: 2rem;
+        .buttons {
+            margin-top: 1rem;
+        }
         form {
             display: flex;
             flex-direction: column;
@@ -62,4 +68,21 @@ body {
             border-radius: 5px;
         }
     }
+}
+
+::-webkit-scrollbar {
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--clr-neutral-600);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--clr-neutral-400);
+    height: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--clr-neutral-500);
 }
