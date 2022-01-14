@@ -109,7 +109,7 @@ include_once("../utils/functions.php");
                                     <div class='vidHolder'>
                                         <div class='overflowHidden'>
                                             <!-- De Thumbnail: -->
-                                            <img src='<?php echo $fullPath ?>' alt='<?php echo $questionTitle ?>'>
+                                            <img src='<?php echo $fullPath ?>' class="thumbnail" alt='<?php echo $questionTitle ?>'>
 
                                             <!-- De video hover die de likes laat zien: -->
                                             <div class='vidHover'>

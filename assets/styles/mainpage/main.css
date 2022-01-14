@@ -97,11 +97,14 @@ h2 {
 }
 
 .vidHolder .overflowHidden img {
+  height: 100%;
   width: 100%;
   margin: 0 auto;
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .vidHolder .overflowHidden .vidHover {
