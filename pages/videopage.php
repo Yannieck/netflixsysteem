@@ -27,7 +27,9 @@ ob_start();
                 if (filter_input(INPUT_GET, "VideoId", FILTER_VALIDATE_INT)) {
                     // Haal de informatie op over het filmpje.
                     $id = filter_input(INPUT_GET, "VideoId", FILTER_SANITIZE_NUMBER_INT);
-                    $sql = "SELECT video.Id, question.Title, video.Description, account.Username, account.MembershipName, video.File, video.UploadDate, question.Id FROM video, account, question WHERE video.Id = ? AND account.Id = video.AccountId AND question.Id = video.QuestionId;";
+                    $sql = "SELECT video.Id, question.Title, video.Description, account.Username, account.MembershipName, video.File, video.UploadDate, question.Id
+                            FROM video, account, question
+                            WHERE video.Id = ? AND account.Id = video.AccountId AND question.Id = video.QuestionId;";
                     $stmt = mysqli_prepare($conn, $sql);
                     mysqli_stmt_bind_param($stmt, 'i', $id);
                     mysqli_stmt_execute($stmt);
@@ -77,10 +79,10 @@ ob_start();
                                     <div class="likes">
                                         <?php
                                         // Query om de likes / dislikes op te halen
-                                        $sql = "SELECT (SELECT COUNT(`like`.`Type`) FROM `like`,video WHERE `like`.`VideoId` = video.Id AND video.Id = ? AND `like`.`Type` = 1),
-                                        (SELECT COUNT(`like`.`Type`) FROM `like`,video WHERE `like`.`VideoId` = video.Id AND video.Id = ? AND `like`.`Type` = 0),
-                                        (SELECT GROUP_CONCAT(`like`.`AccountId`) FROM `like` WHERE `like`.`Type` = 1 AND `like`.`VideoId` = ?),
-                                        (SELECT GROUP_CONCAT(`like`.`AccountId`) FROM `like` WHERE `like`.`Type` = 0 AND `like`.`VideoId` = ?);";
+                                        $sql = "SELECT (SELECT COUNT(`like`.`Type`) FROM `like`,video WHERE `like`.`VideoId` = video.Id AND video.Id = ? AND `like`.`Type` = 1) AS 'Likes',
+                                        (SELECT COUNT(`like`.`Type`) FROM `like`,video WHERE `like`.`VideoId` = video.Id AND video.Id = ? AND `like`.`Type` = 0) AS 'Dislikes',
+                                        (SELECT GROUP_CONCAT(`like`.`AccountId`) FROM `like` WHERE `like`.`Type` = 1 AND `like`.`VideoId` = ?) AS 'LikedUsers',
+                                        (SELECT GROUP_CONCAT(`like`.`AccountId`) FROM `like` WHERE `like`.`Type` = 0 AND `like`.`VideoId` = ?) AS 'DislikedUsers';";
 
                                         $stmt = mysqli_prepare($conn, $sql);
                                         mysqli_stmt_bind_param($stmt, 'iiii', $videoId, $videoId, $videoId, $videoId);
@@ -139,7 +141,10 @@ ob_start();
                                 </div>
                                 <?php
                                 // Haal de informatie over de comment op uit de database.
-                                $sql = "SELECT comment.Id, comment.Content, comment.CommentDate, comment.QuestionId, account.Username, account.MembershipName FROM comment, account WHERE comment.VideoId = ? AND comment.AccountId = account.Id";
+                                $sql = "SELECT comment.Id, comment.Content, comment.CommentDate, comment.QuestionId, account.Username, account.MembershipName
+                                FROM comment, account
+                                WHERE comment.VideoId = ? AND comment.AccountId = account.Id                                
+                                ORDER BY comment.CommentDate DESC";
                                 $stmt = mysqli_prepare($conn, $sql);
                                 mysqli_stmt_bind_param($stmt, 'i', $videoId);
                                 mysqli_stmt_execute($stmt);
@@ -163,13 +168,10 @@ ob_start();
                                                     <p class="text"><span><?php echo $commentText ?><span></p>
 
                                                     <?php
-                                                    $sqlCom = "SELECT (SELECT COUNT(`like`.`Type`) FROM `like`,comment WHERE `like`.`CommentId` = comment.Id AND comment.Id = ? AND `like`.`Type` = 1) as 'likes',
-                                                (SELECT COUNT(`like`.`Type`) FROM `like`,comment WHERE `like`.`CommentId` = comment.Id AND comment.Id = ? AND `like`.`Type` = 0) as 'dislikes',
-                                                (SELECT GROUP_CONCAT(`like`.`AccountId`) FROM `like` WHERE `like`.`Type` = 1 AND `like`.`CommentId` = ?) as 'likedAccs',
-                                                (SELECT GROUP_CONCAT(`like`.`AccountId`) FROM `like` WHERE `like`.`Type` = 0 AND `like`.`CommentId` = ?) as 'dislikedAccs';";
-
-                                                    // $results = stmtExecute($sql, 1, 'iiii', $videoId, $videoId, $videoId, $videoId);
-                                                    // var_dump($result);
+                                                    $sqlCom = "SELECT (SELECT COUNT(`like`.`Type`) FROM `like`,comment WHERE `like`.`CommentId` = comment.Id AND comment.Id = ? AND `like`.`Type` = 1),
+                                                    (SELECT COUNT(`like`.`Type`) FROM `like`,comment WHERE `like`.`CommentId` = comment.Id AND comment.Id = ? AND `like`.`Type` = 0),
+                                                    (SELECT GROUP_CONCAT(`like`.`AccountId`) FROM `like` WHERE `like`.`Type` = 1 AND `like`.`CommentId` = ?),
+                                                    (SELECT GROUP_CONCAT(`like`.`AccountId`) FROM `like` WHERE `like`.`Type` = 0 AND `like`.`CommentId` = ?);";
 
                                                     // Haal de informatie over de comment likes en dislikes op uit de database.
                                                     $stmtCom = mysqli_prepare($conn, $sqlCom);
@@ -198,11 +200,11 @@ ob_start();
                                                     ?>
 
                                                     <div class="likes">
-                                                        <a href="?VideoId=<?php echo $videoId ?>&comlike=<?php echo $comLikeType ?>">
+                                                        <a href="?VideoId=<?php echo $videoId ?>&comlike=<?php echo $comLikeType ?>&comId=<?php echo $commentId ?>">
                                                             <i class="<?php echo $comLikedStr ?> fa-thumbs-up"></i>
                                                         </a>
                                                         <p><?php echo $comLikes ?></p>
-                                                        <a href="?VideoId=<?php echo $videoId ?>&comlike=<?php echo $comDislikeType ?>">
+                                                        <a href="?VideoId=<?php echo $videoId ?>&comlike=<?php echo $comDislikeType ?>&comId=<?php echo $commentId ?>">
                                                             <i class="<?php echo $comDislikedStr ?> fa-thumbs-down"></i>
                                                         </a>
                                                         <p><?php echo $comDislikes ?></p>
@@ -239,10 +241,7 @@ if (isset($_POST['postComment'])) {
         $comment = filter_input(INPUT_POST, 'commentText', FILTER_SANITIZE_SPECIAL_CHARS);
         $accountId = $_SESSION["userId"];
         $sql = "INSERT INTO comment (VideoId, AccountId, Content) VALUES (?,?,?)";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, 'iis', $videoId, $accountId, $comment);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_fetch($stmt);
+        stmtExecute($sql, 0, 'iis', $videoId, $accountId, $comment);
         header("Location: " . $_SERVER["PHP_SELF"] . "?VideoId=" . $videoId);
     }
 }
@@ -252,16 +251,12 @@ $addLike = function ($type, $vidId, $userId, $isVid) use ($conn) {
     // Stop de nieuwe like in de database
     if ($isVid == true) {
         $sql = "INSERT INTO `like` (`AccountId`, `VideoId`, `Type`) VALUES (?,?,?);";
+        echo "add like || user: " . $userId . " - vidId: " . $vidId . " - type: " . $type . "<br>";
     } else {
         $sql = "INSERT INTO `like` (`AccountId`, `CommentId`, `Type`) VALUES (?,?,?);";
+        echo "add like || user: " . $userId . " - CommentId: " . $vidId . " - type: " . $type . "<br>";
     }
-
-    echo "add like: " . $userId . " - vidId: " . $vidId . " - type: " . $type . "<br>";
-    var_dump($isVid);
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, 'iii', $userId, $vidId, $type);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
+    stmtExecute($sql, 0, 'iii', $userId, $vidId, $type);
 };
 
 // === Haal een like uit de database ===
@@ -270,17 +265,14 @@ $removeLike = function ($type, $vidId, $userId, $isVid) use ($conn) {
     // Haal de like/dislike uit de database
     if ($isVid == true) {
         $sql = "DELETE FROM `like` WHERE `like`.`AccountId`=? AND `like`.`VideoId`=? AND `like`.`Type`=?;";
+        $type -= 2;
+        echo "remove like || user: " . $userId . " - vidId: " . $vidId . " - type: " . $type . "<br>";
     } else {
-        $sql = "DELETE FROM `like` WHERE `like`.`CommentId`=? AND `like`.`CommentId`=? AND `like`.`Type`=?;";
+        $sql = "DELETE FROM `like` WHERE `like`.`AccountId`=? AND `like`.`CommentId`=? AND `like`.`Type`=?;";
+        $type -= 2;
+        echo "remove like || user: " . $userId . " - CommentId: " . $vidId . " - type: " . $type . "<br>";
     }
-    $stmt = mysqli_prepare($conn, $sql);
-    $type -= 2;
-    echo "remove like: " . $userId . " - vidId: " . $vidId . " - type: " . $type . "<br>";
-    var_dump($isVid);
-
-    mysqli_stmt_bind_param($stmt, 'iii', $userId, $vidId, $type);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
+    stmtExecute($sql, 0, 'iii', $userId, $vidId, $type);
 };
 
 // === Video likes ===
@@ -305,6 +297,7 @@ if (isset($_GET['like']) && isset($_GET['VideoId'])) {
         $removeLike($type, $vidId, $userId, true);
     }
     // Haal de like waarde weer uit de get.
+
     header("Location: " . $_SERVER['PHP_SELF'] . "?VideoId=" . $vidId);
 }
 
@@ -317,21 +310,39 @@ if (isset($_GET['comlike']) && isset($_GET['VideoId'])) {
     $type = $_GET['comlike'];
     $userId = $_SESSION['userId'];
 
-    // Roep de functie op om de like in de database te zetten.
-    if ($type == 0) {
-        // like
-        echo "like de comment <br>";
-        $removeLike(3, $vidId, $userId, false);
-        $addLike($type, $vidId, $userId, false);
-    } else if ($type == 1) {
-        // dislike
-        echo "dislike de comment <br>";
-        $removeLike(2, $vidId, $userId, false);
-        $addLike($type, $vidId, $userId, false);
-    } else if ($type == 2 || $type == 3) {
-        echo "delete <br>";
-        echo $type;
-        $removeLike($type, $vidId, $userId, false);
+    if (isset($_GET['comId'])) {
+        $commentId = $_GET['comId'];
+        if ($type == 0) {
+            // like
+            echo "like de comment <br>";
+            $removeLike(3, $commentId, $userId, false);
+            $addLike($type, $commentId, $userId, false);
+        } else if ($type == 1) {
+            // dislike
+            echo "dislike de comment <br>";
+            $removeLike(2, $commentId, $userId, false);
+            $addLike($type, $commentId, $userId, false);
+        } else if ($type == 2 || $type == 3) {
+            echo "delete <br>";
+            $removeLike($type, $commentId, $userId, false);
+        }
+    } else {
+        // Roep de functie op om de like in de database te zetten.
+        if ($type == 0) {
+            // like
+            echo "like de comment <br>";
+            $removeLike(3, $vidId, $userId, false);
+            $addLike($type, $vidId, $userId, false);
+        } else if ($type == 1) {
+            // dislike
+            echo "dislike de comment <br>";
+            $removeLike(2, $vidId, $userId, false);
+            $addLike($type, $vidId, $userId, false);
+        } else if ($type == 2 || $type == 3) {
+            echo "delete <br>";
+            echo $type;
+            $removeLike($type, $vidId, $userId, false);
+        }
     }
     // Haal de like waarde weer uit de get.
     header("Location: " . $_SERVER['PHP_SELF'] . "?VideoId=" . $vidId);
