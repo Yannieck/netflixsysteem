@@ -82,7 +82,7 @@ ob_start();
                     $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
                     if (!empty($_FILES["uploadedFile"]["tmp_name"])) {
                         // Kijk of het account bestaat door naar de gegevens te zoeken in de database.
-                        $sql = "SELECT account.`password` FROM account WHERE account.`name` = ? AND email = ?";
+                        $sql = "SELECT account.`password` FROM account WHERE account.`Username` = ? AND email = ?";
                         $result = stmtExecute($sql, 1, 'ss', $fullname, $email);
 
                         // Kijk of er resultaten zijn.
